@@ -4,16 +4,40 @@
 }
 
 @font-face {
-    src: url("static/fonts/Oswald-Regular.ttf");
+    src: url("../fonts/Oswald-Regular.ttf");
     font-family: 'Oswald';
 }
 
 @font-face {
-    src: url("static/fonts/Roboto-Medium.ttf");
+    src: url("../fonts/Roboto-Medium.ttf");
     font-family: 'Roboto';
 }
+
+@font-face {
+    src: url("../fonts/PermanentMarker-Regular.ttf");
+    font-family: 'PM';
+}
+
+/*Navigation*/
 
 .nav-link {
     font-family: 'Oswald';
     font-size: 14pt; 
+}
+
+
+
+
+/*footer*/
+
+.footer-text {
+    font-family: 'Oswald';
+    font-size: 10pt;
+    color: rgba(0,0,0,.5);
+    
+}
+
+.footer-text:hover {
+    color: rgba(0,0,0,.7);
+    text-decoration: none;
 }
