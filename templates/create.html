@@ -1,0 +1,653 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center create-header">
+    <h1>Create a new plan</h1>
+    <p class="small">You can edit the parts, links & price in future <br> on the builds page by clicking 'Edit'.</p>
+</div>
+
+
+<form method="POST" action="{{ url_for('insert_record') }}">
+    <!--Make/Model/Trim/Year-->
+    <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#vehicle" aria-expanded="false"
+                    aria-controls="vehicle">
+                    Car
+                </h6>
+            </div>
+            <div id="vehicle" class="collapse" aria-labelledby="headingTwo" data-parent="#vehicle">
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Make
+                                </th>
+                                <th scope="col">
+                                    Model
+                                </th>
+                                <th scope="col">
+                                    Trim
+                                </th>
+                                <th scope="col">
+                                    Year
+                                </th>
+                                <th scope="col">
+                                    Price
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Splitter-->
+                            <tr>
+                                <th scope="row">
+                                    <input type="text" class="form-control input-sm" name="make">
+                                </th>
+                                <td>
+                                    <input type="text" class="form-control input-sm" name="model">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-sm" name="trim">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control input-sm" name="year">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control input-sm" name="price">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+
+    <!--Bodykit-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#bodykit" aria-expanded="false"
+                aria-controls="bodykit">
+                Bodykit
+            </h6>
+        </div>
+        <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Product Name
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Splitter-->
+                        <tr>
+                            <th scope="row">
+                                Splitter
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="splitter-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="splitter-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="splitter-price">
+                            </td>
+                        </tr>
+                        <!--Sideskirts-->
+                        <tr>
+                            <th scope="row">
+                                Sideskirts
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="sideskirts-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="sideskirts-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="sideskirts-price">
+                            </td>
+                        </tr>
+                        <!--Diffuser-->
+                        <tr>
+                            <th scope="row">
+                                Diffuser
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="diffuser-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="diffuser-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="diffuser-price">
+                            </td>
+                        </tr>
+                        <!--Front Canards-->
+                        <tr>
+                            <th scope="row">
+                                Front Canards
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="front-canards-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="front-canards-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="front-canards-price">
+                            </td>
+                        </tr>
+                        <!--Rear Canards-->
+                        <tr>
+                            <th scope="row">
+                                Rear Canards
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="rear-canards-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="rear-canards-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="rear-canards-price">
+                            </td>
+                        </tr>
+                        <!--Spoiler-->
+                        <tr>
+                            <th scope="row">
+                                Spoiler
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="spoiler-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="spoiler-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="spoiler-price">
+                            </td>
+                        </tr>
+                        <!--Spoiler-->
+                        <tr>
+                            <th scope="row">
+                                Wheel Arches
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="wheel-arches-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wheel-arches-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wheel-arches-price">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="text-center"><strong>OR</strong></td>
+                        </tr>
+                        <!--Full Bodykit-->
+                        <tr>
+                            <th scope="row">
+                                Full Bodykit
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="full-bodykit-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="full-bodykit-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="full-bodykit-price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Engine-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#engine" aria-expanded="false"
+                aria-controls="engine">
+                Engine
+            </h6>
+        </div>
+        <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Product Name
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Air intake-->
+                        <tr>
+                            <th scope="row">
+                                Air intake
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="air-intake-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="air-intake-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="air-intake-price">
+                            </td>
+                        </tr>
+                        <!--Intercooler-->
+                        <tr>
+                            <th scope="row">
+                                Intercooler
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="intercooler-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="intercooler-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="intercooler-price">
+                            </td>
+                        </tr>
+                        <!--Radiator-->
+                        <tr>
+                            <th scope="row">
+                                Radiator
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="radiator-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="radiator-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="radiator-price">
+                            </td>
+                        </tr>
+                        <!--Remap-->
+                        <tr>
+                            <th scope="row">
+                                Remap
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="remap-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="remap-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="remap-price">
+                            </td>
+                        </tr>
+                        <!--Injectors-->
+                        <tr>
+                            <th scope="row">
+                                Injectors
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="injectors-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="injectors-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="injectors-price">
+                            </td>
+                        </tr>
+                        <!--Turbo-charger / Super-charger-->
+                        <tr>
+                            <th scope="row">
+                                Turbo-charger / <br> Super-charger
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="charger-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="charger-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="charger-price">
+                            </td>
+                        </tr>
+                        <!--Engine Hoses-->
+                        <tr>
+                            <th scope="row">
+                                Engine Hoses
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="engine-hoses-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="engine-hoses-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="engine-hoses-price">
+                            </td>
+                        </tr>
+                        <!--Exhaust-->
+                        <tr>
+                            <th scope="row">
+                                Exhaust
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="exhaust-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="exhaust-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="exhaust-price">
+                            </td>
+                        </tr>
+                        <!--Fuel Pump-->
+                        <tr>
+                            <th scope="row">
+                                Fuel Pump
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="fuel-pump-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="fuel-pump-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="fuel-pump-price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Running Gear-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#running-gear" aria-expanded="false"
+                aria-controls="running-gear">
+                Running Gear
+            </h6>
+        </div>
+        <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Product Name
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Suspension-->
+                        <tr>
+                            <th scope="row">
+                                Suspension
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="suspension-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="suspension-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="suspension-price">
+                            </td>
+                        </tr>
+                        <!--Wheels-->
+                        <tr>
+                            <th scope="row">
+                                Wheels
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="wheels-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wheels-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wheels-price">
+                            </td>
+                        </tr>
+                        <!--Tyres-->
+                        <tr>
+                            <th scope="row">
+                                Tyres
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="tyres-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="tyres-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="tyres-price"
+                                    placeholder="Price per tyre">
+                            </td>
+                        </tr>
+                        <!--Brakes-->
+                        <tr>
+                            <th scope="row">
+                                Brakes
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="brakes-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="brakes-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="brakes-price">
+                            </td>
+                        </tr>
+                        <!--Driveshafts-->
+                        <tr>
+                            <th scope="row">
+                                Driveshafts
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="driveshafts-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="driveshafts-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="driveshafts-price">
+                            </td>
+                        </tr>
+                        <!--Wishbones-->
+                        <tr>
+                            <th scope="row">
+                                Wishbones
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="wishbones-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wishbones-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="wishbones-price">
+                            </td>
+                        </tr>
+                        <!--Bushes-->
+                        <tr>
+                            <th scope="row">
+                                Bushes
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="bushes-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="bushes-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="bushes-price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Interior-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#interior" aria-expanded="false"
+                aria-controls="interior">
+                Interior
+            </h6>
+        </div>
+        <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Product Name
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Seats-->
+                        <tr>
+                            <th scope="row">
+                                Seats
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="seats-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="seats-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="seats-price">
+                            </td>
+                        </tr>
+                        <!--Harness-->
+                        <tr>
+                            <th scope="row">
+                                Harness
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="harness-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="harness-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="harness-price">
+                            </td>
+                        </tr>
+                        <!--Boost Gauge-->
+                        <tr>
+                            <th scope="row">
+                                Boost Gauge
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="boost-gauge-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="boost-gauge-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="boost-gauge-price">
+                            </td>
+                        </tr>
+                        <!--Boost Controller-->
+                        <tr>
+                            <th scope="row">
+                                Boost Controller
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="boost-controller-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="boost-controller-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="boost-controller-price">
+                            </td>
+                        </tr>
+                        <!--Gear Knob-->
+                        <tr>
+                            <th scope="row">
+                                Gear Stick
+                            </th>
+                            <th>
+                                <input type="text" class="form-control input-sm" name="gear-stick-product">
+                            </th>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="gear-stick-link">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="gear-stick-price">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Build Total-->
+    <div class="col-md-12">
+        Total Price: <span id="build-total">0.00</span>
+    </div>
+
+    <!--Submit-->
+    <div class="text-center">
+        <button type="submit" class="btn btn-light btn-lg">Create</button>
+    </div>
+
+</form>
+
+{% endblock content %}
