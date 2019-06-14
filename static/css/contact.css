@@ -1,0 +1,15 @@
+.contact-header {
+    margin: 15px;
+}
+
+.contact-header h1 {
+    font-family: 'PM';
+}
+
+.contact-header p {
+    font-family: 'Oswald';
+}
+
+textarea {
+    resize: none;
+}

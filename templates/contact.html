@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="contact-us offset-lg-3 col-lg-5 offset-md-3 col-md-5 col-sm-12">
+        <div class="text-center contact-header">
+            <h1>Contact Us</h1>
+            <p class="small">Anything, big or small. <br> Alternatively you can message us on social media, which are at the
+                bottom of the page.</p>
+        </div>
+    
+        <form action="">
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+                <textarea type="text" id="#message" name="message" class="form-control" rows="10" placeholder="Message"></textarea>
+            </div>
+    
+            <div class="text-center">
+                <button type="submit" class="btn btn-light btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
