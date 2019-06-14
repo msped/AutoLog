@@ -30,6 +30,10 @@
 
 /*footer*/
 
+footer {
+    margin-top: 50px;
+}
+
 .footer-text {
     font-family: 'Oswald';
     font-size: 10pt;
@@ -41,3 +45,46 @@
     color: rgba(0,0,0,.7);
     text-decoration: none;
 }
+
+.social-links h5 {
+    font-family: 'PM';
+}
+
+.social-links ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 20px 10px;
+}
+
+.social-links ul li a {
+    text-decoration: none;
+}
+
+.social-links ul li a i {
+    font-size: 17pt;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.fa-facebook-f {
+    padding: 10px 15px;
+    background-color: #4267B2;
+}
+
+.fa-twitter {
+    padding: 10px;
+    background-color: #1DA1F2;
+}
+
+.fa-instagram {
+    padding: 10px;
+    background: radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+         #fd5949 45%,
+         #d6249f 60%,
+         #285AEB 90%)
+    ;
+}
+

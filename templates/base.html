@@ -7,6 +7,7 @@
     
     <!--CDNs-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/999af8025a.js"></script>
     <!--My Files-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css' )}}">
     <link rel="stylesheet" href="/static/css/{{ files }}.css">
@@ -32,19 +33,11 @@
                     </li>
                 </ul>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-                    {% if current_user.is_authenticated %}
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                        </li>
-                    </ul>
-                    {% else %}
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="modal" data-target="#user-login">Login</a>
                         </li>
                     </ul>
-                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -109,10 +102,26 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-3 mb-md-0 mb-3">
-                            <div class="col-md-6 mt-md-0 mt-3">
-                                <h5 class="text-uppercase">Footer Content</h5>
-                                <p>Here you can use rows and columns to organize your footer content.</p>
+                        <div class="col-md-6 mb-md-0 mb-3">
+                            <div class="col-md-12 mt-md-0 mt-3 social-links">
+                                <h5 class="text-uppercase text-center">Follow us on Social Media</h5>
+                                <ul class="text-center">
+                                    <li>
+                                        <a href="https://www.facebook.com">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.twitter.com">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.instagram.com">
+                                            <i class="fab fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
