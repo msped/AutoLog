@@ -1,0 +1,17 @@
+.login-header {
+    font-family: 'PM', monospace;
+    margin: 20px 0;
+}
+
+.login-content {
+    margin: 0 auto;
+    width: 35%;
+}
+
+.register {
+    margin: 35px 0; 
+}
+
+div.container {
+    margin-bottom: 50px;
+}
