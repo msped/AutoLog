@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="text-center create-header">
-    <h1>Create a new plan</h1>
-    <p class="small">You can edit the parts, links & price in future <br> on the builds page by clicking 'Edit'.</p>
+    <h1>Edit a new plan</h1>
+    <p class="small">Remove, add and update parts.</p>
 </div>
 
 
-<form method="POST" action="{{ url_for('create_record') }}">
+<form method="POST" action="{{ url_for('update_record') }}">
     <!--Make/Model/Trim/Year-->
     <div class="card">
             <div class="card-header" id="headingTwo">
@@ -42,19 +42,19 @@
                             <!--Splitter-->
                             <tr>
                                 <th scope="row">
-                                    <input type="text" class="form-control input-sm" name="make">
+                                    <input type="text" class="form-control input-sm" name="make" value="{{  }}">
                                 </th>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="model">
+                                    <input type="text" class="form-control input-sm" name="model" value="{{  }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="trim">
+                                    <input type="text" class="form-control input-sm" name="trim" value="{{  }}">
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control input-sm" name="year">
+                                    <input type="number" class="form-control input-sm" name="year" value="{{  }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="price">
+                                    <input type="text" class="form-control input-sm" name="price" value="{{  }}">
                                 </td>
                             </tr>
                         </tbody>
@@ -97,13 +97,13 @@
                                 Splitter
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="splitter-product">
+                                <input type="text" class="form-control input-sm" name="splitter-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="splitter-link">
+                                <input type="text" class="form-control input-sm" name="splitter-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="splitter-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="splitter-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Sideskirts-->
@@ -112,13 +112,13 @@
                                 Sideskirts
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="sideskirts-product">
+                                <input type="text" class="form-control input-sm" name="sideskirts-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="sideskirts-link">
+                                <input type="text" class="form-control input-sm" name="sideskirts-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="sideskirts-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="sideskirts-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Diffuser-->
@@ -127,13 +127,13 @@
                                 Diffuser
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="diffuser-product">
+                                <input type="text" class="form-control input-sm" name="diffuser-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="diffuser-link">
+                                <input type="text" class="form-control input-sm" name="diffuser-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="diffuser-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="diffuser-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Front Canards-->
@@ -142,13 +142,13 @@
                                 Front Canards
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="front-canards-product">
+                                <input type="text" class="form-control input-sm" name="front-canards-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="front-canards-link">
+                                <input type="text" class="form-control input-sm" name="front-canards-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="front-canards-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="front-canards-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Rear Canards-->
@@ -157,13 +157,13 @@
                                 Rear Canards
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="rear-canards-product">
+                                <input type="text" class="form-control input-sm" name="rear-canards-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="rear-canards-link">
+                                <input type="text" class="form-control input-sm" name="rear-canards-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="rear-canards-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="rear-canards-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Spoiler-->
@@ -172,13 +172,13 @@
                                 Spoiler
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="spoiler-product">
+                                <input type="text" class="form-control input-sm" name="spoiler-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="spoiler-link">
+                                <input type="text" class="form-control input-sm" name="spoiler-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="spoiler-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="spoiler-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Spoiler-->
@@ -187,13 +187,13 @@
                                 Wheel Arches
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="wheel-arches-product">
+                                <input type="text" class="form-control input-sm" name="wheel-arches-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="wheel-arches-link">
+                                <input type="text" class="form-control input-sm" name="wheel-arches-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="wheel-arches-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="wheel-arches-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <tr>
@@ -205,13 +205,13 @@
                                 Full Bodykit
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="full-bodykit-product">
+                                <input type="text" class="form-control input-sm" name="full-bodykit-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="full-bodykit-link">
+                                <input type="text" class="form-control input-sm" name="full-bodykit-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="full-bodykit-price"step="any" id="part-price"   >
+                                <input type="number" class="form-control input-sm" name="full-bodykit-price"step="any" id="part-price"  value="{{  }}">
                             </td>
                         </tr>
                     </tbody>
@@ -254,13 +254,13 @@
                                 Air intake
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="air-intake-product">
+                                <input type="text" class="form-control input-sm" name="air-intake-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="air-intake-link">
+                                <input type="text" class="form-control input-sm" name="air-intake-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="air-intake-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="air-intake-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Intercooler-->
@@ -269,13 +269,13 @@
                                 Intercooler
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="intercooler-product">
+                                <input type="text" class="form-control input-sm" name="intercooler-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="intercooler-link">
+                                <input type="text" class="form-control input-sm" name="intercooler-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="intercooler-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="intercooler-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Radiator-->
@@ -284,13 +284,13 @@
                                 Radiator
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="radiator-product">
+                                <input type="text" class="form-control input-sm" name="radiator-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="radiator-link">
+                                <input type="text" class="form-control input-sm" name="radiator-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="radiator-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="radiator-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Remap-->
@@ -299,13 +299,13 @@
                                 Remap
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="remap-product">
+                                <input type="text" class="form-control input-sm" name="remap-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="remap-link">
+                                <input type="text" class="form-control input-sm" name="remap-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="remap-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="remap-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Injectors-->
@@ -314,13 +314,13 @@
                                 Injectors
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="injectors-product">
+                                <input type="text" class="form-control input-sm" name="injectors-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="injectors-link">
+                                <input type="text" class="form-control input-sm" name="injectors-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="injectors-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="injectors-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Turbo-charger / Super-charger-->
@@ -329,13 +329,13 @@
                                 Turbo-charger / <br> Super-charger
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="charger-product">
+                                <input type="text" class="form-control input-sm" name="charger-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="charger-link">
+                                <input type="text" class="form-control input-sm" name="charger-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="charger-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="charger-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Engine Hoses-->
@@ -344,13 +344,13 @@
                                 Engine Hoses
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="engine-hoses-product">
+                                <input type="text" class="form-control input-sm" name="engine-hoses-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="engine-hoses-link">
+                                <input type="text" class="form-control input-sm" name="engine-hoses-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="engine-hoses-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="engine-hoses-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Exhaust-->
@@ -359,13 +359,13 @@
                                 Exhaust
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="exhaust-product">
+                                <input type="text" class="form-control input-sm" name="exhaust-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="exhaust-link">
+                                <input type="text" class="form-control input-sm" name="exhaust-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="exhaust-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="exhaust-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Fuel Pump-->
@@ -374,13 +374,13 @@
                                 Fuel Pump
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="fuel-pump-product">
+                                <input type="text" class="form-control input-sm" name="fuel-pump-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="fuel-pump-link">
+                                <input type="text" class="form-control input-sm" name="fuel-pump-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="fuel-pump-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="fuel-pump-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                     </tbody>
@@ -423,13 +423,13 @@
                                 Suspension
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="suspension-product">
+                                <input type="text" class="form-control input-sm" name="suspension-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="suspension-link">
+                                <input type="text" class="form-control input-sm" name="suspension-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="suspension-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="suspension-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Wheels-->
@@ -438,13 +438,13 @@
                                 Wheels
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="wheels-product">
+                                <input type="text" class="form-control input-sm" name="wheels-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="wheels-link">
+                                <input type="text" class="form-control input-sm" name="wheels-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="wheels-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="wheels-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Tyres-->
@@ -453,14 +453,14 @@
                                 Tyres
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="tyres-product">
+                                <input type="text" class="form-control input-sm" name="tyres-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="tyres-link">
+                                <input type="text" class="form-control input-sm" name="tyres-link" value="{{  }}">
                             </td>
                             <td>
                                 <input type="number" class="form-control input-sm" name="tyres-price"
-                                    placeholder="Price per tyre" step="any" id="part-price">
+                                    placeholder="Price per tyre" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Brakes-->
@@ -469,13 +469,13 @@
                                 Brakes
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="brakes-product">
+                                <input type="text" class="form-control input-sm" name="brakes-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="brakes-link">
+                                <input type="text" class="form-control input-sm" name="brakes-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="brakes-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="brakes-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Driveshafts-->
@@ -484,13 +484,13 @@
                                 Driveshafts
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="driveshafts-product">
+                                <input type="text" class="form-control input-sm" name="driveshafts-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="driveshafts-link">
+                                <input type="text" class="form-control input-sm" name="driveshafts-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="driveshafts-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="driveshafts-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Wishbones-->
@@ -499,13 +499,13 @@
                                 Wishbones
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="wishbones-product">
+                                <input type="text" class="form-control input-sm" name="wishbones-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="wishbones-link">
+                                <input type="text" class="form-control input-sm" name="wishbones-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="wishbones-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="wishbones-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Bushes-->
@@ -514,13 +514,13 @@
                                 Bushes
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="bushes-product">
+                                <input type="text" class="form-control input-sm" name="bushes-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="bushes-link">
+                                <input type="text" class="form-control input-sm" name="bushes-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="bushes-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="bushes-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                     </tbody>
@@ -563,13 +563,13 @@
                                 Seats
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="seats-product">
+                                <input type="text" class="form-control input-sm" name="seats-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="seats-link">
+                                <input type="text" class="form-control input-sm" name="seats-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="seats-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="seats-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Harness-->
@@ -578,13 +578,13 @@
                                 Harness
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="harness-product">
+                                <input type="text" class="form-control input-sm" name="harness-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="harness-link">
+                                <input type="text" class="form-control input-sm" name="harness-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="harness-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="harness-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Boost Gauge-->
@@ -593,13 +593,13 @@
                                 Boost Gauge
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="boost-gauge-product">
+                                <input type="text" class="form-control input-sm" name="boost-gauge-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="boost-gauge-link">
+                                <input type="text" class="form-control input-sm" name="boost-gauge-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="boost-gauge-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="boost-gauge-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Boost Controller-->
@@ -608,13 +608,13 @@
                                 Boost Controller
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="boost-controller-product">
+                                <input type="text" class="form-control input-sm" name="boost-controller-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="boost-controller-link">
+                                <input type="text" class="form-control input-sm" name="boost-controller-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="boost-controller-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="boost-controller-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                         <!--Gear Knob-->
@@ -623,13 +623,13 @@
                                 Gear Stick
                             </th>
                             <th>
-                                <input type="text" class="form-control input-sm" name="gear-stick-product">
+                                <input type="text" class="form-control input-sm" name="gear-stick-product" value="{{  }}">
                             </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="gear-stick-link">
+                                <input type="text" class="form-control input-sm" name="gear-stick-link" value="{{  }}">
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="gear-stick-price" step="any" id="part-price">
+                                <input type="number" class="form-control input-sm" name="gear-stick-price" step="any" id="part-price" value="{{  }}">
                             </td>
                         </tr>
                     </tbody>
@@ -640,12 +640,13 @@
 
     <!--Build Total-->
     <div class="col-md-12">
-        Total Price: <span id="build-total">0.00</span>
+        Total Price: <span id="build-total" value="{{  }}">0.00</span>
     </div>
 
     <!--Submit-->
     <div class="text-center">
-        <button type="submit" class="btn btn-light btn-lg">Create</button>
+        <button type="submit" class="btn btn-light btn-lg">Update</button>
+        <a href="{{ url_for('builds') }}" class="btn btn-dark btn-lg">Back to Builds</a>
     </div>
 
 </form>
