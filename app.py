@@ -23,12 +23,11 @@ def home():
 
 @app.route("/builds")
 def builds():
-
     content = {
         "title": "Builds",
         "files": "builds"
     }
-    return render_template("builds.html", **content)
+    return render_template("builds.html", **content, builds.mongo.db.builds.find())
 
 @app.route("/contact_us")
 def contact():
@@ -66,14 +65,16 @@ def logout():
     
     pass
 
-@app.route("/edit")
-def edit_record():
-
+@app.route("/edit/<build_id>")
+def edit_record(build_id):
+    build = mongo.db.builds.find_one({
+        "_id": ObjectId(build_id)
+    })
     content = {
         "title": "Edit a Build",
         "files": "edit"
     }
-    return render_template("edit.html", **content)
+    return render_template("edit.html", **content, builds=build)
 
 ## CRUD Routes
 
