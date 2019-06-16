@@ -100,9 +100,10 @@ def update_record():
 
 @app.route("/delete_record/<build_id>")
 def delete_record(build_id):
-
-    
-    pass
+    mongo.db.builds.remove({
+        '_id': ObjectId(build_id)
+    })
+    return redirect(url_for('builds'))
 
 ##if __name__ == '__main__':
     ##app.run(host=os.environ.get('IP'),
