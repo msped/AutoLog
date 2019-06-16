@@ -646,6 +646,7 @@
     <!--Submit-->
     <div class="text-center">
         <button type="submit" class="btn btn-light btn-lg">Update</button>
+        <a href="{{ url_for('delete_record', build_id=build._id) }}" class="btn btn-dark btn-lg">Back to Builds</a>
         <a href="{{ url_for('builds') }}" class="btn btn-dark btn-lg">Back to Builds</a>
     </div>
 
