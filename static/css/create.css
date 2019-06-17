@@ -29,3 +29,22 @@
     font-family: 'Roboto';
     margin: 5px 0px 5px 15px;
 }
+
+.add-category {
+    margin-bottom: 15px;
+}
+
+#bodykit-categories, #engine-categories, #running-gear-categories, #interior-categories {
+    width: 250px; 
+    display: inline-block; 
+}
+
+#add-bodykit, #add-engine, #add-running-gear, #add-interior {
+    margin-left: 15px;
+}
+
+#delete-row {
+    font-size: 17pt;
+    margin-top: 8px;
+    cursor: pointer;
+}

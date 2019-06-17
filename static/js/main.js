@@ -2,9 +2,9 @@ $(document).ready(function () {
     $('tbody').on('change', '#part-price', function () {
         var buildPrice = 0;
         $('#part-price').each(function () {
-            buildPrice += parseInt($('#part-price').val()) || 0;
+            buildPrice += parseFloat($(this).val()) || 0;
         });
-         $('#build-total').val(buildPrice);
+         $('#build-total').html(buildPrice);
     })
 
     $(window).keydown(function(event){
