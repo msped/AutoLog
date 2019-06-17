@@ -27,7 +27,7 @@ def builds():
         "title": "Builds",
         "files": "builds"
     }
-    return render_template("builds.html", **content, builds.mongo.db.builds.find())
+    return render_template("builds.html", **content, builds=builds.mongo.db.builds.find())
 
 @app.route("/contact_us")
 def contact():
@@ -80,19 +80,23 @@ def edit_record(build_id):
 
 @app.route("/create_record")
 def create_record():
-    
-
+    bodykit = mongo.db.bodykit.find()
+    engine = mongo.db.engine.find()
+    running = mongo.db.runninggear.find()
+    interior = mongo.db.interior.find()
 
     content = {
         "title": "Create a Build",
         "files": "create"
     }
-    return render_template("create.html", **content)
+    return render_template("create.html", **content, bodykit=bodykit, engine=engine, running=running, interior=interior)
 
 @app.route("/insert_record", methods=["POST"])
 def insert_record():
+    builds = mongo.db.builds
+    builds.insert_one(request.form.to_dict())
 
-    pass
+    redirect(url_for('builds'))
 
 @app.route("/update_record")
 def update_record():
