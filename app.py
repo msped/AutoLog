@@ -11,7 +11,7 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
 mongo = PyMongo(app)
 
-## Site Routes
+# Site Routes
 @app.route("/")
 def home():
 
@@ -27,7 +27,7 @@ def builds():
         "title": "Builds",
         "files": "builds"
     }
-    return render_template("builds.html", **content, builds=builds.mongo.db.builds.find())
+    return render_template("builds.html", **content, builds=mongo.db.builds.find())
 
 @app.route("/contact_us")
 def contact():
@@ -65,19 +65,9 @@ def logout():
     
     pass
 
-@app.route("/edit/<build_id>")
-def edit_record(build_id):
-    build = mongo.db.builds.find_one({
-        "_id": ObjectId(build_id)
-    })
-    content = {
-        "title": "Edit a Build",
-        "files": "edit"
-    }
-    return render_template("edit.html", **content, builds=build)
+# CRUD Routes
 
-## CRUD Routes
-
+# Create a Record
 @app.route("/create_record")
 def create_record():
     bodykit = mongo.db.bodykit.find()
@@ -91,18 +81,48 @@ def create_record():
     }
     return render_template("create.html", **content, bodykit=bodykit, engine=engine, running=running, interior=interior)
 
+# Insert Record into DB
 @app.route("/insert_record", methods=["POST"])
 def insert_record():
     builds = mongo.db.builds
     builds.insert_one(request.form.to_dict())
 
-    redirect(url_for('builds'))
+    return redirect(url_for('builds'))
 
+# View a Record
+@app.route("/view/<build_id>")
+def view_record(build_id):
+    build = mongo.db.builds.find_one({
+        "_id": ObjectId(build_id)
+    })
+
+    return render_template("view.html", builds=build)
+
+# Edit a Record
+@app.route("/edit/<build_id>")
+def edit_record(build_id):
+    build = mongo.db.builds.find_one({
+        "_id": ObjectId(build_id)
+    })
+
+    bodykit = mongo.db.bodykit.find()
+    engine = mongo.db.engine.find()
+    running = mongo.db.runninggear.find()
+    interior = mongo.db.interior.find()
+    
+    content = {
+        "title": "Edit a Build",
+        "files": "edit"
+    }
+    return render_template("edit.html", **content, builds=build, bodykit=bodykit, engine=engine, running=running, interior=interior)
+
+# Update a Record
 @app.route("/update_record")
 def update_record():
 
     pass
 
+# Delete a record 
 @app.route("/delete_record/<build_id>")
 def delete_record(build_id):
     mongo.db.builds.remove({
