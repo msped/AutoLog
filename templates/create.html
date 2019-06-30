@@ -54,7 +54,7 @@
                                     <input type="number" class="form-control input-sm" name="year">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="price">
+                                    <input type="text" class="form-control input-sm" name="price" id="part-price">
                                 </td>
                             </tr>
                         </tbody>
@@ -74,7 +74,7 @@
         <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
             <div class="card-body">
                 <div class="add-category col-md-12">
-                    <select name="bodykit-categories" class="form-control" id="bodykit-categories">
+                    <select class="form-control" id="bodykit-categories">
                         <option value="" disabled selected>Choose an option</option>
                         {% for item in bodykit %}
                         <option value="{{ item.name }}">{{ item.title }}</option>
@@ -121,7 +121,7 @@
         <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
             <div class="card-body">
                     <div class="add-category col-md-12">
-                        <select name="engine-categories" class="form-control" id="engine-categories">
+                        <select class="form-control" id="engine-categories">
                             <option value="" disabled selected>Choose an option</option>
                             {% for item in engine %}
                             <option value="{{ item.name }}">{{ item.title }}</option>
@@ -165,7 +165,7 @@
         <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
             <div class="card-body">
                     <div class="add-category col-md-12">
-                        <select name="running-gear-categories" class="form-control" id="running-gear-categories">
+                        <select class="form-control" id="running-gear-categories">
                             <option value="" disabled selected>Choose an option</option>
                             {% for item in running %}
                             <option value="{{ item.name }}">{{ item.title }}</option>
@@ -209,7 +209,7 @@
         <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
             <div class="card-body">
                 <div class="add-category col-md-12">
-                    <select name="interior-categories" class="form-control" id="interior-categories">
+                    <select class="form-control" id="interior-categories">
                         <option value="" disabled selected>Choose an option</option>
                         {% for item in interior %}
                         <option value="{{ item.name }}">{{ item.title }}</option>
@@ -244,7 +244,7 @@
 
     <!--Build Total-->
     <div class="col-md-12">
-        Total Price: <span id="build-total">0.00</span>
+        Total Price: <strong><span id="build-total" name="total" >0.00</span></strong>
     </div>
 
     <!--Submit-->
