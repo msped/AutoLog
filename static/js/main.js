@@ -18,17 +18,16 @@ $(document).ready(function () {
         name = $('#bodykit-categories').find(":selected").val();
         title = $('#bodykit-categories').find(":selected").text();
         var template = '<tr>\
-                        <th scope="row">' +
-                           title 
-                        + '</th>\
-                        <th>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'-product" required>\
-                        </th>\
+                        <td scope="row">\
+                            <td scope="row">'+ title +'\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'-link" required>\
+                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'-price" step="any" id="part-price" required>\
+                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                        </td>\
+                        <td>\
+                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -41,17 +40,15 @@ $(document).ready(function () {
         name = $('#engine-categories').find(":selected").val();
         title = $('#engine-categories').find(":selected").text();
         var template = '<tr>\
-                        <th scope="row">' +
-                           title 
-                        + '</th>\
-                        <th>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'-product" required>\
-                        </th>\
+                            <td scope="row">'+ title +'\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'-link" required>\
+                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'-price" step="any" id="part-price" required>\
+                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                        </td>\
+                        <td>\
+                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -64,17 +61,15 @@ $(document).ready(function () {
         name = $('#running-gear-categories').find(":selected").val();
         title = $('#running-gear-categories').find(":selected").text();
         var template = '<tr>\
-                        <th scope="row">' +
-                           title 
-                        + '</th>\
-                        <th>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'-product" required>\
-                        </th>\
+                            <td scope="row">'+ title +'\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'-link" required>\
+                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'-price" step="any" id="part-price" required>\
+                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                        </td>\
+                        <td>\
+                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -87,17 +82,15 @@ $(document).ready(function () {
         name = $('#interior-categories').find(":selected").val();
         title = $('#interior-categories').find(":selected").text();
         var template = '<tr>\
-                        <th scope="row">' +
-                           title 
-                        + '</th>\
-                        <th>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'-product" required>\
-                        </th>\
+                            <td scope="row">'+ title +'\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'-link" required>\
+                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'-price" step="any" id="part-price" required>\
+                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                        </td>\
+                        <td>\
+                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
