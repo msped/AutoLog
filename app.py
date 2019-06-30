@@ -23,28 +23,17 @@ def home():
 
 @app.route("/builds")
 def builds():
-    content = {
-        "title": "Builds",
-        "files": "builds"
-    }
-    return render_template("builds.html", **content, builds=mongo.db.builds.find())
+    
+    return render_template("builds.html", builds=mongo.db.builds.find())
 
 @app.route("/contact_us")
 def contact():
 
-    content = {
-        "title": "Contact Us",
-        "files": "contact"
-    }
     return render_template("contact.html", **content)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     
-    content = {
-        "title": "Register",
-        "files": "register"
-    }
     return render_template("register.html", **content)
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -54,10 +43,6 @@ def login():
 
         pass
 
-    content = {
-        "title": "Login",
-        "files": "login"
-    }
     return render_template("login.html", **content)
 
 @app.route("/logout")
@@ -75,11 +60,7 @@ def create_record():
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    content = {
-        "title": "Create a Build",
-        "files": "create"
-    }
-    return render_template("create.html", **content, bodykit=bodykit, engine=engine, running=running, interior=interior)
+    return render_template("create.html", bodykit=bodykit, engine=engine, running=running, interior=interior)
 
 # Insert Record into DB
 @app.route("/insert_record", methods=["POST"])
@@ -109,12 +90,8 @@ def edit_record(build_id):
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
-    
-    content = {
-        "title": "Edit a Build",
-        "files": "edit"
-    }
-    return render_template("edit.html", **content, builds=build, bodykit=bodykit, engine=engine, running=running, interior=interior)
+
+    return render_template("edit.html", builds=build, bodykit=bodykit, engine=engine, running=running, interior=interior)
 
 # Update a Record
 @app.route("/update_record")
