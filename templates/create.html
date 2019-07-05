@@ -19,13 +19,26 @@ Create a new build
     <!--Make/Model/Trim/Year-->
     <div class="card">
             <div class="card-header" id="headingTwo">
-                <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#vehicle" aria-expanded="false"
-                    aria-controls="vehicle">
-                    Car
+                <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
+                    aria-controls="build-details">
+                    Build Details
                 </h6>
             </div>
-            <div id="vehicle" class="collapse" aria-labelledby="headingTwo" data-parent="#vehicle">
+            <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
                 <div class="card-body">
+                    <table class="table-sm col-md-6">
+                        <thead>
+                            <tr>
+                                <th>Build Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control input-sm" name="build-name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
                     <table class="table table-sm">
                         <thead>
                             <tr>
@@ -49,9 +62,9 @@ Create a new build
                         <tbody>
                             <!--Car-->
                             <tr>
-                                <th scope="row">
+                                <td scope="row">
                                     <input type="text" class="form-control input-sm" name="make">
-                                </th>
+                                </td>
                                 <td>
                                     <input type="text" class="form-control input-sm" name="model">
                                 </td>
