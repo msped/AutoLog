@@ -5,9 +5,570 @@ View a build
 {% endblock title %}
 
 {% block css %}
-<link rel="stylesheet" href="view.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view.css' )}}">
 {% endblock css %}
 
 {% block content %}
+<div class="build-header">
+    <h1> {{ build.build_name }}</h1>
+</div>
+
+<!--Make/Model/Trim/Year-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
+            aria-controls="build-details">
+            Car
+        </h6>
+    </div>
+    <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Make
+                        </th>
+                        <th scope="col">
+                            Model
+                        </th>
+                        <th scope="col">
+                            Trim
+                        </th>
+                        <th scope="col">
+                            Year
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Car-->
+                    <tr>
+                        <td scope="row">
+                            {{ build.make }}
+                        </td>
+                        <td>
+                            {{ build.model }}
+                        </td>
+                        <td>
+                            {{ build.trim }}
+                        </td>
+                        <td>
+                            {{ build.year }}
+                        </td>
+                        <td>
+                            {{ build.price }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Bodykit-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#bodykit" aria-expanded="false"
+            aria-controls="bodykit">
+            Bodykit
+        </h6>
+    </div>
+    <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="bodykit-table">
+                    <tr>
+                        <td>
+                            <a href="{{ build.bodykit_link }}" target="_blank">{{ build.bodykit_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.bodykit_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.front_splitter_link }}" target="_blank">{{ build.front_splitter_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.front_splitter_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.spoiler_link }}" target="_blank">{{ build.spoiler_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.spoiler_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.sideskirts_link }}" target="_blank">{{ build.sideskirts_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.sideskirts_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.diffuser_link }}" target="_blank">{{ build.diffuser_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.diffuser_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.front_canards_link }}" target="_blank">{{ build.front_canards_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.front_canards_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.rear_canards_link }}" target="_blank">{{ build.rear_canards_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.rear_canards_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.wheel_arches_link }}" target="_blank">{{ build.wheel_arches_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.wheel_arches_price }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Engine-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#engine" aria-expanded="false"
+            aria-controls="engine">
+            Engine
+        </h6>
+    </div>
+    <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="engine-table">
+                    <tr>
+                        <td>
+                            <a href="{{ build.exhaust_link }}" target="_blank">{{ build.exhaust_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.exhaust_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.induction_kit_link }}" target="_blank">{{ build.induction_kit_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.induction_kit_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.turbo_super_charger_link }}" target="_blank">{{ build.turbo_super_charger_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.turbo_super_charger_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.intercooler_link }}" target="_blank">{{ build.intercooler_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.intercooler_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.water_pump_link }}" target="_blank">{{ build.water_pump_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.water_pump_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.fuel_pump_link }}" target="_blank">{{ build.fuel_pump_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.fuel_pump_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.oil_pump_link }}" target="_blank">{{ build.oil_pump_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.oil_pump_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.radiator_link }}" target="_blank">{{ build.radiator_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.radiator_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.dump_valve_link }}" target="_blank">{{ build.dump_valve_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.dump_valve_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.remap_link }}" target="_blank">{{ build.remap_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.remap_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.engine_mount_link }}" target="_blank">{{ build.engine_mount_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.engine_mount_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.gearbox_mount_link }}" target="_blank">{{ build.gearbox_mount_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.gearbox_mount_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.silicone_hoset_link }}" target="_blank">{{ build.silicone_hose_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.silicone_hose_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.clutch_kit_link }}" target="_blank">{{ build.clutch_kit_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.clutch_kit_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.quick_shifter_link }}" target="_blank">{{ build.quick_shifter_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.quick_shifter_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.flywheel_link }}" target="_blank">{{ build.flywheel_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.flywheel_price }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Running Gear-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#running-gear" aria-expanded="false"
+            aria-controls="running-gear">
+            Running Gear
+        </h6>
+    </div>
+    <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="running-gear-table">
+                    <tr>
+                        <td>
+                            <a href="{{ build.tyres_link }}" target="_blank">{{ build.tyres_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.tyres_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.driveshafts_link }}" target="_blank">{{ build.driveshafts_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.driveshafts_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.brake_discs_link }}" target="_blank">{{ build.brake_discs_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.brake_discs_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.brake_pads_link }}" target="_blank">{{ build.brake_pads_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.brake_pads_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.lowering_springs_link }}" target="_blank">{{ build.lowering_springs_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.lowering_springs_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.strut_brace_link }}" target="_blank">{{ build.strut_brace_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.strut_brace_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.coilovers_air_link }}" target="_blank">{{ build.coilovers_air_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.coilovers_air_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.differential_link }}" target="_blank">{{ build.differential_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.differential_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.anti_roll_bar_link }}" target="_blank">{{ build.anti_roll_bar_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.anti_roll_bar_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.wheels_link }}" target="_blank">{{ build.wheels_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.wheels_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.brake_kit_link }}" target="_blank">{{ build.brake_kit_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.brake_kit_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.wishbones_link }}" target="_blank">{{ build.wishbones_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.wishbones_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.bushes_link }}" target="_blank">{{ build.bushes_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.bushes_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.front_lower_strut_brace_link }}" target="_blank">{{ build.front_lower_strut_brace_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.front_lower_strut_brace_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.rear_lower_strut_brace_link }}" target="_blank">{{ build.rear_lower_strut_brace_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.rear_lower_strut_brace_price }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Interior-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#interior" aria-expanded="false"
+            aria-controls="interior">
+            Interior
+        </h6>
+    </div>
+    <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="interior-table">
+                    <tr>
+                        <td>
+                            <a href="{{ build.harness_link }}" target="_blank">{{ build.harness_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.harness_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.seats_link }}" target="_blank">{{ build.seats_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.seats_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.steering_wheel_link }}" target="_blank">{{ build.steering_wheel_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.steering_wheel_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.gearknob_link }}" target="_blank">{{ build.gearknob_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.gearknob_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.handbrake_link }}" target="_blank">{{ build.handbrake_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.handbrake_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.boost_gauge_link }}" target="_blank">{{ build.boost_gauge_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.boost_gauge_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.interior_light_link }}" target="_blank">{{ build.interior_light_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.interior_light_price }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{ build.floormat_link }}" target="_blank">{{ build.floormat_product }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build.floormat_price }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Build Total-->
+<div class="col-md-12">
+    Total Price: <strong>{{ build.total }}</strong>
+</div>
+
+<!--Submit-->
+<div class="text-center">
+    <a class="btn btn-primary" href="{{ url_for('edit_record', build_id=build._id) }}">Edit</a>
+    <a class="btn btn-light" href="{{ url_for('builds') }}">Back to Builds</a>
+</div>
 
 {% endblock content %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/view.js' )}}"></script>
+{% endblock js %}
