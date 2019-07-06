@@ -34,7 +34,7 @@ Create a new build
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="text" class="form-control input-sm" name="build-name"></td>
+                                <td><input type="text" class="form-control input-sm" name="build_name"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -269,10 +269,15 @@ Create a new build
         <input type="hidden" name="total" id="build-total">
     </div>
 
-    <!--Submit-->
+    <!--Submit / Go back to Builds Page-->
     <div class="text-center">
-        <button type="submit" class="btn btn-light btn-lg">Create</button>
+        <a class="btn btn-btn-outline-dark" href="{{ url_for('builds') }}">Back to Builds</a>
+        <button type="submit" class="btn btn-outline-success">Create</button>
     </div>
 
 </form>
 {% endblock content %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/create-edit.js' )}}"></script>
+{% endblock js %}
