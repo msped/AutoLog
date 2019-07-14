@@ -15,20 +15,20 @@ $(document).ready(function () {
     });
 
     $('#add-bodykit').on('click', function(){
-        name = $('#bodykit-categories').find(":selected").val();
+        part_id = $('#bodykit-categories').find(":selected").val();
         title = $('#bodykit-categories').find(":selected").text();
         var template = '<tr>\
                         <td scope="row">'
                             + title +
                         '</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -38,18 +38,18 @@ $(document).ready(function () {
     })
 
     $('#add-engine').on('click', function(){
-        name = $('#engine-categories').find(":selected").val();
+        part_id = $('#engine-categories').find(":selected").val();
         title = $('#engine-categories').find(":selected").text();
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -59,18 +59,18 @@ $(document).ready(function () {
     })
 
     $('#add-running-gear').on('click', function(){
-        name = $('#running-gear-categories').find(":selected").val();
+        part_id = $('#running-gear-categories').find(":selected").val();
         title = $('#running-gear-categories').find(":selected").text();
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -80,18 +80,18 @@ $(document).ready(function () {
     })
 
     $('#add-interior').on('click', function(){
-        name = $('#interior-categories').find(":selected").val();
+        part_id = $('#interior-categories').find(":selected").val();
         title = $('#interior-categories').find(":selected").text();
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ name +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ name +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ name +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\

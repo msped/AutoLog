@@ -5,7 +5,7 @@ Create a new build
 {% endblock title %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/create.css' )}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
 {% endblock css %}
 
 {% block content %}
@@ -34,7 +34,7 @@ Create a new build
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="text" class="form-control input-sm" name="build_name"></td>
+                                <td><input type="text" class="form-control input-sm" name="build_name" required></td>
                             </tr>
                         </tbody>
                     </table>
@@ -63,19 +63,19 @@ Create a new build
                             <!--Car-->
                             <tr>
                                 <td scope="row">
-                                    <input type="text" class="form-control input-sm" name="make">
+                                    <input type="text" class="form-control input-sm" name="make" required>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="model">
+                                    <input type="text" class="form-control input-sm" name="model" required>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="trim">
+                                    <input type="text" class="form-control input-sm" name="trim" required>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control input-sm" name="year">
+                                    <input type="number" class="form-control input-sm" name="year" required>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="price" id="part-price">
+                                    <input type="text" class="form-control input-sm" name="price" id="part-price" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -98,7 +98,7 @@ Create a new build
                     <select class="form-control" id="bodykit-categories">
                         <option value="" disabled selected>Choose an option</option>
                         {% for item in bodykit %}
-                        <option value="{{ item.name }}">{{ item.title }}</option>
+                        <option value="{{ item.part_id }}">{{ item.title }}</option>
                         {% endfor %}
                     </select>
                     <a id="add-bodykit" class="btn btn-light">Add</a>
@@ -279,5 +279,5 @@ Create a new build
 {% endblock content %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/create-edit.js' )}}"></script>
+    <script src="{{ url_for('static', filename='js/create.js' )}}"></script>
 {% endblock js %}
