@@ -47,19 +47,19 @@ View a build
                     <!--Car-->
                     <tr>
                         <td scope="row">
-                            {{ build.make }}
+                            {{ build['car']['make'] }}
                         </td>
                         <td>
-                            {{ build.model }}
+                            {{ build['car']['model'] }}
                         </td>
                         <td>
-                            {{ build.trim }}
+                            {{ build['car']['trim'] }}
                         </td>
                         <td>
-                            {{ build.year }}
+                            {{ build['car']['year'] }}
                         </td>
                         <td>
-                            {{ build.price }}
+                            {{ build['car']['price'] }}
                         </td>
                     </tr>
                 </tbody>
@@ -85,75 +85,31 @@ View a build
                             Part
                         </th>
                         <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
                             Price
                         </th>
                     </tr>
                 </thead>
                 <tbody id="bodykit-table">
+                    {% for item in bodykit %}
+                    {% set prod = item.part_id %}
+                    {% if build['bodykit'][prod]['product'] is defined %}
                     <tr>
                         <td>
-                            <a href="{{ build.bodykit_link }}" target="_blank">{{ build.bodykit_product }}</a>
+                            {{ item['title'] }}
                         </td>
                         <td>
-                            <p>{{ build.bodykit_price }}</p>
+                            <a href="{{ build['bodykit'][prod]['link'] }}"
+                                target="_blank">{{ build['bodykit'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['bodykit'][prod]['price'] }}</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.front_splitter_link }}" target="_blank">{{ build.front_splitter_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.front_splitter_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.spoiler_link }}" target="_blank">{{ build.spoiler_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.spoiler_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.sideskirts_link }}" target="_blank">{{ build.sideskirts_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.sideskirts_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.diffuser_link }}" target="_blank">{{ build.diffuser_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.diffuser_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.front_canards_link }}" target="_blank">{{ build.front_canards_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.front_canards_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.rear_canards_link }}" target="_blank">{{ build.rear_canards_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.rear_canards_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.wheel_arches_link }}" target="_blank">{{ build.wheel_arches_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.wheel_arches_price }}</p>
-                        </td>
-                    </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -177,139 +133,31 @@ View a build
                             Part
                         </th>
                         <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
                             Price
                         </th>
                     </tr>
                 </thead>
                 <tbody id="engine-table">
+                    {% for item in engine %}
+                    {% set prod = item.part_id %}
+                    {% if build['engine'][prod]['product'] is defined %}
                     <tr>
                         <td>
-                            <a href="{{ build.exhaust_link }}" target="_blank">{{ build.exhaust_product }}</a>
+                            {{ item['title'] }}
                         </td>
                         <td>
-                            <p>{{ build.exhaust_price }}</p>
+                            <a href="{{ build['engine'][prod]['link'] }}"
+                                target="_blank">{{ build['engine'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['engine'][prod]['price'] }}</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.induction_kit_link }}" target="_blank">{{ build.induction_kit_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.induction_kit_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.turbo_super_charger_link }}" target="_blank">{{ build.turbo_super_charger_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.turbo_super_charger_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.intercooler_link }}" target="_blank">{{ build.intercooler_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.intercooler_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.water_pump_link }}" target="_blank">{{ build.water_pump_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.water_pump_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.fuel_pump_link }}" target="_blank">{{ build.fuel_pump_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.fuel_pump_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.oil_pump_link }}" target="_blank">{{ build.oil_pump_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.oil_pump_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.radiator_link }}" target="_blank">{{ build.radiator_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.radiator_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.dump_valve_link }}" target="_blank">{{ build.dump_valve_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.dump_valve_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.remap_link }}" target="_blank">{{ build.remap_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.remap_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.engine_mount_link }}" target="_blank">{{ build.engine_mount_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.engine_mount_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.gearbox_mount_link }}" target="_blank">{{ build.gearbox_mount_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.gearbox_mount_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.silicone_hoset_link }}" target="_blank">{{ build.silicone_hose_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.silicone_hose_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.clutch_kit_link }}" target="_blank">{{ build.clutch_kit_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.clutch_kit_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.quick_shifter_link }}" target="_blank">{{ build.quick_shifter_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.quick_shifter_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.flywheel_link }}" target="_blank">{{ build.flywheel_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.flywheel_price }}</p>
-                        </td>
-                    </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -333,131 +181,31 @@ View a build
                             Part
                         </th>
                         <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
                             Price
                         </th>
                     </tr>
                 </thead>
-                <tbody id="running-gear-table">
+                <tbody id="running-table">
+                    {% for item in running %}
+                    {% set prod = item.part_id %}
+                    {% if build['running'][prod]['product'] is defined %}
                     <tr>
                         <td>
-                            <a href="{{ build.tyres_link }}" target="_blank">{{ build.tyres_product }}</a>
+                            {{ item['title'] }}
                         </td>
                         <td>
-                            <p>{{ build.tyres_price }}</p>
+                            <a href="{{ build['running'][prod]['link'] }}"
+                                target="_blank">{{ build['running'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['running'][prod]['price'] }}</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.driveshafts_link }}" target="_blank">{{ build.driveshafts_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.driveshafts_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.brake_discs_link }}" target="_blank">{{ build.brake_discs_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.brake_discs_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.brake_pads_link }}" target="_blank">{{ build.brake_pads_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.brake_pads_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.lowering_springs_link }}" target="_blank">{{ build.lowering_springs_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.lowering_springs_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.strut_brace_link }}" target="_blank">{{ build.strut_brace_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.strut_brace_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.coilovers_air_link }}" target="_blank">{{ build.coilovers_air_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.coilovers_air_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.differential_link }}" target="_blank">{{ build.differential_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.differential_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.anti_roll_bar_link }}" target="_blank">{{ build.anti_roll_bar_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.anti_roll_bar_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.wheels_link }}" target="_blank">{{ build.wheels_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.wheels_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.brake_kit_link }}" target="_blank">{{ build.brake_kit_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.brake_kit_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.wishbones_link }}" target="_blank">{{ build.wishbones_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.wishbones_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.bushes_link }}" target="_blank">{{ build.bushes_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.bushes_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.front_lower_strut_brace_link }}" target="_blank">{{ build.front_lower_strut_brace_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.front_lower_strut_brace_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.rear_lower_strut_brace_link }}" target="_blank">{{ build.rear_lower_strut_brace_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.rear_lower_strut_brace_price }}</p>
-                        </td>
-                    </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -481,75 +229,31 @@ View a build
                             Part
                         </th>
                         <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
                             Price
                         </th>
                     </tr>
                 </thead>
                 <tbody id="interior-table">
+                    {% for item in interior %}
+                    {% set prod = item.part_id %}
+                    {% if build['interior'][prod]['product'] is defined %}
                     <tr>
                         <td>
-                            <a href="{{ build.harness_link }}" target="_blank">{{ build.harness_product }}</a>
+                            {{ item['title'] }}
                         </td>
                         <td>
-                            <p>{{ build.harness_price }}</p>
+                            <a href="{{ build['interior'][prod]['link'] }}"
+                                target="_blank">{{ build['interior'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['interior'][prod]['price'] }}</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.seats_link }}" target="_blank">{{ build.seats_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.seats_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.steering_wheel_link }}" target="_blank">{{ build.steering_wheel_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.steering_wheel_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.gearknob_link }}" target="_blank">{{ build.gearknob_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.gearknob_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.handbrake_link }}" target="_blank">{{ build.handbrake_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.handbrake_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.boost_gauge_link }}" target="_blank">{{ build.boost_gauge_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.boost_gauge_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.interior_light_link }}" target="_blank">{{ build.interior_light_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.interior_light_price }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{ build.floormat_link }}" target="_blank">{{ build.floormat_product }}</a>
-                        </td>
-                        <td>
-                            <p>{{ build.floormat_price }}</p>
-                        </td>
-                    </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
