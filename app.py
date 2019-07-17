@@ -90,9 +90,9 @@ def insert_record():
     for item in bodykit:
         bodykit_dict.update({
             item["part_id"]: {
-            'product': request.form.get(item["part_id"]+'_product'),
-            'link': request.form.get(item["part_id"]+'_link'),
-            'price': request.form.get(item["part_id"]+'_price')
+            'product': request.form.get('bodykit_'+item["part_id"]+'_product'),
+            'link': request.form.get('bodykit_'+item["part_id"]+'_link'),
+            'price': request.form.get('bodykit_'+item["part_id"]+'_price')
             }
         })
 
@@ -103,9 +103,9 @@ def insert_record():
     for item in engine:
         engine_dict.update({
             item["part_id"]: {
-            'product': request.form.get(item["part_id"]+'_product'),
-            'link': request.form.get(item["part_id"]+'_link'),
-            'price': request.form.get(item["part_id"]+'_price')
+            'product': request.form.get('engine_'+item["part_id"]+'_product'),
+            'link': request.form.get('engine_'+item["part_id"]+'_link'),
+            'price': request.form.get('engine_'+item["part_id"]+'_price')
             }
         })
 
@@ -116,9 +116,9 @@ def insert_record():
     for item in running:
         running_dict.update({
             item["part_id"]: {
-            'product': request.form.get(item["part_id"]+'_product'),
-            'link': request.form.get(item["part_id"]+'_link'),
-            'price': request.form.get(item["part_id"]+'_price')
+            'product': request.form.get('running_'+item["part_id"]+'_product'),
+            'link': request.form.get('running_'+item["part_id"]+'_link'),
+            'price': request.form.get('running_'+item["part_id"]+'_price')
             }
         })
 
@@ -129,9 +129,9 @@ def insert_record():
     for item in interior:
         interior_dict.update({
             item["part_id"]: {
-            'product': request.form.get(item["part_id"]+'_product'),
-            'link': request.form.get(item["part_id"]+'_link'),
-            'price': request.form.get(item["part_id"]+'_price')
+            'product': request.form.get('interior_'+item["part_id"]+'_product'),
+            'link': request.form.get('interior_'+item["part_id"]+'_link'),
+            'price': request.form.get('interior_'+item["part_id"]+'_price')
             }
         })
 
