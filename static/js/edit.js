@@ -5,6 +5,7 @@ $(document).ready(function () {
             buildPrice += parseFloat($(this).val()) || 0;
         });
          $('#build-total').html(buildPrice);
+         $('input[name="total"]').val(buildPrice);
     })
 
     $(window).keydown(function(event){
@@ -22,13 +23,13 @@ $(document).ready(function () {
                             + title +
                         '</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="bodykit_'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="bodykit_'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="bodykit_'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -43,13 +44,13 @@ $(document).ready(function () {
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="engine_'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="engine_'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="engine_'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -64,13 +65,13 @@ $(document).ready(function () {
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="running_'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="running_'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="running_'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -85,13 +86,13 @@ $(document).ready(function () {
         var template = '<tr>\
                             <td scope="row">'+ title +'</td>\
                         <td>\
-                            <input type="text" class="form-control input-sm" name="'+ part_id +'_product" required>\
+                            <input type="text" class="form-control input-sm" name="interior_'+ part_id +'_product" required>\
                         </td>\
                         <td>\
-                            <input type="url" class="form-control input-sm" name="'+ part_id +'_link" required>\
+                            <input type="url" class="form-control input-sm" name="interior_'+ part_id +'_link" required>\
                         </td>\
                         <td>\
-                            <input type="number" class="form-control input-sm" name="'+ part_id +'_price" step="any" id="part-price" required>\
+                            <input type="number" class="form-control input-sm" name="interior_'+ part_id +'_price" step="any" id="part-price" required>\
                         </td>\
                         <td>\
                             <i class="far fa-times-circle" id="delete-row"></i>\
@@ -103,10 +104,4 @@ $(document).ready(function () {
     $('tbody').on('click', '#delete-row', function(){
         $(this).closest('tr').remove();
     })
-
-    $("#part-price").each(function( i ) {
-        if ( this.innerHTML == "None" ) {
-          this.closest('tr').remove();
-        }
-    });
 })
