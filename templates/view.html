@@ -95,7 +95,7 @@ View a build
                 <tbody id="bodykit-table">
                     {% for item in bodykit %}
                     {% set prod = item.part_id %}
-                    {% if build['bodykit'][prod]['product'] is defined %}
+                    {% if build['bodykit'][prod]['product'] != None %}
                     <tr>
                         <td>
                             {{ item['title'] }}
@@ -143,7 +143,7 @@ View a build
                 <tbody id="engine-table">
                     {% for item in engine %}
                     {% set prod = item.part_id %}
-                    {% if build['engine'][prod]['product'] is defined %}
+                    {% if build['engine'][prod]['product'] != None %}
                     <tr>
                         <td>
                             {{ item['title'] }}
@@ -191,7 +191,7 @@ View a build
                 <tbody id="running-table">
                     {% for item in running %}
                     {% set prod = item.part_id %}
-                    {% if build['running'][prod]['product'] is defined %}
+                    {% if build['running'][prod]['product'] != None %}
                     <tr>
                         <td>
                             {{ item['title'] }}
@@ -239,7 +239,7 @@ View a build
                 <tbody id="interior-table">
                     {% for item in interior %}
                     {% set prod = item.part_id %}
-                    {% if build['interior'][prod]['product'] is defined %}
+                    {% if build['interior'][prod]['product'] != None %}
                     <tr>
                         <td>
                             {{ item['title'] }}
