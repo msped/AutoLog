@@ -166,7 +166,7 @@ def edit_record(build_id):
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    return render_template("edit.html", build=build, bodykit=bodykit, engine=engine, running=running, interior=interior)
+    return render_template("edit.html", build=build, bodykit=list(bodykit), engine=list(engine), running=list(running), interior=list(interior))
 
 # Update a Record
 @app.route("/update_record")
