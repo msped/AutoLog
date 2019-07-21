@@ -169,10 +169,83 @@ def edit_record(build_id):
     return render_template("edit.html", build=build, bodykit=list(bodykit), engine=list(engine), running=list(running), interior=list(interior))
 
 # Update a Record
-@app.route("/update_record")
-def update_record():
+@app.route("/update_record/<build_id>", methods=['POST'])
+def update_record(build_id):
+    builds = mongo.db.builds
 
-    pass
+    bodykit = mongo.db.bodykit.find()
+    engine = mongo.db.engine.find()
+    running = mongo.db.runninggear.find()
+    interior = mongo.db.interior.find()
+
+    record = {
+        'build_name': request.form.get('build_name'),
+        'total': request.form.get('total'),
+        'car': {
+            'make': request.form.get('make'),
+            'model': request.form.get('model'),
+            'trim': request.form.get('trim'),
+            'year': request.form.get('year'),
+            'price': request.form.get('price')
+        },
+    }
+
+   # Adds Bodykit collection to record 
+    bodykit_dict = {}
+    for item in bodykit:
+        bodykit_dict.update({
+            item["part_id"]: {
+            'product': request.form.get('bodykit_'+item["part_id"]+'_product'),
+            'link': request.form.get('bodykit_'+item["part_id"]+'_link'),
+            'price': request.form.get('bodykit_'+item["part_id"]+'_price')
+            }
+        })
+
+    record.update({'bodykit': bodykit_dict})
+        
+    # Adds Engine collection to record 
+    engine_dict = {}
+    for item in engine:
+        engine_dict.update({
+            item["part_id"]: {
+            'product': request.form.get('engine_'+item["part_id"]+'_product'),
+            'link': request.form.get('engine_'+item["part_id"]+'_link'),
+            'price': request.form.get('engine_'+item["part_id"]+'_price')
+            }
+        })
+
+    record.update({'engine': engine_dict})
+
+    # Adds Running Gear collection to record 
+    running_dict = {}
+    for item in running:
+        running_dict.update({
+            item["part_id"]: {
+            'product': request.form.get('running_'+item["part_id"]+'_product'),
+            'link': request.form.get('running_'+item["part_id"]+'_link'),
+            'price': request.form.get('running_'+item["part_id"]+'_price')
+            }
+        })
+
+    record.update({'running': running_dict})
+
+    # Adds Interior collection to record 
+    interior_dict = {}
+    for item in interior:
+        interior_dict.update({
+            item["part_id"]: {
+            'product': request.form.get('interior_'+item["part_id"]+'_product'),
+            'link': request.form.get('interior_'+item["part_id"]+'_link'),
+            'price': request.form.get('interior_'+item["part_id"]+'_price')
+            }
+        })
+
+    record.update({'interior': interior_dict})
+
+    # Update in Mongo
+    builds.update({"_id": ObjectId(build_id)}, record)  
+
+    return redirect(url_for('view_record', build_id=build_id))
 
 # Delete a record 
 @app.route("/delete_record/<build_id>")
