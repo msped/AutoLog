@@ -15,7 +15,7 @@ Edit a build
 </div>
 
 
-<form method="POST" action="{{ url_for('insert_record') }}">
+<form method="POST" action="{{ url_for('update_record'), build_id=build._id }}">
     <!--Make/Model/Trim/Year-->
     <div class="card">
             <div class="card-header" id="headingTwo">
@@ -342,7 +342,7 @@ Edit a build
 
     <!--Submit-->
     <div class="text-center">
-        <a class="btn btn-outline-dark" href="{{ url_for('builds') }}">Back to Builds</a>
+        <a class="btn btn-outline-dark" href="{{ url_for('view_record', build_id=build._id) }}">Back to View</a>
         <a class="btn btn-outline-danger" href="{{ url_for('delete_record', build_id=build._id) }}">Delete Build</a>
         <button type="submit" class="btn btn-outline-warning">Update</button>
     </div>
