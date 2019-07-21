@@ -15,7 +15,7 @@ Edit a build
 </div>
 
 
-<form method="POST" action="{{ url_for('update_record'), build_id=build._id }}">
+<form method="POST" action="{{ url_for('update_record', build_id=build._id) }}">
     <!--Make/Model/Trim/Year-->
     <div class="card">
             <div class="card-header" id="headingTwo">
