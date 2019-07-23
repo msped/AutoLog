@@ -26,3 +26,21 @@
     text-align: center;
     font-family: 'PM', monospace;
 }
+
+.like, .dislike, .like-button, .dislike-button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fa-thumbs-up, .fa-thumbs-down {
+    font-size: 20pt;
+}
+
+.voting-content {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-buttons {
+    margin-top: 20px;
+}
