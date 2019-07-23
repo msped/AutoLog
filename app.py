@@ -83,6 +83,10 @@ def insert_record():
             'year': request.form.get('year'),
             'price': request.form.get('price')
         },
+        'votes':{
+            'like': '1',
+            'dislike': '0'
+        },
     }
 
    # Adds Bodykit collection to record 
