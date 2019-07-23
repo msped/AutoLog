@@ -44,3 +44,15 @@
 .submit-buttons {
     margin-top: 20px;
 }
+
+.like-button, .dislike-button {
+    color: #000; 
+}
+
+.like-button:hover {
+    color: green;
+}
+
+.dislike-button:hover {
+    color: red;
+}

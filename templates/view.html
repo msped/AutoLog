@@ -266,20 +266,21 @@ View a build
         Total Price: <strong>{{ build.total }}</strong>
     </div>
 
+    
     <!--Voting-->
     <div class="col">
         <div class="voting-content">
             <div class="like">
-                <div class="like-button">
+                <a class="like-button" href="{{ url_for('like_build', build_id=build._id) }}">
                     <i class="far fa-thumbs-up"></i>
-                </div>
-                <span>{{ build['votes']['like'] }}</span>
+                </a>
+                <span id="like-count">{{ build['votes']['like'] }}</span>
             </div>
             <div class="dislike">
-                <div class="dislike-button">
+                <a class="dislike-button" href="{{ url_for('dislike_build', build_id=build._id) }}">
                     <i class="far fa-thumbs-down"></i>
-                </div>
-                <span class>{{ build['votes']['dislike'] }}</span>
+                </a>
+                <span id="dislike-count">{{ build['votes']['dislike'] }}</span>
             </div>
         </div>
     </div>
@@ -294,5 +295,5 @@ View a build
 {% endblock content %}
 
 {% block js %}
-    <script src="{{ url_for('static', filename='js/view.js' )}}"></script>
+    
 {% endblock js %}
