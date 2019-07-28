@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block title %}
+View a build
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view.css' )}}">
+{% endblock css %}
+
+{% block content %}
+<div class="build-header">
+    <h1> {{ build.build_name }}</h1>
+</div>
+
+<!--Make/Model/Trim/Year-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
+            aria-controls="build-details">
+            Car
+        </h6>
+    </div>
+    <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Make
+                        </th>
+                        <th scope="col">
+                            Model
+                        </th>
+                        <th scope="col">
+                            Trim
+                        </th>
+                        <th scope="col">
+                            Year
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Car-->
+                    <tr>
+                        <td scope="row">
+                            {{ build['car']['make'] }}
+                        </td>
+                        <td>
+                            {{ build['car']['model'] }}
+                        </td>
+                        <td>
+                            {{ build['car']['trim'] }}
+                        </td>
+                        <td>
+                            {{ build['car']['year'] }}
+                        </td>
+                        <td>
+                            {{ build['car']['price'] }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Bodykit-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#bodykit" aria-expanded="false"
+            aria-controls="bodykit">
+            Bodykit
+        </h6>
+    </div>
+    <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="bodykit-table">
+                    {% for item in bodykit %}
+                    {% set prod = item.part_id %}
+                    {% if build['bodykit'][prod]['product'] != None %}
+                    <tr>
+                        <td>
+                            {{ item['title'] }}
+                        </td>
+                        <td>
+                            <a href="{{ build['bodykit'][prod]['link'] }}"
+                                target="_blank">{{ build['bodykit'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['bodykit'][prod]['price'] }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Engine-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#engine" aria-expanded="false"
+            aria-controls="engine">
+            Engine
+        </h6>
+    </div>
+    <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="engine-table">
+                    {% for item in engine %}
+                    {% set prod = item.part_id %}
+                    {% if build['engine'][prod]['product'] != None %}
+                    <tr>
+                        <td>
+                            {{ item['title'] }}
+                        </td>
+                        <td>
+                            <a href="{{ build['engine'][prod]['link'] }}"
+                                target="_blank">{{ build['engine'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['engine'][prod]['price'] }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Running Gear-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#running-gear" aria-expanded="false"
+            aria-controls="running-gear">
+            Running Gear
+        </h6>
+    </div>
+    <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="running-table">
+                    {% for item in running %}
+                    {% set prod = item.part_id %}
+                    {% if build['running'][prod]['product'] != None %}
+                    <tr>
+                        <td>
+                            {{ item['title'] }}
+                        </td>
+                        <td>
+                            <a href="{{ build['running'][prod]['link'] }}"
+                                target="_blank">{{ build['running'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['running'][prod]['price'] }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Interior-->
+<div class="card">
+    <div class="card-header" id="headingTwo">
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#interior" aria-expanded="false"
+            aria-controls="interior">
+            Interior
+        </h6>
+    </div>
+    <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Part
+                        </th>
+                        <th scope="col">
+                            Product
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="interior-table">
+                    {% for item in interior %}
+                    {% set prod = item.part_id %}
+                    {% if build['interior'][prod]['product'] != None %}
+                    <tr>
+                        <td>
+                            {{ item['title'] }}
+                        </td>
+                        <td>
+                            <a href="{{ build['interior'][prod]['link'] }}"
+                                target="_blank">{{ build['interior'][prod]['product'] }}</a>
+                        </td>
+                        <td>
+                            <p>{{ build['interior'][prod]['price'] }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!--Build Total-->
+    <div class="col">
+        Total Price: <strong>{{ build.total }}</strong>
+    </div>
+
+    <!--Voting-->
+    <div class="col">
+        <div class="voting-content">
+            <div class="like">
+                <div class="like-button like-button-hover">
+                    <i class="far fa-thumbs-up"></i>
+                </div>
+                <span id="like-count">{{ build['votes']['like']['count'] }}</span>
+                <input type="hidden" value="{{ user_liked }}" id="user-liked">
+            </div>
+            <div class="dislike">
+                <div class="dislike-button dislike-button-hover">
+                    <i class="far fa-thumbs-down"></i>
+                </div>
+                <span id="dislike-count">{{ build['votes']['dislike']['count'] }}</span>
+                <input type="hidden" value="{{ user_disliked }}" id="user-disliked">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Submit-->
+<div class="text-center submit-buttons">
+    <a class="btn btn-outline-dark" href="{{ url_for('builds') }}">Back to Builds</a>
+    <a class="btn btn-outline-secondary" href="{{ url_for('edit_record', build_id=build._id) }}">Edit</a>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            $('.like-button').on('click.like-button', function(){
+                $.ajax({
+                    url: "{{ url_for('like_build', build_id=build._id) }}",
+                    type: 'POST',
+                    success: function(data){
+                        if (data !== 'True') {
+                            new_count = data;
+                            $('#like-count').html(new_count); 
+                        } 
+                    }
+                })
+                $('.dislike-button, .like-button').off('click')
+            })
+
+            $('.dislike-button').on('click.dislike-button', function(){
+                $.ajax({
+                    url: "{{ url_for('dislike_build', build_id=build._id) }}",
+                    type: 'POST',
+                    success: function(data){
+                        if (data !== 'True') {
+                            new_count = data;
+                            $('#dislike-count').html(new_count); 
+                        } 
+                    }
+                })
+                $('.dislike-button, .like-button').off('click')
+            })
+
+            user_liked = $('#user-liked').val();
+            user_disliked = $('#user-disliked').val();
+
+            if (user_liked == "True") {
+                $('.like-button').addClass('liked');
+                $('.dislike-button').removeClass("dislike-button-hover");
+                $('.dislike-button, .like-button').off('click');
+                $('.fa-thumbs-down').css('opacity', '.5');
+            }
+
+            if (user_disliked == "True") {
+                $('.dislike-button').addClass('disliked');
+                $('.like-button').removeClass("like-button-hover");
+                $('.dislike-button, .like-button').off('click');
+                $('.fa-thumbs-up').css('opacity', '.5');
+            }
+        })
+    </script>
+{% endblock js %}

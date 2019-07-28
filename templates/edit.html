@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Edit a build
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css' )}}">
+{% endblock css %}
+
 {% block content %}
-<div class="text-center create-header">
-    <h1>Edit a new plan</h1>
+<div class="text-center edit-header">
+    <h1>Edit {{ build.build_name }}</h1>
     <p class="small">Remove, add and update parts.</p>
 </div>
 
 
-<form method="POST" action="{{ url_for('update_record') }}">
+<form method="POST" action="{{ url_for('update_record', build_id=build._id) }}">
     <!--Make/Model/Trim/Year-->
     <div class="card">
             <div class="card-header" id="headingTwo">
@@ -39,22 +47,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!--Splitter-->
+                            <!--Car-->
                             <tr>
                                 <th scope="row">
-                                    <input type="text" class="form-control input-sm" name="make" value="{{  }}">
+                                    <input type="text" class="form-control input-sm" name="make" value="{{ build['car']['make'] }}">
                                 </th>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="model" value="{{  }}">
+                                    <input type="text" class="form-control input-sm" name="model" value="{{ build['car']['model'] }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="trim" value="{{  }}">
+                                    <input type="text" class="form-control input-sm" name="trim" value="{{ build['car']['trim'] }}">
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control input-sm" name="year" value="{{  }}">
+                                    <input type="number" class="form-control input-sm" name="year" value="{{ build['car']['year'] }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="price" value="{{  }}">
+                                    <input type="text" class="form-control input-sm" name="price" id="part-price" value="{{ build['car']['price'] }}">
                                 </td>
                             </tr>
                         </tbody>
@@ -73,6 +81,15 @@
         </div>
         <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
             <div class="card-body">
+                <div class="add-category col-md-12">
+                    <select class="form-control" id="bodykit-categories">
+                        <option value="" disabled selected>Choose an option</option>
+                        {% for item in bodykit %}
+                        <option value="{{ item.part_id }}">{{ item.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <a id="add-bodykit" class="btn btn-light">Add</a>
+                </div>
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -88,132 +105,34 @@
                             <th scope="col">
                                 Price
                             </th>
+                            <th scope="col">
+
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!--Splitter-->
+                    <tbody id="bodykit-table">                   
+                        {% for item in bodykit %}
+                        {% set prod = item.part_id %}
+                        {% if build['bodykit'][prod]['product'] != None %}
                         <tr>
-                            <th scope="row">
-                                Splitter
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="splitter-product" value="{{  }}">
-                            </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="splitter-link" value="{{  }}">
+                                {{ item['title'] }}
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="splitter-price" step="any" id="part-price" value="{{  }}">
+                                <input type="text" class="form-control input-sm" value="{{ build['bodykit'][prod]['product'] }}" name="bodykit_{{ prod }}_product" required>
+                            </td>
+                            <td>
+                                <input type="url" class="form-control input-sm" value="{{ build['bodykit'][prod]['link'] }}" name="bodykit_{{ prod }}_link" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" value="{{ build['bodykit'][prod]['price'] }}" name="bodykit_{{ prod }}_price" step="any" id="part-price" required>
+                            </td>
+                            <td>
+                                <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
-                        <!--Sideskirts-->
-                        <tr>
-                            <th scope="row">
-                                Sideskirts
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="sideskirts-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="sideskirts-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="sideskirts-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Diffuser-->
-                        <tr>
-                            <th scope="row">
-                                Diffuser
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="diffuser-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="diffuser-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="diffuser-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Front Canards-->
-                        <tr>
-                            <th scope="row">
-                                Front Canards
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="front-canards-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="front-canards-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="front-canards-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Rear Canards-->
-                        <tr>
-                            <th scope="row">
-                                Rear Canards
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="rear-canards-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="rear-canards-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="rear-canards-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Spoiler-->
-                        <tr>
-                            <th scope="row">
-                                Spoiler
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="spoiler-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="spoiler-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="spoiler-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Spoiler-->
-                        <tr>
-                            <th scope="row">
-                                Wheel Arches
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="wheel-arches-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="wheel-arches-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="wheel-arches-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="text-center"><strong>OR</strong></td>
-                        </tr>
-                        <!--Full Bodykit-->
-                        <tr>
-                            <th scope="row">
-                                Full Bodykit
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="full-bodykit-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="full-bodykit-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="full-bodykit-price"step="any" id="part-price"  value="{{  }}">
-                            </td>
-                        </tr>
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -230,6 +149,15 @@
         </div>
         <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
             <div class="card-body">
+                    <div class="add-category col-md-12">
+                        <select class="form-control" id="engine-categories">
+                            <option value="" disabled selected>Choose an option</option>
+                            {% for item in engine %}
+                            <option value="{{ item.part_id }}">{{ item.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <a id="add-engine" class="btn btn-light">Add</a>
+                    </div>
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -247,142 +175,29 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!--Air intake-->
+                    <tbody id="engine-table">
+                        {% for item in engine %}
+                        {% set prod = item.part_id %}
+                        {% if build['engine'][prod]['product'] != None %}
                         <tr>
-                            <th scope="row">
-                                Air intake
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="air-intake-product" value="{{  }}">
-                            </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="air-intake-link" value="{{  }}">
+                                {{ item['title'] }}
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="air-intake-price" step="any" id="part-price" value="{{  }}">
+                                <input type="text" class="form-control input-sm" value="{{ build['engine'][prod]['product'] }}" name="engine_{{ prod }}_product" required>
+                            </td>
+                            <td>
+                                <input type="url" class="form-control input-sm" value="{{ build['engine'][prod]['link'] }}" name="engine_{{ prod }}_link" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" value="{{ build['engine'][prod]['price'] }}" name="engine_{{ prod }}_price" step="any" id="part-price" required>
+                            </td>
+                            <td>
+                                <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
-                        <!--Intercooler-->
-                        <tr>
-                            <th scope="row">
-                                Intercooler
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="intercooler-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="intercooler-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="intercooler-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Radiator-->
-                        <tr>
-                            <th scope="row">
-                                Radiator
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="radiator-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="radiator-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="radiator-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Remap-->
-                        <tr>
-                            <th scope="row">
-                                Remap
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="remap-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="remap-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="remap-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Injectors-->
-                        <tr>
-                            <th scope="row">
-                                Injectors
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="injectors-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="injectors-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="injectors-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Turbo-charger / Super-charger-->
-                        <tr>
-                            <th scope="row">
-                                Turbo-charger / <br> Super-charger
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="charger-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="charger-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="charger-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Engine Hoses-->
-                        <tr>
-                            <th scope="row">
-                                Engine Hoses
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="engine-hoses-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="engine-hoses-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="engine-hoses-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Exhaust-->
-                        <tr>
-                            <th scope="row">
-                                Exhaust
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="exhaust-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="exhaust-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="exhaust-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Fuel Pump-->
-                        <tr>
-                            <th scope="row">
-                                Fuel Pump
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="fuel-pump-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="fuel-pump-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="fuel-pump-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -399,6 +214,15 @@
         </div>
         <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
             <div class="card-body">
+                    <div class="add-category col-md-12">
+                        <select class="form-control" id="running-gear-categories">
+                            <option value="" disabled selected>Choose an option</option>
+                            {% for item in running %}
+                            <option value="{{ item.part_id }}">{{ item.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <a id="add-running-gear" class="btn btn-light">Add</a>
+                    </div>
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -416,113 +240,29 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!--Suspension-->
+                    <tbody id="running-gear-table">
+                        {% for item in running %}
+                        {% set prod = item.part_id %}
+                        {% if build['running'][prod]['product'] != None %}
                         <tr>
-                            <th scope="row">
-                                Suspension
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="suspension-product" value="{{  }}">
-                            </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="suspension-link" value="{{  }}">
+                                {{ item['title'] }}
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="suspension-price" step="any" id="part-price" value="{{  }}">
+                                <input type="text" class="form-control input-sm" value="{{ build['running'][prod]['product'] }}" name="running_{{ prod }}_product" required>
+                            </td>
+                            <td>
+                                <input type="url" class="form-control input-sm" value="{{ build['running'][prod]['link'] }}" name="running_{{ prod }}_link" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" value="{{ build['running'][prod]['price'] }}" name="running_{{ prod }}_price" step="any" id="part-price" required>
+                            </td>
+                            <td>
+                                <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
-                        <!--Wheels-->
-                        <tr>
-                            <th scope="row">
-                                Wheels
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="wheels-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="wheels-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="wheels-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Tyres-->
-                        <tr>
-                            <th scope="row">
-                                Tyres
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="tyres-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="tyres-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="tyres-price"
-                                    placeholder="Price per tyre" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Brakes-->
-                        <tr>
-                            <th scope="row">
-                                Brakes
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="brakes-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="brakes-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="brakes-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Driveshafts-->
-                        <tr>
-                            <th scope="row">
-                                Driveshafts
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="driveshafts-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="driveshafts-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="driveshafts-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Wishbones-->
-                        <tr>
-                            <th scope="row">
-                                Wishbones
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="wishbones-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="wishbones-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="wishbones-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Bushes-->
-                        <tr>
-                            <th scope="row">
-                                Bushes
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="bushes-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="bushes-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="bushes-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -539,6 +279,15 @@
         </div>
         <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
             <div class="card-body">
+                <div class="add-category col-md-12">
+                    <select class="form-control" id="interior-categories">
+                        <option value="" disabled selected>Choose an option</option>
+                        {% for item in interior %}
+                        <option value="{{ item.part_id }}">{{ item.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <a id="add-interior" class="btn btn-light">Add</a>
+                </div>
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -556,82 +305,29 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!--Seats-->
+                    <tbody id="interior-table">
+                        {% for item in interior %}
+                        {% set prod = item.part_id %}
+                        {% if build['interior'][prod]['product'] != None %}
                         <tr>
-                            <th scope="row">
-                                Seats
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="seats-product" value="{{  }}">
-                            </th>
                             <td>
-                                <input type="text" class="form-control input-sm" name="seats-link" value="{{  }}">
+                                {{ item['title'] }}
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" name="seats-price" step="any" id="part-price" value="{{  }}">
+                                <input type="text" class="form-control input-sm" value="{{ build['interior'][prod]['product'] }}" name="interior_{{ prod }}_product" required>
+                            </td>
+                            <td>
+                                <input type="url" class="form-control input-sm" value="{{ build['interior'][prod]['link'] }}" name="interior_{{ prod }}_link" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" value="{{ build['interior'][prod]['price'] }}" name="interior_{{ prod }}_price" step="any" id="part-price" required>
+                            </td>
+                            <td>
+                                <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
-                        <!--Harness-->
-                        <tr>
-                            <th scope="row">
-                                Harness
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="harness-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="harness-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="harness-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Boost Gauge-->
-                        <tr>
-                            <th scope="row">
-                                Boost Gauge
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="boost-gauge-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="boost-gauge-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="boost-gauge-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Boost Controller-->
-                        <tr>
-                            <th scope="row">
-                                Boost Controller
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="boost-controller-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="boost-controller-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="boost-controller-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
-                        <!--Gear Knob-->
-                        <tr>
-                            <th scope="row">
-                                Gear Stick
-                            </th>
-                            <th>
-                                <input type="text" class="form-control input-sm" name="gear-stick-product" value="{{  }}">
-                            </th>
-                            <td>
-                                <input type="text" class="form-control input-sm" name="gear-stick-link" value="{{  }}">
-                            </td>
-                            <td>
-                                <input type="number" class="form-control input-sm" name="gear-stick-price" step="any" id="part-price" value="{{  }}">
-                            </td>
-                        </tr>
+                        {% endif %}
+                        {% endfor %}    
                     </tbody>
                 </table>
             </div>
@@ -640,15 +336,21 @@
 
     <!--Build Total-->
     <div class="col-md-12">
-        Total Price: <span id="build-total" value="{{  }}">0.00</span>
+        Total Price: <strong><span id="build-total" name="total" >{{ build.total }}</span></strong>
+        <input type="hidden" name="total" id="build-total">
     </div>
 
     <!--Submit-->
     <div class="text-center">
-        <button type="submit" class="btn btn-light btn-lg">Update</button>
-        <a href="{{ url_for('builds') }}" class="btn btn-dark btn-lg">Back to Builds</a>
+        <a class="btn btn-outline-dark" href="{{ url_for('view_record', build_id=build._id) }}">Back to View</a>
+        <a class="btn btn-outline-danger" href="{{ url_for('delete_record', build_id=build._id) }}">Delete Build</a>
+        <button type="submit" class="btn btn-outline-warning">Update</button>
     </div>
 
 </form>
 
 {% endblock content %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/edit.js' )}}"></script>
+{% endblock js %}

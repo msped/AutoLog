@@ -1,22 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Builds
+Edit a build
 {% endblock title %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css' )}}">
+<link rel="stylesheet" href="edit.css">
 {% endblock css %}
-
 {% block content %}
 <div class="builds">
     {% for build in builds %}
-    <p>{{ build.build_name }}</p>
-    <a href="{{ url_for('view_record', build_id=build._id) }}">Edit</a>
+    <a href="{{ url_for('edit_record', build_id=build._id) }}">Edit</a>
     {% endfor %}
 </div>
 {% endblock content %}
-
-{% block js %}
-<link rel="stylesheet" href="{{ url_for('static', filename='js/build.js' )}}">
-{% endblock js %}

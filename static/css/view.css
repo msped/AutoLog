@@ -1,0 +1,66 @@
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    margin-bottom: 20px; 
+    border: 0px solid rgba(0,0,0,.125);
+}
+
+.card-header {
+    padding: .25rem 0rem;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+}
+
+.card-header h6 {
+    font-family: 'Roboto';
+    margin: 5px 0px 5px 15px;
+}
+
+.build-header {
+    text-align: center;
+    font-family: 'PM', monospace;
+}
+
+.like, .dislike, .like-button, .dislike-button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fa-thumbs-up, .fa-thumbs-down {
+    font-size: 20pt;
+}
+
+.voting-content {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-buttons {
+    margin-top: 20px;
+}
+
+.far-thumbs-up, .far-thumbs-down {
+    color: #000; 
+}
+
+.like-button-hover:hover {
+    color: green;
+}
+
+.dislike-button-hover:hover {
+    color: red;
+}
+
+.liked {
+    color: green;
+}
+
+.disliked {
+    color: red;
+}
