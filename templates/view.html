@@ -266,21 +266,22 @@ View a build
         Total Price: <strong>{{ build.total }}</strong>
     </div>
 
-    
     <!--Voting-->
     <div class="col">
         <div class="voting-content">
             <div class="like">
-                <a class="like-button" href="{{ url_for('like_build', build_id=build._id) }}">
+                <div class="like-button like-button-hover">
                     <i class="far fa-thumbs-up"></i>
-                </a>
-                <span id="like-count">{{ build['votes']['like'] }}</span>
+                </div>
+                <span id="like-count">{{ build['votes']['like']['count'] }}</span>
+                <input type="hidden" value="{{ user_liked }}" id="user-liked">
             </div>
             <div class="dislike">
-                <a class="dislike-button" href="{{ url_for('dislike_build', build_id=build._id) }}">
+                <div class="dislike-button dislike-button-hover">
                     <i class="far fa-thumbs-down"></i>
-                </a>
-                <span id="dislike-count">{{ build['votes']['dislike'] }}</span>
+                </div>
+                <span id="dislike-count">{{ build['votes']['dislike']['count'] }}</span>
+                <input type="hidden" value="{{ user_disliked }}" id="user-disliked">
             </div>
         </div>
     </div>
@@ -295,5 +296,52 @@ View a build
 {% endblock content %}
 
 {% block js %}
-    
+    <script>
+        $(document).ready(function(){
+            $('.like-button').on('click.like-button', function(){
+                $.ajax({
+                    url: "{{ url_for('like_build', build_id=build._id) }}",
+                    type: 'POST',
+                    success: function(data){
+                        if (data !== 'True') {
+                            new_count = data;
+                            $('#like-count').html(new_count); 
+                        } 
+                    }
+                })
+                $('.dislike-button, .like-button').off('click')
+            })
+
+            $('.dislike-button').on('click.dislike-button', function(){
+                $.ajax({
+                    url: "{{ url_for('dislike_build', build_id=build._id) }}",
+                    type: 'POST',
+                    success: function(data){
+                        if (data !== 'True') {
+                            new_count = data;
+                            $('#dislike-count').html(new_count); 
+                        } 
+                    }
+                })
+                $('.dislike-button, .like-button').off('click')
+            })
+
+            user_liked = $('#user-liked').val();
+            user_disliked = $('#user-disliked').val();
+
+            if (user_liked == "True") {
+                $('.like-button').addClass('liked');
+                $('.dislike-button').removeClass("dislike-button-hover");
+                $('.dislike-button, .like-button').off('click');
+                $('.fa-thumbs-down').css('opacity', '.5');
+            }
+
+            if (user_disliked == "True") {
+                $('.dislike-button').addClass('disliked');
+                $('.like-button').removeClass("like-button-hover");
+                $('.dislike-button, .like-button').off('click');
+                $('.fa-thumbs-up').css('opacity', '.5');
+            }
+        })
+    </script>
 {% endblock js %}

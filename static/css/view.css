@@ -45,14 +45,22 @@
     margin-top: 20px;
 }
 
-.like-button, .dislike-button {
+.far-thumbs-up, .far-thumbs-down {
     color: #000; 
 }
 
-.like-button:hover {
+.like-button-hover:hover {
     color: green;
 }
 
-.dislike-button:hover {
+.dislike-button-hover:hover {
+    color: red;
+}
+
+.liked {
+    color: green;
+}
+
+.disliked {
     color: red;
 }

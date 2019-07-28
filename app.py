@@ -73,6 +73,8 @@ def insert_record():
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
+    users_Array = ['Mattex',]
+
     record = {
         'build_name': request.form.get('build_name'),
         'total': request.form.get('total'),
@@ -84,8 +86,14 @@ def insert_record():
             'price': request.form.get('price')
         },
         'votes':{
-            'like': '1',
-            'dislike': '0'
+            'like': {
+                'count': 1,
+                'users_liked': users_Array
+            },
+            'dislike': {
+                'count': 0,
+                'users_disliked': []
+            }
         },
     }
 
@@ -151,12 +159,40 @@ def view_record(build_id):
         "_id": ObjectId(build_id)
     })
 
+    builds = mongo.db.builds
     bodykit = mongo.db.bodykit.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    return render_template("view.html", build=build, bodykit=bodykit, engine=engine, running=running, interior=interior)
+    #Check for if user has liked the build already 
+    liked_length = int(len(build['votes']['like']['users_liked']))
+
+    liked_by = []
+
+    for x in range(0, liked_length):
+        user_in_like = build['votes']['like']['users_liked'][x]
+        liked_by.append(user_in_like)
+
+    if 'Mattex' in liked_by: 
+        user_liked = True
+    else:
+        user_liked = False
+
+    disliked_length = int(len(build['votes']['dislike']['users_disliked']))
+
+    disliked_by = []
+
+    for x in range(0, disliked_length):
+        user_in_dislike = build['votes']['dislike']['users_disliked'][x]
+        disliked_by.append(user_in_dislike)
+
+    if 'Mattex' in disliked_by: 
+        user_disliked = True
+    else:
+        user_disliked = False
+
+    return render_template("view.html", build=build, bodykit=bodykit, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
 
 # Edit a Record
 @app.route("/edit/<build_id>")
@@ -258,6 +294,65 @@ def delete_record(build_id):
         '_id': ObjectId(build_id)
     })
     return redirect(url_for('builds'))
+
+# Votes 
+@app.route('/like_build/<build_id>', methods=['POST'])
+def like_build(build_id):
+    build = mongo.db.builds
+
+    current_build = mongo.db.builds.find_one({
+        "_id": ObjectId(build_id)
+    })
+
+    array_length = int(len(current_build['votes']['like']['users_liked']))
+
+    liked_by = []
+
+    for x in range(0, array_length):
+        user = current_build['votes']['like']['users_liked'][x]
+        liked_by.append(user)
+
+    if 'Currrent User' in liked_by:
+        result = True 
+
+    else: 
+        likes_number = current_build['votes']['like']['count']
+
+        result = likes_number + 1 
+
+        build.update_one({"_id": ObjectId(build_id)}, {'$set': {'votes.like.count': result}}) 
+        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.like.users_liked': 'Mattex'}}) 
+
+    return str(result)
+
+@app.route('/dislike_build/<build_id>', methods=['POST'])
+def dislike_build(build_id):
+    build = mongo.db.builds
+
+    current_build = mongo.db.builds.find_one({
+        "_id": ObjectId(build_id)
+    })
+
+    array_length = int(len(current_build['votes']['dislike']['users_disliked']))
+
+    disliked_by = []
+
+    for x in range(0, array_length):
+        user = current_build['votes']['dislike']['users_disliked'][x]
+        disliked_by.append(user)
+
+    if 'Currrent User' in disliked_by:
+        result = True 
+
+    else: 
+        dislikes_number = current_build['votes']['dislike']['count']
+
+        result = dislikes_number + 1
+
+        build.update_one({"_id": ObjectId(build_id)}, {'$set': {'votes.dislike.count': result}}) 
+        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.dislike.users_disliked': 'Mattex'}}) 
+
+    return str(result)
 
 ##if __name__ == '__main__':
     ##app.run(host=os.environ.get('IP'),
