@@ -25,7 +25,20 @@ def home():
 @app.route("/builds")
 def builds():
     
-    return render_template("builds.html", builds=mongo.db.builds.find())
+    builds = mongo.db.builds
+    builds_average_cost = builds.aggregate([
+        {
+            '$group': {
+                '_id': 'null',
+                'average_build_cost': {
+                    '$avg': '$total'
+                }
+            }
+        }
+    ])
+
+
+    return render_template("builds.html", builds=mongo.db.builds.find(), builds_average_cost=list(builds_average_cost))
 
 @app.route("/contact_us")
 def contact():
@@ -77,7 +90,7 @@ def insert_record():
 
     record = {
         'build_name': request.form.get('build_name'),
-        'total': request.form.get('total'),
+        'total': float(request.form.get('total')),
         'car': {
             'make': request.form.get('make'),
             'model': request.form.get('model'),

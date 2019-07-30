@@ -1,0 +1,67 @@
+/*Builds Stats*/
+.average-price-header, .average-price {
+    font-family: 'Oswald', sans-serif;
+    display: inline-block;
+}
+
+/*Build Search*/
+.search-header {
+    text-align: center;
+    font-family: 'PM', monospace;
+}
+
+.search-options {
+    margin-top: 15px;
+    text-align: center
+}
+
+.search-options form {
+    margin: 2.5%;
+}
+
+#sort-by-price, #sort-by-likes {
+    width: 200px; 
+    display: inline-block;
+}
+
+#sort-button {
+    vertical-align: initial;
+}
+
+.reset-button {
+    margin-top: 15px;
+    text-align: center
+}
+
+/*Build Cards*/
+.card {
+    margin: 10px;
+}
+
+.card-title {
+    font-family: 'PM', monospace;
+    font-size: 20pt;
+}
+
+.card-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13pt;
+}
+
+.card-text {
+    font-size: 10pt;
+}
+
+.like, .dislike, .like-button, .dislike-button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.fa-thumbs-up, .fa-thumbs-down {
+    font-size: 20pt;
+}
+
+.voting-content {
+    display: flex;
+    justify-content: flex-end;
+}
