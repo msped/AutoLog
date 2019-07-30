@@ -367,6 +367,75 @@ def dislike_build(build_id):
 
     return str(result)
 
+# Sort on Likes and Price
+@app.route('/sort_likes', methods=['POST'])
+def sort_likes():
+
+    builds = mongo.db.builds
+
+    sort_option = request.form.get('sort_by_likes')
+
+    if sort_option == "high_to_low":
+        sort_results = builds.aggregate(
+            [
+                {'$sort' : {'votes.like.count': -1}}
+            ]
+        )
+
+    if sort_option == "low_to_high":
+        sort_results = builds.aggregate(
+            [
+                {'$sort' : {'votes.like.count': 1}}
+            ]
+        )
+
+    builds_average_cost = builds.aggregate([
+        {
+            '$group': {
+                '_id': 'null',
+                'average_build_cost': {
+                    '$avg': '$total'
+                }
+            }
+        }
+    ])
+
+    return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+
+@app.route('/sort_price', methods=['POST'])
+def sort_prices():
+
+    builds = mongo.db.builds
+
+    sort_option = request.form.get('sort_by_price')
+
+    if sort_option == "high_to_low":
+        sort_results = builds.aggregate(
+            [
+                {'$sort' : {'total': -1}}
+            ]
+        )
+
+    if sort_option == "low_to_high":
+        sort_results = builds.aggregate(
+            [
+                {'$sort' : {'total': 1}}
+            ]
+        )
+
+    builds_average_cost = builds.aggregate([
+        {
+            '$group': {
+                '_id': 'null',
+                'average_build_cost': {
+                    '$avg': '$total'
+                }
+            }
+        }
+    ])
+
+    return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+
 ##if __name__ == '__main__':
     ##app.run(host=os.environ.get('IP'),
     ##    port=int(os.environ.get('PORT')),
