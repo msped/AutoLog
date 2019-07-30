@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    $('tbody').on('change', '#part-price', function () {
+    $('tbody').on('change', '.part-price', function () {
         var buildPrice = 0;
-        $('#part-price').each(function () {
+        $('.part-price').each(function () {
             buildPrice += parseFloat($(this).val()) || 0;
         });
-         $('#build-total').html(buildPrice);
-         $('input[name="total"]').val(buildPrice);
+        $('#build-total').html(buildPrice);
+        $('input[name="total"]').val(buildPrice);
     });
 
     $(window).keydown(function(event){
@@ -27,7 +27,7 @@ $(document).ready(function () {
                             '<input type="url" class="form-control input-sm" name="bodykit_'+ part_id +'_link" required>' +
                         '</td>' +
                         '<td>' +
-                            '<input type="number" class="form-control input-sm" name="bodykit_'+ part_id +'_price" step="any" id="part-price" required>' +
+                            '<input type="number" class="form-control input-sm part-price" name="bodykit_'+ part_id +'_price" step="any" required>' +
                         '</td>' +
                         '<td>' +
                             '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -48,7 +48,7 @@ $(document).ready(function () {
                                 '<input type="url" class="form-control input-sm" name="engine_'+ part_id +'_link" required>' +
                             '</td>' +
                             '<td>' +
-                                '<input type="number" class="form-control input-sm" name="engine_'+ part_id +'_price" step="any" id="part-price" required>' +
+                                '<input type="number" class="form-control input-sm part-price" name="engine_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -69,7 +69,7 @@ $(document).ready(function () {
                                 '<input type="url" class="form-control input-sm" name="running_'+ part_id +'_link" required>' +
                             '</td>' +
                             '<td>' +
-                                '<input type="number" class="form-control input-sm" name="running_'+ part_id +'_price" step="any" id="part-price" required>' +
+                                '<input type="number" class="form-control input-sm part-price" name="running_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -90,7 +90,7 @@ $(document).ready(function () {
                                 '<input type="url" class="form-control input-sm" name="interior_'+ part_id +'_link" required>' +
                             '</td>' +
                             '<td>' +
-                                '<input type="number" class="form-control input-sm" name="interior_'+ part_id +'_price" step="any" id="part-price" required>' +
+                                '<input type="number" class="form-control input-sm part-price" name="interior_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
