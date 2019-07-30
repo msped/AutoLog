@@ -1,3 +1,15 @@
+.build-header {
+    margin-bottom: 7%;
+}
+
+.build-header h1 {
+    font-family: 'PM';
+}
+
+.build-header p {
+    font-family: 'Oswald';
+}
+
 /*Builds Stats*/
 .average-price-header, .average-price {
     font-family: 'Oswald', sans-serif;
