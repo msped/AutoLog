@@ -17,6 +17,7 @@ Edit a build
 <div class="row">
     <div class="build-stats col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="average-build-price">
+            <div id="amount-of-makes"></div>
             <p class="average-price-header">Average Price of all Builds:</p>
             {% for item in builds_average_cost %}
             <p class="average-price">{{ item.average_build_cost }}</p>
@@ -59,11 +60,11 @@ Edit a build
         {% for item in builds %}
         <div class="card col-lg-5 col-md-5 col-sm-5 col-xs-6">
             <div class="card-body">
-                <p class="card-title">{{ item.car.make }} {{ item.car.model }} {{ item.car.trim }}</p>
+                <p class="card-title">{{ item.build_name }}</p>
                 <hr>
-                <p class="card-subtitle mb-2 text-muted">Year: {{ item.car.year }}</p>
+                <p class="card-subtitle mb-2 text-muted">{{ item.car.make }}{{ item.car.model }} {{ item.car.trim }}</p>
                 <p class="card-subtitle mb-2 text-muted"> Car Price: {{ item.car.price }}</p>
-                <p class="card-text">The build will cost you {{ item.total }} and consists of _____ parts.</p>
+                <p class="card-text">The build will cost you {{ item.total }}.</p>
                 <div class="row">
                     <div class="col">
                         <a class="btn btn-sm btn-outline-dark" href="{{ url_for('view_record', build_id=item._id) }}">View Build</a>
