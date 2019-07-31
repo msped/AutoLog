@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, flash
+from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import json
@@ -435,6 +435,23 @@ def sort_prices():
     ])
 
     return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+
+@app.route('/get_cars')
+def get_cars():
+
+    builds = mongo.db.builds
+
+    get_cars = builds.find()
+
+    cars = []
+
+    for item in get_cars:
+        cars.append({
+            'make': item['car']['make'],
+            'total': item['total']
+        })
+
+    return jsonify(cars)
 
 ##if __name__ == '__main__':
     ##app.run(host=os.environ.get('IP'),
