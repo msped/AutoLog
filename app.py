@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 lm = LoginManager()
 lm.init_app(app)
+lm.login_view = 'login'
 
 app.secret_key = '7764d031a1424bf8b12357f7ebb05681'
 app.config["MONGO_DBNAME"] = os.getenv("MONGO_DBNAME")
@@ -150,7 +151,7 @@ def insert_record():
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    users_Array = ['Mattex',]
+    users_Array = [str(current_user.email),]
 
     record = {
         'author': current_user.email,
@@ -232,7 +233,6 @@ def insert_record():
 
 # View a Record
 @app.route("/view/<build_id>")
-@login_required
 def view_record(build_id):
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
@@ -253,28 +253,33 @@ def view_record(build_id):
         user_in_like = build['votes']['like']['users_liked'][x]
         liked_by.append(user_in_like)
 
-    if 'Mattex' in liked_by: 
+    if current_user.is_authenticated: 
+        if str(current_user.email) in liked_by: 
+            user_liked = True
+        else:
+            user_liked = False
+
+        disliked_length = int(len(build['votes']['dislike']['users_disliked']))
+
+        disliked_by = []
+
+        for x in range(0, disliked_length):
+            user_in_dislike = build['votes']['dislike']['users_disliked'][x]
+            disliked_by.append(user_in_dislike)
+
+        if str(current_user.email) in disliked_by: 
+            user_disliked = True
+        else:
+            user_disliked = False
+    else: 
         user_liked = True
-    else:
-        user_liked = False
-
-    disliked_length = int(len(build['votes']['dislike']['users_disliked']))
-
-    disliked_by = []
-
-    for x in range(0, disliked_length):
-        user_in_dislike = build['votes']['dislike']['users_disliked'][x]
-        disliked_by.append(user_in_dislike)
-
-    if 'Mattex' in disliked_by: 
         user_disliked = True
-    else:
-        user_disliked = False
 
     return render_template("view.html", build=build, bodykit=bodykit, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
 
 # Edit a Record
 @app.route("/edit/<build_id>")
+@login_required
 def edit_record(build_id):
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
@@ -299,6 +304,7 @@ def update_record(build_id):
 
     record = {
         'build_name': request.form.get('build_name'),
+        'author': current_user.email,
         'total': request.form.get('total'),
         'car': {
             'make': request.form.get('make'),
@@ -392,7 +398,7 @@ def like_build(build_id):
         user = current_build['votes']['like']['users_liked'][x]
         liked_by.append(user)
 
-    if 'Currrent User' in liked_by:
+    if current_user.email in liked_by:
         result = True 
 
     else: 
@@ -401,7 +407,7 @@ def like_build(build_id):
         result = likes_number + 1 
 
         build.update_one({"_id": ObjectId(build_id)}, {'$set': {'votes.like.count': result}}) 
-        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.like.users_liked': 'Mattex'}}) 
+        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.like.users_liked': str(current_user.email)}}) 
 
     return str(result)
 
@@ -421,7 +427,7 @@ def dislike_build(build_id):
         user = current_build['votes']['dislike']['users_disliked'][x]
         disliked_by.append(user)
 
-    if 'Currrent User' in disliked_by:
+    if current_user.email in disliked_by:
         result = True 
 
     else: 

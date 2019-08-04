@@ -27,7 +27,7 @@
     font-family: 'PM', monospace;
 }
 
-.like, .dislike, .like-button, .dislike-button {
+.like, .dislike, .like-button-div, .dislike-button-div {
     display: inline-block;
     margin-right: 10px;
 }
@@ -43,6 +43,10 @@
 
 .submit-buttons {
     margin-top: 20px;
+}
+
+.user-logged-in p {
+    margin-right: 10px;
 }
 
 .far-thumbs-up, .far-thumbs-down {
