@@ -295,10 +295,12 @@ View a build
 </div>
 
 <!--Submit-->
+{% if current_user.is_authenticated %}
 <div class="text-center submit-buttons">
     <a class="btn btn-outline-dark" href="{{ url_for('builds') }}">Back to Builds</a>
     <a class="btn btn-outline-secondary" href="{{ url_for('edit_record', build_id=build._id) }}">Edit</a>
 </div>
+{% endif %}
 
 {% endblock content %}
 
