@@ -123,6 +123,7 @@ def login():
     return render_template("login.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
@@ -230,6 +231,7 @@ def insert_record():
 
 # View a Record
 @app.route("/view/<build_id>")
+@login_required
 def view_record(build_id):
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
@@ -365,6 +367,7 @@ def update_record(build_id):
 
 # Delete a record 
 @app.route("/delete_record/<build_id>")
+@login_required
 def delete_record(build_id):
     mongo.db.builds.remove({
         '_id': ObjectId(build_id)
