@@ -153,6 +153,7 @@ def insert_record():
     users_Array = ['Mattex',]
 
     record = {
+        'author': current_user.email,
         'build_name': request.form.get('build_name'),
         'total': float(request.form.get('total')),
         'car': {
