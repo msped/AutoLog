@@ -499,7 +499,7 @@ def sort_prices():
     builds_average_cost = builds.aggregate([
         {
             '$group': {
-                '_id': 'null',
+                '_id': '$author',
                 'average_build_cost': {
                     '$avg': '$total'
                 }
