@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
-from flask_login import LoginManager, UserMixin, current_user, login_user, login_required
+from flask_login import LoginManager, UserMixin, current_user, login_user, login_required, logout_user
 from flask_pymongo import PyMongo
 import bcrypt
 from bson.objectid import ObjectId
