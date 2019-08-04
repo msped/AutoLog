@@ -132,6 +132,7 @@ def logout():
 
 # Create a Record
 @app.route("/create_record")
+@login_required
 def create_record():
     bodykit = mongo.db.bodykit.find()
     engine = mongo.db.engine.find()
