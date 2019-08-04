@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Edit a build
+{{ current_user.username }}'s Builds
 {% endblock title %}
 
 {% block css %}
@@ -10,7 +10,7 @@ Edit a build
 
 {% block content %}
 <div class="text-center build-header">
-    <h1>Your Builds</h1>
+    <h1>{{ current_user.username }}'s Builds</h1>
     <p class="small">View all your builds and sort them by price and likes.</p>
 </div>
 
