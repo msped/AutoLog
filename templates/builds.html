@@ -9,91 +9,91 @@ Builds
 {% endblock css %}
 
 {% block content %}
-<div class="text-center build-header">
-    <h1>Builds</h1>
-    <p class="small">View all your builds and sort them by price and likes.</p>
-</div>
-
-<div class="row">
-    <div class="build-stats col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <div class="average-build-price">
-            <div id="amount-of-makes"></div>
-            <p class="average-price-header">Average Price of all Builds:</p>
-            {% for item in builds_average_cost %}
-                {% if item._id == current_user.email %}
-                    <p class="average-price">{{ item.average_build_cost }}</p>
-                {% endif %}
-            {% endfor %}
-        </div>
+    <div class="text-center build-header">
+        <h1>Builds</h1>
+        <p class="small">View all your builds and sort them by price and likes.</p>
     </div>
 
-    <div class="search-builds col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <div class="search-header">
-            Sort Options
+    <div class="row">
+        <div class="build-stats col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="average-build-price">
+                <div id="amount-of-makes"></div>
+                <p class="average-price-header">Average Price of all Builds:</p>
+                {% for item in builds_average_cost %}
+                    {% if item._id == current_user.email %}
+                        <p class="average-price">{{ item.average_build_cost }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
-        <div class="search-options">
-            <form action="{{ url_for('sort_prices') }}" method="POST">
-                <select class="form-control" name="sort_by_price" id="sort-by-price">
-                    <option value="" disabled selected>Sort By Price</option>
-                    <option value="high_to_low">High to Low</option>
-                    <option value="low_to_high">Low to High</option>
-                </select>
-                <button type="submit" id="sort-button" class="btn btn-sm btn-outline-dark">Sort Price</button>
-            </form>
 
-            <form action="{{ url_for('sort_likes')}}" method="POST">
-                <select class="form-control" name="sort_by_likes" id="sort-by-likes">
-                    <option value="" disabled selected>Sort By Likes</option>
-                    <option value="high_to_low">High to Low</option>
-                    <option value="low_to_high">Low to High</option>
-                </select>
-                <button type="submit" id="sort-button" class="btn btn-sm btn-outline-dark">Sort Likes</button>
-            </form>
+        <div class="search-builds col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="search-header">
+                Sort Options
+            </div>
+            <div class="search-options">
+                <form action="{{ url_for('sort_prices') }}" method="POST">
+                    <select class="form-control" name="sort_by_price" id="sort-by-price">
+                        <option value="" disabled selected>Sort By Price</option>
+                        <option value="high_to_low">High to Low</option>
+                        <option value="low_to_high">Low to High</option>
+                    </select>
+                    <button type="submit" id="sort-button" class="btn btn-sm btn-outline-dark">Sort Price</button>
+                </form>
 
-            <div class="reset-button">
-                <a class="btn btn-sm btn-outline-danger" href="{{ url_for('builds') }}" id="search-reset">Reset</a>
+                <form action="{{ url_for('sort_likes')}}" method="POST">
+                    <select class="form-control" name="sort_by_likes" id="sort-by-likes">
+                        <option value="" disabled selected>Sort By Likes</option>
+                        <option value="high_to_low">High to Low</option>
+                        <option value="low_to_high">Low to High</option>
+                    </select>
+                    <button type="submit" id="sort-button" class="btn btn-sm btn-outline-dark">Sort Likes</button>
+                </form>
+
+                <div class="reset-button">
+                    <a class="btn btn-sm btn-outline-danger" href="{{ url_for('builds') }}" id="search-reset">Reset</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="builds">
-    <div class="row">
-        {% for item in builds %}
-        <div class="card col-lg-5 col-md-5 col-sm-5 col-xs-6">
-            <div class="card-body">
-                <p class="card-title">{{ item.build_name }}</p>
-                <hr>
-                <p class="card-subtitle mb-2 text-muted">{{ item.car.make }}{{ item.car.model }} {{ item.car.trim }}</p>
-                <p class="card-subtitle mb-2 text-muted"> Car Price: {{ item.car.price }}</p>
-                <p class="card-text">The build will cost you {{ item.total }}.</p>
-                <div class="row">
-                    <div class="col">
-                        <a class="btn btn-sm btn-outline-dark" href="{{ url_for('view_record', build_id=item._id) }}">View Build</a>
-                    </div>
-                    <div class="col">
-                        <div class="voting-content">
-                            <div class="like">
-                                <div class="like-button">
-                                    <i class="far fa-thumbs-up"></i>
+    <div class="builds">
+        <div class="row">
+            {% for item in builds %}
+            <div class="card col-lg-5 col-md-5 col-sm-5 col-xs-6">
+                <div class="card-body">
+                    <p class="card-title">{{ item.build_name }}</p>
+                    <hr>
+                    <p class="card-subtitle mb-2 text-muted">{{ item.car.make }}{{ item.car.model }} {{ item.car.trim }}</p>
+                    <p class="card-subtitle mb-2 text-muted"> Car Price: {{ item.car.price }}</p>
+                    <p class="card-text">The build will cost you {{ item.total }}.</p>
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-sm btn-outline-dark" href="{{ url_for('view_record', build_id=item._id) }}">View Build</a>
+                        </div>
+                        <div class="col">
+                            <div class="voting-content">
+                                <div class="like">
+                                    <div class="like-button">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </div>
+                                    <span id="like-count">{{ item['votes']['like']['count'] }}</span>
                                 </div>
-                                <span id="like-count">{{ item['votes']['like']['count'] }}</span>
-                            </div>
-                            <div class="dislike">
-                                <div class="dislike-button">
-                                    <i class="far fa-thumbs-down"></i>
+                                <div class="dislike">
+                                    <div class="dislike-button">
+                                        <i class="far fa-thumbs-down"></i>
+                                    </div>
+                                    <span id="dislike-count">{{ item['votes']['dislike']['count'] }}</span>
                                 </div>
-                                <span id="dislike-count">{{ item['votes']['dislike']['count'] }}</span>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-                
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
 {% endblock content %}
 
 {% block js %}

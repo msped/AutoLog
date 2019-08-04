@@ -63,6 +63,7 @@ def home():
     return render_template("home.html", **content)
 
 @app.route("/builds")
+@login_required
 def builds():
     
     builds = mongo.db.builds
