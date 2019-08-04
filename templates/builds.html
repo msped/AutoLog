@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ current_user.username }}'s Builds
+Builds
 {% endblock title %}
 
 {% block css %}
@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="text-center build-header">
-    <h1>{{ current_user.username }}'s Builds</h1>
+    <h1>Builds</h1>
     <p class="small">View all your builds and sort them by price and likes.</p>
 </div>
 
@@ -20,7 +20,9 @@
             <div id="amount-of-makes"></div>
             <p class="average-price-header">Average Price of all Builds:</p>
             {% for item in builds_average_cost %}
-            <p class="average-price">{{ item.average_build_cost }}</p>
+                {% if item._id == current_user.email %}
+                    <p class="average-price">{{ item.average_build_cost }}</p>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

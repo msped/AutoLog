@@ -68,7 +68,7 @@ def builds():
     builds_average_cost = builds.aggregate([
         {
             '$group': {
-                '_id': 'null',
+                '_id': '$author',
                 'average_build_cost': {
                     '$avg': '$total'
                 }
@@ -77,7 +77,7 @@ def builds():
     ])
 
 
-    return render_template("builds.html", builds=mongo.db.builds.find(), builds_average_cost=list(builds_average_cost))
+    return render_template("builds.html", builds=mongo.db.builds.find({'author': current_user.email }), builds_average_cost=list(builds_average_cost))
 
 @app.route("/contact_us")
 def contact():
@@ -108,7 +108,6 @@ def register():
 def login():
     if request.method == 'POST':
         user_check = mongo.db.users.find_one({'email': request.form.get('email')})
-        form_password = request.form.get('password')
         if str(user_check['email']) == str(request.form.get('email')):
             
             if User.validate_login(request.form.get('password'), user_check['password']):
