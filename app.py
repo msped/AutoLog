@@ -1,16 +1,55 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
+from flask_login import LoginManager, UserMixin, current_user, login_user, login_required
 from flask_pymongo import PyMongo
+import bcrypt
 from bson.objectid import ObjectId
 import json
 
 app = Flask(__name__)
+
+lm = LoginManager()
+lm.init_app(app)
 
 app.secret_key = '7764d031a1424bf8b12357f7ebb05681'
 app.config["MONGO_DBNAME"] = os.getenv("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
 mongo = PyMongo(app)
+
+# Classes
+class User(UserMixin):
+
+    def __init__(self, email, username):
+        self.email = email
+        self.username = username
+
+    @property
+    def is_authenticated(self):
+        return True
+    
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return self.email
+
+    @staticmethod
+    def validate_login(password, password_hash):
+        password_check = bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
+        return password_check
+
+@lm.user_loader
+def load_user(email):
+    u = mongo.db.users.find_one({'email': email})
+    if not u:
+        return None
+    return User(u['email'], u['username'])
 
 # Site Routes
 @app.route("/")
@@ -48,21 +87,45 @@ def contact():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     
-    return render_template("register.html", **content)
+    if request.method == 'POST':
+        email_exists = mongo.db.users.find_one({'email': request.form.get('email')})
+        if email_exists is None:
+            password = request.form.get('password')
+            confirm_password = request.form.get('confirm-password')
+            if password == confirm_password:
+                hashed_pwd = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+                mongo.db.users.insert_one({
+                    'username': request.form.get('username'),
+                    'email': request.form.get('email'),
+                    'password': hashed_pwd.decode('utf-8')
+                })
+                return redirect(url_for('login'))
+                
+        return redirect(url_for('register'))       
+    return render_template("register.html")
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    
     if request.method == 'POST':
-
-        pass
-
-    return render_template("login.html", **content)
+        user_check = mongo.db.users.find_one({'email': request.form.get('email')})
+        form_password = request.form.get('password')
+        if str(user_check['email']) == str(request.form.get('email')):
+            
+            if User.validate_login(request.form.get('password'), user_check['password']):
+                user_obj = User(user_check['email'], user_check['username'])
+                login_user(user_obj)
+                flash("Logged in successfully", category='success')
+                return redirect(url_for('builds'))
+            else: 
+                flash("Password error")
+        else: 
+            flash("Wrong username / doesnt exist", category='error')
+    return render_template("login.html")
 
 @app.route("/logout")
 def logout():
-    
-    pass
+    logout_user()
+    return redirect(url_for('login'))
 
 # CRUD Routes
 
