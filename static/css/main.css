@@ -25,8 +25,9 @@
     font-size: 14pt; 
 }
 
-
-
+.flashes  li {
+    list-style: none;
+}
 
 /*footer*/
 

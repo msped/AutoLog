@@ -55,12 +55,7 @@ def load_user(email):
 # Site Routes
 @app.route("/")
 def home():
-
-    content = {
-        "title": "Home",
-        "files": "home"
-    }
-    return render_template("home.html", **content)
+    return render_template("home.html")
 
 @app.route("/builds")
 @login_required
@@ -101,8 +96,10 @@ def register():
                     'email': request.form.get('email'),
                     'password': hashed_pwd.decode('utf-8')
                 })
+                flash('Account created!', category='success')
                 return redirect(url_for('login'))
-                
+        else:
+            flash('User already exists', category="danger")        
         return redirect(url_for('register'))       
     return render_template("register.html")
 
@@ -110,17 +107,20 @@ def register():
 def login():
     if request.method == 'POST':
         user_check = mongo.db.users.find_one({'email': request.form.get('email')})
-        if str(user_check['email']) == str(request.form.get('email')):
-            
-            if User.validate_login(request.form.get('password'), user_check['password']):
-                user_obj = User(user_check['email'], user_check['username'])
-                login_user(user_obj)
-                flash("Logged in successfully", category='success')
-                return redirect(url_for('builds'))
+        if user_check is not None:
+            if str(user_check['email']) == str(request.form.get('email')):
+                
+                if User.validate_login(request.form.get('password'), user_check['password']):
+                    user_obj = User(user_check['email'], user_check['username'])
+                    login_user(user_obj)
+                    flash("Logged in successfully", category='success')
+                    return redirect(url_for('builds'))
+                else:
+                    flash("Incorrect E-mail/Password", category='danger')
             else: 
-                flash("Password error")
-        else: 
-            flash("Wrong username / doesnt exist", category='error')
+                flash("Incorrect E-mail/Password", category='danger')
+        else:
+            flash("Incorrect E-mail/Password", category='danger')
     return render_template("login.html")
 
 @app.route("/logout")
