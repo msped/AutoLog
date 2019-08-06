@@ -79,7 +79,7 @@ def builds():
 @app.route("/contact_us")
 def contact():
 
-    return render_template("contact.html", **content)
+    return render_template("contact.html")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
