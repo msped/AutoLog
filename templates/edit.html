@@ -113,6 +113,7 @@ Edit a build
                     <tbody id="exterior-table">                   
                         {% for item in exterior %}
                         {% set prod = item.part_id %}
+                        {% if build['exterior'][prod] is defined %}
                         {% if build['exterior'][prod]['product'] != None %}
                         <tr>
                             <td>
@@ -131,6 +132,7 @@ Edit a build
                                 <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                     </tbody>
@@ -178,6 +180,7 @@ Edit a build
                     <tbody id="engine-table">
                         {% for item in engine %}
                         {% set prod = item.part_id %}
+                        {% if build['engine'][prod] is defined %}
                         {% if build['engine'][prod]['product'] != None %}
                         <tr>
                             <td>
@@ -196,6 +199,7 @@ Edit a build
                                 <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                     </tbody>
@@ -243,6 +247,7 @@ Edit a build
                     <tbody id="running-gear-table">
                         {% for item in running %}
                         {% set prod = item.part_id %}
+                        {% if build['running'][prod] is defined %}
                         {% if build['running'][prod]['product'] != None %}
                         <tr>
                             <td>
@@ -261,6 +266,7 @@ Edit a build
                                 <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                     </tbody>
@@ -308,6 +314,7 @@ Edit a build
                     <tbody id="interior-table">
                         {% for item in interior %}
                         {% set prod = item.part_id %}
+                        {% if build['interior'][prod] is defined %}
                         {% if build['interior'][prod]['product'] != None %}
                         <tr>
                             <td>
@@ -326,6 +333,7 @@ Edit a build
                                 <i class="far fa-times-circle" id="delete-row"></i>
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}    
                     </tbody>
