@@ -127,6 +127,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('Logged out Successfully', category='success')
     return redirect(url_for('login'))
 
 # CRUD Routes
@@ -229,7 +230,7 @@ def insert_record():
 
     record.update({'interior': interior_dict})
     builds.insert_one(record)
-
+    flash('Build Created', category='success')
     return redirect(url_for('builds'))
 
 # View a Record
@@ -370,7 +371,7 @@ def update_record(build_id):
 
     # Update in Mongo
     builds.update({"_id": ObjectId(build_id)}, record)  
-
+    flash('Build Updated', category='warning')
     return redirect(url_for('view_record', build_id=build_id))
 
 # Delete a record 
@@ -380,6 +381,7 @@ def delete_record(build_id):
     mongo.db.builds.remove({
         '_id': ObjectId(build_id)
     })
+    flash('Build Deleted', category='danger')
     return redirect(url_for('builds'))
 
 # Votes 
