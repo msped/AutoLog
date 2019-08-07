@@ -42,7 +42,13 @@
 }
 
 .submit-buttons {
-    margin-top: 20px;
+    margin-top: 10%;
+}
+
+@media (min-width: 576px) {
+    .submit-buttons {
+        margin-top: 5%;
+    }
 }
 
 .user-logged-in p {

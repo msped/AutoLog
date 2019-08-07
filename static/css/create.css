@@ -48,3 +48,13 @@
     margin-top: 8px;
     cursor: pointer;
 }
+
+.submit-buttons {
+    margin-top: 10%;
+}
+
+@media (min-width: 576px) {
+    .submit-buttons {
+        margin-top: 5%;
+    }
+}
