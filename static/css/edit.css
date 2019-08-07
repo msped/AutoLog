@@ -34,12 +34,12 @@
     margin-bottom: 15px;
 }
 
-#bodykit-categories, #engine-categories, #running-gear-categories, #interior-categories {
+#exterior-categories, #engine-categories, #running-gear-categories, #interior-categories {
     width: 250px; 
     display: inline-block; 
 }
 
-#add-bodykit, #add-engine, #add-running-gear, #add-interior {
+#add-exterior, #add-engine, #add-running-gear, #add-interior {
     margin-left: 15px;
 }
 

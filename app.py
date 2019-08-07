@@ -136,19 +136,19 @@ def logout():
 @app.route("/create_record")
 @login_required
 def create_record():
-    bodykit = mongo.db.bodykit.find()
+    exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    return render_template("create.html", bodykit=bodykit, engine=engine, running=running, interior=interior)
+    return render_template("create.html", exterior=exterior, engine=engine, running=running, interior=interior)
 
 # Insert Record into DB
 @app.route("/insert_record", methods=['POST'])
 def insert_record():
     builds = mongo.db.builds
 
-    bodykit = mongo.db.bodykit.find()
+    exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
@@ -178,18 +178,18 @@ def insert_record():
         },
     }
 
-   # Adds Bodykit collection to record 
-    bodykit_dict = {}
-    for item in bodykit:
-        bodykit_dict.update({
+   # Adds exterior collection to record 
+    exterior_dict = {}
+    for item in exterior:
+        exterior_dict.update({
             item["part_id"]: {
-            'product': request.form.get('bodykit_'+item["part_id"]+'_product'),
-            'link': request.form.get('bodykit_'+item["part_id"]+'_link'),
-            'price': request.form.get('bodykit_'+item["part_id"]+'_price')
+            'product': request.form.get('exterior_'+item["part_id"]+'_product'),
+            'link': request.form.get('exterior_'+item["part_id"]+'_link'),
+            'price': request.form.get('exterior_'+item["part_id"]+'_price')
             }
         })
 
-    record.update({'bodykit': bodykit_dict})
+    record.update({'exterior': exterior_dict})
         
     # Adds Engine collection to record 
     engine_dict = {}
@@ -241,7 +241,7 @@ def view_record(build_id):
     })
 
     builds = mongo.db.builds
-    bodykit = mongo.db.bodykit.find()
+    exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
@@ -277,7 +277,7 @@ def view_record(build_id):
         user_liked = True
         user_disliked = True
 
-    return render_template("view.html", build=build, bodykit=bodykit, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
+    return render_template("view.html", build=build, exterior=exterior, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
 
 # Edit a Record
 @app.route("/edit/<build_id>")
@@ -287,19 +287,19 @@ def edit_record(build_id):
         "_id": ObjectId(build_id)
     })
 
-    bodykit = mongo.db.bodykit.find()
+    exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    return render_template("edit.html", build=build, bodykit=list(bodykit), engine=list(engine), running=list(running), interior=list(interior))
+    return render_template("edit.html", build=build, exterior=list(exterior), engine=list(engine), running=list(running), interior=list(interior))
 
 # Update a Record
 @app.route("/update_record/<build_id>", methods=['POST'])
 def update_record(build_id):
     builds = mongo.db.builds
 
-    bodykit = mongo.db.bodykit.find()
+    exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
@@ -317,18 +317,18 @@ def update_record(build_id):
         },
     }
 
-   # Adds Bodykit collection to record 
-    bodykit_dict = {}
-    for item in bodykit:
-        bodykit_dict.update({
+   # Adds exterior collection to record 
+    exterior_dict = {}
+    for item in exterior:
+        exterior_dict.update({
             item["part_id"]: {
-            'product': request.form.get('bodykit_'+item["part_id"]+'_product'),
-            'link': request.form.get('bodykit_'+item["part_id"]+'_link'),
-            'price': request.form.get('bodykit_'+item["part_id"]+'_price')
+            'product': request.form.get('exterior_'+item["part_id"]+'_product'),
+            'link': request.form.get('exterior_'+item["part_id"]+'_link'),
+            'price': request.form.get('exterior_'+item["part_id"]+'_price')
             }
         })
 
-    record.update({'bodykit': bodykit_dict})
+    record.update({'exterior': exterior_dict})
         
     # Adds Engine collection to record 
     engine_dict = {}

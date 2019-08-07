@@ -84,24 +84,24 @@ Create a new build
             </div>
     </div>
 
-    <!--Bodykit-->
+    <!--Exterior-->
     <div class="card">
         <div class="card-header" id="headingTwo">
-            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#bodykit" aria-expanded="false"
-                aria-controls="bodykit">
-                Bodykit
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#exterior" aria-expanded="false"
+                aria-controls="exterior">
+                Exterior
             </h6>
         </div>
-        <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
+        <div id="exterior" class="collapse" aria-labelledby="headingTwo" data-parent="#exterior">
             <div class="card-body">
                 <div class="add-category col-md-12">
-                    <select class="form-control" id="bodykit-categories">
+                    <select class="form-control" id="exterior-categories">
                         <option value="" disabled selected>Choose an option</option>
-                        {% for item in bodykit %}
+                        {% for item in exterior %}
                         <option value="{{ item.part_id }}">{{ item.title }}</option>
                         {% endfor %}
                     </select>
-                    <a id="add-bodykit" class="btn btn-light">Add</a>
+                    <a id="add-exterior" class="btn btn-light">Add</a>
                 </div>
                 <table class="table table-sm">
                     <thead>
@@ -123,7 +123,7 @@ Create a new build
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="bodykit-table">
+                    <tbody id="exterior-table">
 
                     </tbody>
                 </table>

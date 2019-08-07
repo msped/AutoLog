@@ -15,25 +15,25 @@ $(document).ready(function () {
         }
     });
 
-    $('#add-bodykit').on('click', function(){
-        part_id = $('#bodykit-categories').find(":selected").val();
-        title = $('#bodykit-categories').find(":selected").text();
+    $('#add-exterior').on('click', function(){
+        part_id = $('#exterior-categories').find(":selected").val();
+        title = $('#exterior-categories').find(":selected").text();
         var template = '<tr>' +
                         '<td scope="row">' + title + '</td>' +
                         '<td>' +
-                            '<input type="text" class="form-control input-sm" name="bodykit_'+ part_id +'_product" required>' +
+                            '<input type="text" class="form-control input-sm" name="exterior_'+ part_id +'_product" required>' +
                         '</td>' +
                         '<td>' +
-                            '<input type="url" class="form-control input-sm" name="bodykit_'+ part_id +'_link" required>' +
+                            '<input type="url" class="form-control input-sm" name="exterior_'+ part_id +'_link" required>' +
                         '</td>' +
                         '<td>' +
-                            '<input type="number" class="form-control input-sm part-price" name="bodykit_'+ part_id +'_price" step="any" required>' +
+                            '<input type="number" class="form-control input-sm part-price" name="exterior_'+ part_id +'_price" step="any" required>' +
                         '</td>' +
                         '<td>' +
                             '<i class="far fa-times-circle" id="delete-row"></i>' +
                         '</td>' +
                     '</tr>';
-        $('#bodykit-table').append(template);
+        $('#exterior-table').append(template);
     });
 
     $('#add-engine').on('click', function(){

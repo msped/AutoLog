@@ -68,15 +68,15 @@ View a build
     </div>
 </div>
 
-<!--Bodykit-->
+<!--Exterior-->
 <div class="card">
     <div class="card-header" id="headingTwo">
-        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#bodykit" aria-expanded="false"
-            aria-controls="bodykit">
-            Bodykit
+        <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#exterior" aria-expanded="false"
+            aria-controls="exterior">
+            Exterior
         </h6>
     </div>
-    <div id="bodykit" class="collapse" aria-labelledby="headingTwo" data-parent="#bodykit">
+    <div id="exterior" class="collapse" aria-labelledby="headingTwo" data-parent="#exterior">
         <div class="card-body">
             <table class="table table-sm">
                 <thead>
@@ -92,20 +92,20 @@ View a build
                         </th>
                     </tr>
                 </thead>
-                <tbody id="bodykit-table">
-                    {% for item in bodykit %}
+                <tbody id="exterior-table">
+                    {% for item in exterior %}
                     {% set prod = item.part_id %}
-                    {% if build['bodykit'][prod]['product'] != None %}
+                    {% if build['exterior'][prod]['product'] != None %}
                     <tr>
                         <td>
                             {{ item['title'] }}
                         </td>
                         <td>
-                            <a href="{{ build['bodykit'][prod]['link'] }}"
-                                target="_blank">{{ build['bodykit'][prod]['product'] }}</a>
+                            <a href="{{ build['exterior'][prod]['link'] }}"
+                                target="_blank">{{ build['exterior'][prod]['product'] }}</a>
                         </td>
                         <td>
-                            <p>{{ build['bodykit'][prod]['price'] }}</p>
+                            <p>{{ build['exterior'][prod]['price'] }}</p>
                         </td>
                     </tr>
                     {% endif %}
