@@ -370,7 +370,7 @@ def update_record(build_id):
     record.update({'interior': interior_dict})
 
     # Update in Mongo
-    builds.update({"_id": ObjectId(build_id)}, record)  
+    builds.update({"_id": ObjectId(build_id)}, {'$set': record})  
     flash('Build Updated', category='warning')
     return redirect(url_for('view_record', build_id=build_id))
 
