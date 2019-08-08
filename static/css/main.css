@@ -20,6 +20,12 @@
 
 /*Navigation*/
 
+.navbar-brand img{
+    height: 60px;
+}
+
+
+
 .nav-link {
     font-family: 'Oswald';
     font-size: 14pt; 
