@@ -305,9 +305,7 @@ def update_record(build_id):
     interior = mongo.db.interior.find()
 
     record = {
-        'build_name': request.form.get('build_name'),
-        'author': current_user.email,
-        'total': request.form.get('total'),
+        'total': float(request.form.get('total')),
         'car': {
             'make': request.form.get('make'),
             'model': request.form.get('model'),
