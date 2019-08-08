@@ -62,7 +62,7 @@ Edit a build
                                     <input type="number" class="form-control input-sm" name="year" value="{{ build['car']['year'] }}">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="price" id="part-price" value="{{ build['car']['price'] }}">
+                                    <input type="text" class="form-control input-sm part-price" name="price" value="{{ build['car']['price'] }}">
                                 </td>
                             </tr>
                         </tbody>
@@ -126,7 +126,7 @@ Edit a build
                                 <input type="url" class="form-control input-sm" value="{{ build['exterior'][prod]['link'] }}" name="exterior_{{ prod }}_link" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" value="{{ build['exterior'][prod]['price'] }}" name="exterior_{{ prod }}_price" step="any" id="part-price" required>
+                                <input type="number" class="form-control input-sm part-price" value="{{ build['exterior'][prod]['price'] }}" name="exterior_{{ prod }}_price" step="any" required>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -193,7 +193,7 @@ Edit a build
                                 <input type="url" class="form-control input-sm" value="{{ build['engine'][prod]['link'] }}" name="engine_{{ prod }}_link" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" value="{{ build['engine'][prod]['price'] }}" name="engine_{{ prod }}_price" step="any" id="part-price" required>
+                                <input type="number" class="form-control input-sm part-price" value="{{ build['engine'][prod]['price'] }}" name="engine_{{ prod }}_price" step="any" required>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -260,7 +260,7 @@ Edit a build
                                 <input type="url" class="form-control input-sm" value="{{ build['running'][prod]['link'] }}" name="running_{{ prod }}_link" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" value="{{ build['running'][prod]['price'] }}" name="running_{{ prod }}_price" step="any" id="part-price" required>
+                                <input type="number" class="form-control input-sm part-price" value="{{ build['running'][prod]['price'] }}" name="running_{{ prod }}_price" step="any" required>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -327,7 +327,7 @@ Edit a build
                                 <input type="url" class="form-control input-sm" value="{{ build['interior'][prod]['link'] }}" name="interior_{{ prod }}_link" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control input-sm" value="{{ build['interior'][prod]['price'] }}" name="interior_{{ prod }}_price" step="any" id="part-price" required>
+                                <input type="number" class="form-control input-sm part-price" value="{{ build['interior'][prod]['price'] }}" name="interior_{{ prod }}_price" step="any" required>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
