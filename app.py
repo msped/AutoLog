@@ -186,7 +186,7 @@ def insert_record():
             item["part_id"]: {
             'product': request.form.get('exterior_'+item["part_id"]+'_product'),
             'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-            'price': request.form.get('exterior_'+item["part_id"]+'_price')
+            'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
             }
         })
 
@@ -199,7 +199,7 @@ def insert_record():
             item["part_id"]: {
             'product': request.form.get('engine_'+item["part_id"]+'_product'),
             'link': request.form.get('engine_'+item["part_id"]+'_link'),
-            'price': request.form.get('engine_'+item["part_id"]+'_price')
+            'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
             }
         })
 
@@ -212,7 +212,7 @@ def insert_record():
             item["part_id"]: {
             'product': request.form.get('running_'+item["part_id"]+'_product'),
             'link': request.form.get('running_'+item["part_id"]+'_link'),
-            'price': request.form.get('running_'+item["part_id"]+'_price')
+            'price': float(request.form.get('running_'+item["part_id"]+'_price'))
             }
         })
 
@@ -225,7 +225,7 @@ def insert_record():
             item["part_id"]: {
             'product': request.form.get('interior_'+item["part_id"]+'_product'),
             'link': request.form.get('interior_'+item["part_id"]+'_link'),
-            'price': request.form.get('interior_'+item["part_id"]+'_price')
+            'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
             }
         })
 
@@ -323,7 +323,7 @@ def update_record(build_id):
             item["part_id"]: {
             'product': request.form.get('exterior_'+item["part_id"]+'_product'),
             'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-            'price': request.form.get('exterior_'+item["part_id"]+'_price')
+            'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
             }
         })
 
@@ -336,7 +336,7 @@ def update_record(build_id):
             item["part_id"]: {
             'product': request.form.get('engine_'+item["part_id"]+'_product'),
             'link': request.form.get('engine_'+item["part_id"]+'_link'),
-            'price': request.form.get('engine_'+item["part_id"]+'_price')
+            'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
             }
         })
 
@@ -349,7 +349,7 @@ def update_record(build_id):
             item["part_id"]: {
             'product': request.form.get('running_'+item["part_id"]+'_product'),
             'link': request.form.get('running_'+item["part_id"]+'_link'),
-            'price': request.form.get('running_'+item["part_id"]+'_price')
+            'price': float(request.form.get('running_'+item["part_id"]+'_price'))
             }
         })
 
@@ -362,7 +362,7 @@ def update_record(build_id):
             item["part_id"]: {
             'product': request.form.get('interior_'+item["part_id"]+'_product'),
             'link': request.form.get('interior_'+item["part_id"]+'_link'),
-            'price': request.form.get('interior_'+item["part_id"]+'_price')
+            'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
             }
         })
 
