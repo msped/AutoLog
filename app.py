@@ -73,8 +73,9 @@ def builds():
         }
     ])
 
+    users_builds = builds.find({'author': current_user.email })
 
-    return render_template("builds.html", builds=mongo.db.builds.find({'author': current_user.email }), builds_average_cost=list(builds_average_cost))
+    return render_template("builds.html", builds=users_builds, builds_average_cost=list(builds_average_cost))
 
 @app.route("/contact_us")
 def contact():
@@ -515,17 +516,17 @@ def get_cars():
 
     builds = mongo.db.builds
 
-    get_cars = builds.find()
+    get_cars = builds.find({'author': current_user.email})
 
-    cars = []
+    buildData = []
 
     for item in get_cars:
-        cars.append({
+        buildData.append({
             'make': item['car']['make'],
-            'total': item['total']
+            'total': str(item['total'])
         })
 
-    return jsonify(cars)
+    return jsonify(buildData)
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
