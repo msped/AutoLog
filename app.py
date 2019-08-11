@@ -165,7 +165,7 @@ def insert_record():
             'model': request.form.get('model'),
             'trim': request.form.get('trim'),
             'year': request.form.get('year'),
-            'price': request.form.get('price')
+            'price': float(request.form.get('price'))
         },
         'votes':{
             'like': {
@@ -312,7 +312,7 @@ def update_record(build_id):
             'model': request.form.get('model'),
             'trim': request.form.get('trim'),
             'year': request.form.get('year'),
-            'price': request.form.get('price')
+            'price': float(request.form.get('price'))
         },
     }
 
