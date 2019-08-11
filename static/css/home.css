@@ -1,27 +1,40 @@
 .homepage-banner {
   width: 100%;
-  height: 375px;
+  height: 500px;
   display: block;
   margin: 20px 0 20px 0 ;
   background-image: url('../images/blueprint-image.jpg');
   }
 
-.homepage-banner {
+.homepage-button {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  display: block;
-  line-height: 225px;
+}
+
+.homepage-button p {
+  font-family: 'PM', sans-serif;
+  font-weight: 600; 
   font-size: 25pt;
-  font-family: 'Oswald';
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: #fff;
+  -webkit-text-stroke: 1px black;
 }
 
 a.homepage-banner-button {
-  background-color: #fff;
+  background-color: rgb(245, 170, 49);
   font-family: 'PM', monospace;
   border-radius: 5px;
+  font-size: 20pt;
   padding: 5px 10px;
-  color: #000;
+  color: #fff;
   text-decoration: none;
+  -webkit-text-stroke: 1px black;
+}
+
+.new-section {
+  margin-top: 5%;
 }
 
 .what-is-autolog {
@@ -33,6 +46,6 @@ a.homepage-banner-button {
   margin-bottom: 20px;
 }
 
-.what-is-autolog p {
-  font-family: 'Roboto', monospace;
+#create-a-plan-img {
+  width: 100%;
 }
