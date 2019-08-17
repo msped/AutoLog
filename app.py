@@ -118,11 +118,11 @@ def register():
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        user_check = mongo.db.users.find_one({'email': request.form.get('email')})
-        if user_check is not None:
-            if str(user_check['email']) == str(request.form.get('email')):
-                if User.validate_login(request.form.get('password'), user_check['password']):
-                    user_obj = User(user_check['email'], user_check['username'])
+        user = mongo.db.users.find_one({'email': request.form.get('email')})
+        if user is not None:
+            if str(user['email']) == str(request.form.get('email')):
+                if User.validate_login(request.form.get('password'), user['password']):
+                    user_obj = User(user['email'], user['username'])
                     login_user(user_obj)
                     flash("Logged in successfully", category='success')
                     return redirect(url_for('builds'))
@@ -149,15 +149,15 @@ def logout():
 @app.route("/build/new", methods=['POST', 'GET'])
 @login_required
 def create_record():
+    exterior = mongo.db.exterior.find()
+    engine = mongo.db.engine.find()
+    running = mongo.db.runninggear.find()
+    interior = mongo.db.interior.find()
+
     if request.method == 'POST':
         builds = mongo.db.builds
 
-        exterior = mongo.db.exterior.find()
-        engine = mongo.db.engine.find()
-        running = mongo.db.runninggear.find()
-        interior = mongo.db.interior.find()
-
-        users_Array = [str(current_user.email), ]
+        users = [str(current_user.email), ]
 
         record = {
             'author': current_user._id,
@@ -174,7 +174,7 @@ def create_record():
             'votes': {
                 'like': {
                     'count': 1,
-                    'users_liked': users_Array
+                    'users_liked': users
                 },
                 'dislike': {
                     'count': 0,
@@ -242,11 +242,6 @@ def create_record():
         flash('Build Created', category='success')
         return redirect(url_for('builds'))
 
-    exterior = mongo.db.exterior.find()
-    engine = mongo.db.engine.find()
-    running = mongo.db.runninggear.find()
-    interior = mongo.db.interior.find()
-
     return render_template("create.html", exterior=exterior, engine=engine, running=running, interior=interior)
 
 
@@ -257,22 +252,21 @@ def view_record(build_id):
         "_id": ObjectId(build_id)
     })
 
-    builds = mongo.db.builds
     exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
     # Check for if user has liked the build already
-    liked_length = int(len(build['votes']['like']['users_liked']))
-
-    liked_by = []
-
-    for x in range(0, liked_length):
-        user_in_like = build['votes']['like']['users_liked'][x]
-        liked_by.append(user_in_like)
-
     if current_user.is_authenticated: 
+        liked_length = int(len(build['votes']['like']['users_liked']))
+
+        liked_by = []
+
+        for x in range(0, liked_length):
+            user_in_like = build['votes']['like']['users_liked'][x]
+            liked_by.append(user_in_like)
+
         if str(current_user.email) in liked_by: 
             user_liked = True
         else:
@@ -543,7 +537,7 @@ def get_cars():
 
     builds = mongo.db.builds
 
-    get_cars = builds.find({'author': current_user.email})
+    get_cars = builds.find({'author': current_user._id})
 
     buildData = []
 
