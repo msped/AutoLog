@@ -1,10 +1,10 @@
 import os
+import json
 from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
 from flask_login import LoginManager, UserMixin, current_user, login_user, login_required, logout_user
 from flask_pymongo import PyMongo
 import bcrypt
 from bson.objectid import ObjectId
-import json
 
 app = Flask(__name__)
 
@@ -18,17 +18,19 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
 mongo = PyMongo(app)
 
+
 # Classes
 class User(UserMixin):
 
-    def __init__(self, email, username):
+    def __init__(self, email, username, user_id):
         self.email = email
         self.username = username
+        self._id = user_id
 
     @property
     def is_authenticated(self):
         return True
-    
+
     @property
     def is_active(self):
         return True
@@ -36,31 +38,43 @@ class User(UserMixin):
     @property
     def is_anonymous(self):
         return False
-    
+
     def get_id(self):
-        return self.email
+        return self._id
 
     @staticmethod
     def validate_login(password, password_hash):
         password_check = bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
         return password_check
 
+
 @lm.user_loader
 def load_user(email):
     u = mongo.db.users.find_one({'email': email})
     if not u:
         return None
-    return User(u['email'], u['username'])
+    return User(u['email'], u['username'], u['_id'])
+
 
 # Site Routes
 @app.route("/")
 def home():
     return render_template("home.html")
 
+
 @app.route("/builds")
-@login_required
 def builds():
-    
+    builds = mongo.db.builds
+
+    users_builds = builds.find({'public': True})
+
+    return render_template("builds.html", builds=users_builds)
+
+
+# All public builds
+@app.route("/builds/<user_id>")
+@login_required
+def my_builds():
     builds = mongo.db.builds
     builds_average_cost = builds.aggregate([
         {
@@ -73,14 +87,17 @@ def builds():
         }
     ])
 
-    users_builds = builds.find({'author': current_user.email })
+    users_builds = builds.find({'author': current_user.email})
 
-    return render_template("builds.html", builds=users_builds, builds_average_cost=list(builds_average_cost))
+    return render_template("my_builds.html", builds=users_builds, builds_average_cost=list(builds_average_cost))
 
+
+# Users Builds
 @app.route("/contact_us")
 def contact():
 
     return render_template("contact.html")
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -104,13 +121,13 @@ def register():
         return redirect(url_for('register'))       
     return render_template("register.html")
 
+
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         user_check = mongo.db.users.find_one({'email': request.form.get('email')})
         if user_check is not None:
             if str(user_check['email']) == str(request.form.get('email')):
-                
                 if User.validate_login(request.form.get('password'), user_check['password']):
                     user_obj = User(user_check['email'], user_check['username'])
                     login_user(user_obj)
@@ -124,6 +141,7 @@ def login():
             flash("Incorrect E-mail/Password", category='danger')
     return render_template("login.html")
 
+
 @app.route("/logout")
 @login_required
 def logout():
@@ -133,10 +151,101 @@ def logout():
 
 # CRUD Routes
 
+
 # Create a Record
-@app.route("/create_record")
+@app.route("/build/new", methods=['POST', 'GET'])
 @login_required
 def create_record():
+    if request.method == 'POST':
+        builds = mongo.db.builds
+
+        exterior = mongo.db.exterior.find()
+        engine = mongo.db.engine.find()
+        running = mongo.db.runninggear.find()
+        interior = mongo.db.interior.find()
+
+        users_Array = [str(current_user.email), ]
+
+        record = {
+            'author': current_user.email,
+            'build_name': request.form.get('build_name'),
+            'total': float(request.form.get('total')),
+            'public': request.form.get('public'),
+            'car': {
+                'make': request.form.get('make'),
+                'model': request.form.get('model'),
+                'trim': request.form.get('trim'),
+                'year': request.form.get('year'),
+                'price': float(request.form.get('price'))
+            },
+            'votes':{
+                'like': {
+                    'count': 1,
+                    'users_liked': users_Array
+                },
+                'dislike': {
+                    'count': 0,
+                    'users_disliked': []
+                }
+            },
+        }
+
+    # Adds exterior collection to record 
+        exterior_dict = {}
+        for item in exterior:
+            exterior_dict.update({
+                item["part_id"]: {
+                'product': request.form.get('exterior_'+item["part_id"]+'_product'),
+                'link': request.form.get('exterior_'+item["part_id"]+'_link'),
+                'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'exterior': exterior_dict})
+            
+        # Adds Engine collection to record 
+        engine_dict = {}
+        for item in engine:
+            engine_dict.update({
+                item["part_id"]: {
+                'product': request.form.get('engine_'+item["part_id"]+'_product'),
+                'link': request.form.get('engine_'+item["part_id"]+'_link'),
+                'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'engine': engine_dict})
+
+        # Adds Running Gear collection to record 
+        running_dict = {}
+        for item in running:
+            running_dict.update({
+                item["part_id"]: {
+                'product': request.form.get('running_'+item["part_id"]+'_product'),
+                'link': request.form.get('running_'+item["part_id"]+'_link'),
+                'price': float(request.form.get('running_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'running': running_dict})
+
+        # Adds Interior collection to record 
+        interior_dict = {}
+        for item in interior:
+            interior_dict.update({
+                item["part_id"]: {
+                'product': request.form.get('interior_'+item["part_id"]+'_product'),
+                'link': request.form.get('interior_'+item["part_id"]+'_link'),
+                'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'interior': interior_dict})
+        builds.insert_one(record)
+        flash('Build Created', category='success')
+        return redirect(url_for('builds'))
+
+
     exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
@@ -144,98 +253,9 @@ def create_record():
 
     return render_template("create.html", exterior=exterior, engine=engine, running=running, interior=interior)
 
-# Insert Record into DB
-@app.route("/insert_record", methods=['POST'])
-def insert_record():
-    builds = mongo.db.builds
-
-    exterior = mongo.db.exterior.find()
-    engine = mongo.db.engine.find()
-    running = mongo.db.runninggear.find()
-    interior = mongo.db.interior.find()
-
-    users_Array = [str(current_user.email),]
-
-    record = {
-        'author': current_user.email,
-        'build_name': request.form.get('build_name'),
-        'total': float(request.form.get('total')),
-        'car': {
-            'make': request.form.get('make'),
-            'model': request.form.get('model'),
-            'trim': request.form.get('trim'),
-            'year': request.form.get('year'),
-            'price': float(request.form.get('price'))
-        },
-        'votes':{
-            'like': {
-                'count': 1,
-                'users_liked': users_Array
-            },
-            'dislike': {
-                'count': 0,
-                'users_disliked': []
-            }
-        },
-    }
-
-   # Adds exterior collection to record 
-    exterior_dict = {}
-    for item in exterior:
-        exterior_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('exterior_'+item["part_id"]+'_product'),
-            'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'exterior': exterior_dict})
-        
-    # Adds Engine collection to record 
-    engine_dict = {}
-    for item in engine:
-        engine_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('engine_'+item["part_id"]+'_product'),
-            'link': request.form.get('engine_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'engine': engine_dict})
-
-    # Adds Running Gear collection to record 
-    running_dict = {}
-    for item in running:
-        running_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('running_'+item["part_id"]+'_product'),
-            'link': request.form.get('running_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('running_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'running': running_dict})
-
-    # Adds Interior collection to record 
-    interior_dict = {}
-    for item in interior:
-        interior_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('interior_'+item["part_id"]+'_product'),
-            'link': request.form.get('interior_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'interior': interior_dict})
-    builds.insert_one(record)
-    flash('Build Created', category='success')
-    return redirect(url_for('builds'))
 
 # View a Record
-@app.route("/view/<build_id>")
+@app.route("/build/<build_id>")
 def view_record(build_id):
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
@@ -280,8 +300,9 @@ def view_record(build_id):
 
     return render_template("view.html", build=build, exterior=exterior, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
 
+
 # Edit a Record
-@app.route("/edit/<build_id>")
+@app.route("/build/<build_id>/edit")
 @login_required
 def edit_record(build_id):
     build = mongo.db.builds.find_one({
@@ -295,8 +316,9 @@ def edit_record(build_id):
 
     return render_template("edit.html", build=build, exterior=list(exterior), engine=list(engine), running=list(running), interior=list(interior))
 
+
 # Update a Record
-@app.route("/update_record/<build_id>", methods=['POST'])
+@app.route("/build/<build_id>", methods=['POST'])
 def update_record(build_id):
     builds = mongo.db.builds
 
@@ -319,6 +341,7 @@ def update_record(build_id):
    # Adds exterior collection to record 
     exterior_dict = {}
     for item in exterior:
+
         exterior_dict.update({
             item["part_id"]: {
             'product': request.form.get('exterior_'+item["part_id"]+'_product'),
@@ -373,8 +396,9 @@ def update_record(build_id):
     flash('Build Updated', category='warning')
     return redirect(url_for('view_record', build_id=build_id))
 
-# Delete a record 
-@app.route("/delete_record/<build_id>")
+
+# Delete a record
+@app.route("/build/<build_id>")
 @login_required
 def delete_record(build_id):
     mongo.db.builds.remove({
@@ -383,8 +407,9 @@ def delete_record(build_id):
     flash('Build Deleted', category='danger')
     return redirect(url_for('builds'))
 
-# Votes 
-@app.route('/like_build/<build_id>', methods=['POST'])
+
+# Votes
+@app.route('/build/like/<build_id>', methods=['POST'])
 def like_build(build_id):
     build = mongo.db.builds
 
@@ -413,7 +438,8 @@ def like_build(build_id):
 
     return str(result)
 
-@app.route('/dislike_build/<build_id>', methods=['POST'])
+
+@app.route('/build/dislike/<build_id>', methods=['POST'])
 def dislike_build(build_id):
     build = mongo.db.builds
 
@@ -441,6 +467,7 @@ def dislike_build(build_id):
         build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.dislike.users_disliked': 'Mattex'}}) 
 
     return str(result)
+
 
 # Sort on Likes and Price
 @app.route('/sort_likes', methods=['POST'])
@@ -477,6 +504,7 @@ def sort_likes():
 
     return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
 
+
 @app.route('/sort_price', methods=['POST'])
 def sort_prices():
 
@@ -510,6 +538,7 @@ def sort_prices():
     ])
 
     return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+
 
 @app.route('/get_cars')
 def get_cars():
