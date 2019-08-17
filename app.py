@@ -62,6 +62,7 @@ def home():
     return render_template("home.html")
 
 
+# All public builds
 @app.route("/builds")
 def builds():
     builds = mongo.db.builds
@@ -71,10 +72,10 @@ def builds():
     return render_template("builds.html", builds=users_builds)
 
 
-# All public builds
+# Users builds
 @app.route("/builds/<user_id>")
 @login_required
-def my_builds():
+def my_builds(user_id):
     builds = mongo.db.builds
     builds_average_cost = builds.aggregate([
         {
@@ -87,16 +88,9 @@ def my_builds():
         }
     ])
 
-    users_builds = builds.find({'author': current_user.email})
+    users_builds = builds.find({'author': ObjectId(user_id)})
 
     return render_template("my_builds.html", builds=users_builds, builds_average_cost=list(builds_average_cost))
-
-
-# Users Builds
-@app.route("/contact_us")
-def contact():
-
-    return render_template("contact.html")
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -190,7 +184,7 @@ def create_record():
             },
         }
 
-    # Adds exterior collection to record 
+    # Adds exterior collection to record
         exterior_dict = {}
         for item in exterior:
             exterior_dict.update({
@@ -203,7 +197,7 @@ def create_record():
 
         record.update({'exterior': exterior_dict})
             
-        # Adds Engine collection to record 
+        # Adds Engine collection to record
         engine_dict = {}
         for item in engine:
             engine_dict.update({
@@ -216,7 +210,7 @@ def create_record():
 
         record.update({'engine': engine_dict})
 
-        # Adds Running Gear collection to record 
+        # Adds Running Gear collection to record
         running_dict = {}
         for item in running:
             running_dict.update({
@@ -229,7 +223,7 @@ def create_record():
 
         record.update({'running': running_dict})
 
-        # Adds Interior collection to record 
+        # Adds Interior collection to record
         interior_dict = {}
         for item in interior:
             interior_dict.update({
@@ -244,7 +238,6 @@ def create_record():
         builds.insert_one(record)
         flash('Build Created', category='success')
         return redirect(url_for('builds'))
-
 
     exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
@@ -302,9 +295,88 @@ def view_record(build_id):
 
 
 # Edit a Record
-@app.route("/build/<build_id>/edit")
+@app.route("/build/<build_id>/edit", methods=['POST', 'GET'])
 @login_required
 def edit_record(build_id):
+
+    if request.method == 'POST':
+        builds = mongo.db.builds
+
+        exterior = mongo.db.exterior.find()
+        engine = mongo.db.engine.find()
+        running = mongo.db.runninggear.find()
+        interior = mongo.db.interior.find()
+
+        record = {
+            'total': float(request.form.get('total')),
+            'public': request.form.get('public')
+            'car': {
+                'make': request.form.get('make'),
+                'model': request.form.get('model'),
+                'trim': request.form.get('trim'),
+                'year': request.form.get('year'),
+                'price': float(request.form.get('price'))
+            },
+        }
+
+        #Adds exterior collection to record
+        exterior_dict = {}
+        for item in exterior:
+
+            exterior_dict.update({
+                item["part_id"]: {
+                    'product': request.form.get('exterior_'+item["part_id"]+'_product'),
+                    'link': request.form.get('exterior_'+item["part_id"]+'_link'),
+                    'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'exterior': exterior_dict})
+
+        # Adds Engine collection to record
+        engine_dict = {}
+        for item in engine:
+            engine_dict.update({
+                item["part_id"]: {
+                    'product': request.form.get('engine_'+item["part_id"]+'_product'),
+                    'link': request.form.get('engine_'+item["part_id"]+'_link'),
+                    'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'engine': engine_dict})
+
+        # Adds Running Gear collection to record
+        running_dict = {}
+        for item in running:
+            running_dict.update({
+                item["part_id"]: {
+                    'product': request.form.get('running_'+item["part_id"]+'_product'),
+                    'link': request.form.get('running_'+item["part_id"]+'_link'),
+                    'price': float(request.form.get('running_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'running': running_dict})
+
+        # Adds Interior collection to record
+        interior_dict = {}
+        for item in interior:
+            interior_dict.update({
+                item["part_id"]: {
+                    'product': request.form.get('interior_'+item["part_id"]+'_product'),
+                    'link': request.form.get('interior_'+item["part_id"]+'_link'),
+                    'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
+                }
+            })
+
+        record.update({'interior': interior_dict})
+
+        # Update in Mongo
+        builds.update({"_id": ObjectId(build_id)}, {'$set': record}) 
+        flash('Build Updated', category='warning')
+        return redirect(url_for('view_record', build_id=build_id))
+
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
     })
@@ -315,86 +387,6 @@ def edit_record(build_id):
     interior = mongo.db.interior.find()
 
     return render_template("edit.html", build=build, exterior=list(exterior), engine=list(engine), running=list(running), interior=list(interior))
-
-
-# Update a Record
-@app.route("/build/<build_id>", methods=['POST'])
-def update_record(build_id):
-    builds = mongo.db.builds
-
-    exterior = mongo.db.exterior.find()
-    engine = mongo.db.engine.find()
-    running = mongo.db.runninggear.find()
-    interior = mongo.db.interior.find()
-
-    record = {
-        'total': float(request.form.get('total')),
-        'car': {
-            'make': request.form.get('make'),
-            'model': request.form.get('model'),
-            'trim': request.form.get('trim'),
-            'year': request.form.get('year'),
-            'price': float(request.form.get('price'))
-        },
-    }
-
-   # Adds exterior collection to record 
-    exterior_dict = {}
-    for item in exterior:
-
-        exterior_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('exterior_'+item["part_id"]+'_product'),
-            'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'exterior': exterior_dict})
-        
-    # Adds Engine collection to record 
-    engine_dict = {}
-    for item in engine:
-        engine_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('engine_'+item["part_id"]+'_product'),
-            'link': request.form.get('engine_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'engine': engine_dict})
-
-    # Adds Running Gear collection to record 
-    running_dict = {}
-    for item in running:
-        running_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('running_'+item["part_id"]+'_product'),
-            'link': request.form.get('running_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('running_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'running': running_dict})
-
-    # Adds Interior collection to record 
-    interior_dict = {}
-    for item in interior:
-        interior_dict.update({
-            item["part_id"]: {
-            'product': request.form.get('interior_'+item["part_id"]+'_product'),
-            'link': request.form.get('interior_'+item["part_id"]+'_link'),
-            'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
-            }
-        })
-
-    record.update({'interior': interior_dict})
-
-    # Update in Mongo
-    builds.update({"_id": ObjectId(build_id)}, {'$set': record})  
-    flash('Build Updated', category='warning')
-    return redirect(url_for('view_record', build_id=build_id))
 
 
 # Delete a record
