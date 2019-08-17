@@ -97,7 +97,7 @@
                             </li>
                             {% if current_user.is_authenticated %}
                             <li>
-                                <a class="footer-text" href="{{ url_for('my_builds') }}">My Builds</a>
+                                <a class="footer-text" href="{{ url_for('my_builds', user_id=current_user._id) }}">My Builds</a>
                             </li>
                             <li>
                                 <a class="footer-text" href="{{ url_for('logout') }}">Logout</a>
