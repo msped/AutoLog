@@ -8,9 +8,9 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
-lm = LoginManager()
-lm.init_app(app)
-lm.login_view = 'login'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 app.secret_key = '7764d031a1424bf8b12357f7ebb05681'
 app.config["MONGO_DBNAME"] = os.getenv("MONGO_DBNAME")
@@ -48,7 +48,7 @@ class User(UserMixin):
         return password_check
 
 
-@lm.user_loader
+@login_manager.user_loader
 def load_user(email):
     u = mongo.db.users.find_one({'email': email})
     if not u:
@@ -67,7 +67,7 @@ def home():
 def builds():
     builds = mongo.db.builds
 
-    users_builds = builds.find({'public': True})
+    users_builds = builds.find({'visibility': 'Public'})
 
     return render_template("builds.html", builds=users_builds)
 
@@ -160,7 +160,7 @@ def create_record():
         users_Array = [str(current_user.email), ]
 
         record = {
-            'author': current_user.email,
+            'author': current_user._id,
             'build_name': request.form.get('build_name'),
             'total': float(request.form.get('total')),
             'visibility': request.form.get('visibility'),
@@ -186,52 +186,56 @@ def create_record():
     # Adds exterior collection to record
         exterior_dict = []
         for item in exterior:
-            exterior_dict.update({
-                item["part_id"]: {
-                    'product': request.form.get('exterior_'+item["part_id"]+'_product'),
-                    'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-                    'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
-                }
-            })
+            if request.form.get('exterior_'+item["part_id"]+'_product') is not None:
+                exterior_dict.append({
+                    item["part_id"]: {
+                        'product': request.form.get('exterior_'+item["part_id"]+'_product'),
+                        'link': request.form.get('exterior_'+item["part_id"]+'_link'),
+                        'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
+                    }
+                })
 
         record.update({'exterior': exterior_dict})
 
         # Adds Engine collection to record
         engine_dict = []
         for item in engine:
-            engine_dict.update({
-                item["part_id"]: {
-                    'product': request.form.get('engine_'+item["part_id"]+'_product'),
-                    'link': request.form.get('engine_'+item["part_id"]+'_link'),
-                    'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
-                }
-            })
+            if request.form.get('engine_'+item["part_id"]+'_product') is not None:
+                engine_dict.append({
+                    item["part_id"]: {
+                        'product': request.form.get('engine_'+item["part_id"]+'_product'),
+                        'link': request.form.get('engine_'+item["part_id"]+'_link'),
+                        'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
+                    }
+                })
 
         record.update({'engine': engine_dict})
 
         # Adds Running Gear collection to record
         running_dict = []
         for item in running:
-            running_dict.update({
-                item["part_id"]: {
-                    'product': request.form.get('running_'+item["part_id"]+'_product'),
-                    'link': request.form.get('running_'+item["part_id"]+'_link'),
-                    'price': float(request.form.get('running_'+item["part_id"]+'_price'))
-                }
-            })
+            if request.form.get('running_'+item["part_id"]+'_product') is not None:
+                running_dict.append({
+                    item["part_id"]: {
+                        'product': request.form.get('running_'+item["part_id"]+'_product'),
+                        'link': request.form.get('running_'+item["part_id"]+'_link'),
+                        'price': float(request.form.get('running_'+item["part_id"]+'_price'))
+                    }
+                })
 
         record.update({'running': running_dict})
 
         # Adds Interior collection to record
         interior_dict = []
         for item in interior:
-            interior_dict.update({
-                item["part_id"]: {
-                    'product': request.form.get('interior_'+item["part_id"]+'_product'),
-                    'link': request.form.get('interior_'+item["part_id"]+'_link'),
-                    'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
-                }
-            })
+            if request.form.get('interior_'+item["part_id"]+'_product') is not None:
+                interior_dict.append({
+                    item["part_id"]: {
+                        'product': request.form.get('interior_'+item["part_id"]+'_product'),
+                        'link': request.form.get('interior_'+item["part_id"]+'_link'),
+                        'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
+                    }
+                })
 
         record.update({'interior': interior_dict})
         builds.insert_one(record)
@@ -321,7 +325,7 @@ def edit_record(build_id):
         # Adds exterior collection to record
         exterior_dict = []
         for item in exterior:
-            if request.form.get('exterior_'+item["part_id"]+'_product') is not '':
+            if request.form.get('exterior_'+item["part_id"]+'_product') is not None:
                 exterior_dict.update({
                     item["part_id"]: {
                         'product': request.form.get('exterior_'+item["part_id"]+'_product'),
@@ -335,7 +339,7 @@ def edit_record(build_id):
         # Adds Engine collection to record
         engine_dict = []
         for item in engine:
-            if request.form.get('engine_'+item["part_id"]+'_product') is not '':
+            if request.form.get('engine_'+item["part_id"]+'_product') is not None:
                 engine_dict.update({
                     item["part_id"]: {
                         'product': request.form.get('engine_'+item["part_id"]+'_product'),
@@ -349,7 +353,7 @@ def edit_record(build_id):
         # Adds Running Gear collection to record
         running_dict = []
         for item in running:
-            if request.form.get('running_'+item["part_id"]+'_product') is not '':
+            if request.form.get('running_'+item["part_id"]+'_product') is not None:
                 running_dict.update({
                     item["part_id"]: {
                         'product': request.form.get('running_'+item["part_id"]+'_product'),
@@ -363,7 +367,7 @@ def edit_record(build_id):
         # Adds Interior collection to record
         interior_dict = []
         for item in interior:
-            if request.form.get('interior_'+item["part_id"]+'_product') is not '':
+            if request.form.get('interior_'+item["part_id"]+'_product') is not None:
                 interior_dict.update({
                     item["part_id"]: {
                         'product': request.form.get('interior_'+item["part_id"]+'_product'),
