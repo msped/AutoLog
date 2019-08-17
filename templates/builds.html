@@ -12,23 +12,11 @@ Builds
 {% block content %}
     <div class="text-center build-header">
         <h1>Builds</h1>
-        <p class="small">View all your builds and sort them by price and likes.</p>
+        <p class="small">View all public builds and sort them by price and likes.</p>
     </div>
 
     <div class="row">
-        <div class="build-stats col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div class="average-build-price">
-                <div id="amount-of-makes"></div>
-                <p class="average-price-header">Average Price of all Builds:</p>
-                {% for item in builds_average_cost %}
-                    {% if item._id == current_user.email %}
-                        <p class="average-price">{{ item.average_build_cost }}</p>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="search-builds col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="search-builds col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="search-header">
                 Sort Options
             </div>
@@ -114,8 +102,8 @@ Builds
         .await(makeGraph)
 
     function makeGraph(error, buildData) {
-        var ndx = crossfilter(buildData);
         console.log(buildData)
+        var ndx = crossfilter(buildData);
         var makeDim = ndx.dimension(dc.pluck('make'));
         var build_total = makeDim.group().reduceSum(dc.pluck('total'));
 
