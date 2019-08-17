@@ -18,70 +18,89 @@ Create a new build
 <form method="POST" action="{{ url_for('create_record') }}">
     <!--Make/Model/Trim/Year-->
     <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
-                    aria-controls="build-details">
-                    Build Details
-                </h6>
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
+                aria-controls="build-details">
+                Build Details
+            </h6>
+        </div>
+        <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
+            <div class="card-body">
+                <table class="table-sm col-md-6">
+                    <thead>
+                        <tr>
+                            <th>Build Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control input-sm" name="build_name" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Make
+                            </th>
+                            <th scope="col">
+                                Model
+                            </th>
+                            <th scope="col">
+                                Trim
+                            </th>
+                            <th scope="col">
+                                Year
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Car-->
+                        <tr>
+                            <td scope="row">
+                                <input type="text" class="form-control input-sm" name="make" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="model" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="trim" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" name="year" required>
+                            </td>
+                            <td>
+                                <input type="number" step="any" class="form-control input-sm part-price" name="price"
+                                    required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-sm col-md-4">
+                    <thead>
+                        <tr>
+                            <th>Visibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select name="visibility" class="form-control" id="visibility">
+                                    <option value="Public" selected>Public</option>
+                                    <option value="Private">Private</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
-                <div class="card-body">
-                    <table class="table-sm col-md-6">
-                        <thead>
-                            <tr>
-                                <th>Build Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" class="form-control input-sm" name="build_name" required></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">
-                                    Make
-                                </th>
-                                <th scope="col">
-                                    Model
-                                </th>
-                                <th scope="col">
-                                    Trim
-                                </th>
-                                <th scope="col">
-                                    Year
-                                </th>
-                                <th scope="col">
-                                    Price
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--Car-->
-                            <tr>
-                                <td scope="row">
-                                    <input type="text" class="form-control input-sm" name="make" required>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control input-sm" name="model" required>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control input-sm" name="trim" required>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control input-sm" name="year" required>
-                                </td>
-                                <td>
-                                    <input type="number" step="any" class="form-control input-sm part-price" name="price" required>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        </div>
     </div>
 
     <!--Exterior-->
