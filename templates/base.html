@@ -45,6 +45,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ url_for('my_builds', user_id=current_user._id) }}">
+                                My Builds
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                         </li>
                         {% else %}
@@ -95,12 +101,21 @@
                             <li>
                                 <a class="footer-text" href="{{ url_for('contact') }}">Contact Us</a>
                             </li>
+                            {% if current_user.is_authenticated %}
+                            <li>
+                                <a class="footer-text" href="{{ url_for('my_builds') }}">My Builds</a>
+                            </li>
+                            <li>
+                                <a class="footer-text" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                            {% else %}
                             <li>
                                 <a class="footer-text" href="{{ url_for('register') }}">Register</a>
                             </li>
                             <li>
                                 <a class="footer-text" href="{{ url_for('login') }}">Login</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                     <div class="col-md-6 mb-md-0 mb-3">
