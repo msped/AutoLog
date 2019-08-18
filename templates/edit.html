@@ -363,18 +363,19 @@ Edit a build
             </div>
         </div>
     </div>
-
+    
     <!--Build Total-->
     <div class="col-md-12">
         Total Price: <strong><span id="build-total" name="total" >{{ build.total }}</span></strong>
         <input type="hidden" name="total" value="{{ build.total }}" id="build-total">
     </div>
 
+    
     <!--Submit-->
     <div class="text-center submit-buttons">
         <a class="btn btn-outline-dark" href="{{ url_for('view_record', build_id=build._id) }}">Back to View</a>
-        <a class="btn btn-outline-danger" href="{{ url_for('delete_record', build_id=build._id) }}">Delete Build</a>
         <button type="submit" class="btn btn-outline-warning">Update</button>
+        <a class="btn btn-outline-danger float-right" href="{{ url_for('delete_record', build_id=build._id) }}">Delete Build</a>
     </div>
 
 </form>
