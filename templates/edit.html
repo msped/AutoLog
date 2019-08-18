@@ -78,7 +78,7 @@ Edit a build
                             <tr>
                                 <td>
                                     <select name="visibility" class="form-control" id="visibility">
-                                        <option value="{{ visibility }}">{{ visibility }}</option>
+                                        <option value="{{ build.visibility }}">{{ build.visibility }}</option>
                                         {% if visibility == 'Public' %}
                                         <option value="Private">Private</option>
                                         {% else %}
