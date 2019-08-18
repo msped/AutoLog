@@ -201,7 +201,7 @@ def create_record():
                 'year': request.form.get('year'),
                 'price': float(request.form.get('price'))
             },
-            'votes': [
+            'votes': {
                 'like': {
                     'count': 1,
                     'users_liked': users
@@ -210,10 +210,10 @@ def create_record():
                     'count': 0,
                     'users_disliked': []
                 }
-            ],
+            },
         }
 
-    # Adds exterior collection to record
+        # Adds exterior collection to record
         exterior_dict = []
         for item in exterior:
             product = request.form.get('exterior_'+item["part_id"]+'_product')
@@ -632,10 +632,10 @@ def get_cars():
 
     return jsonify(buildData)
 
-if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
-            debug=False)
+#if __name__ == '__main__':
+#    app.run(host=os.environ.get('IP'),
+#            port=int(os.environ.get('PORT')),
+#            debug=False)
 
-##if __name__ == '__main__':
-##    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
