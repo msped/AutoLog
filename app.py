@@ -131,7 +131,7 @@ def register():
                     flask('Passwords did not match', category='danger')
             else:
                 flash_message = Markup(
-                    'User already exists, <a href="{{ url_for(\'login\')}}"' +
+                    'User already exists, <a href="/login"' +
                     'class="alert-link">Login here.</a>')
                 flash(flash_message, category="danger")
             return redirect(url_for('register'))
@@ -151,7 +151,8 @@ def login():
                 if str(user['email']) == str(request.form.get('email')):
                     if User.validate_login(request.form.get('password'),
                                            user['password']):
-                        user_obj = User(user['email'], user['username'], user['_id'])
+                        user_obj = User(user['email'],
+                                        user['username'], user['_id'])
                         login_user(user_obj)
                         flash("Logged in successfully", category='success')
                         return redirect(url_for('builds'))
@@ -464,7 +465,7 @@ def edit_record(build_id):
 
 
 # Delete a record
-@app.route("/build/<build_id>")
+@app.route("/build/<build_id>/delete")
 @login_required
 def delete_record(build_id):
     mongo.db.builds.remove({
