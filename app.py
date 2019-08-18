@@ -1,7 +1,15 @@
 import os
 import json
-from flask import Flask, render_template, redirect, request, url_for, flash, jsonify
-from flask_login import LoginManager, UserMixin, current_user, login_user, login_required, logout_user
+from flask import (
+    Flask, render_template, redirect, request, url_for, flash, jsonify, Markup)
+from flask_login import (
+        LoginManager,
+        UserMixin,
+        current_user,
+        login_user,
+        login_required,
+        logout_user
+    )
 from flask_pymongo import PyMongo
 import bcrypt
 from bson.objectid import ObjectId
@@ -44,7 +52,8 @@ class User(UserMixin):
 
     @staticmethod
     def validate_login(password, password_hash):
-        password_check = bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8'))
+        password_check = bcrypt.checkpw(password.encode('utf-8'),
+                                        password_hash.encode('utf-8'))
         return password_check
 
 
@@ -90,18 +99,20 @@ def my_builds(user_id):
 
     users_builds = builds.find({'author': ObjectId(user_id)})
 
-    return render_template("my_builds.html", builds=users_builds, builds_average_cost=list(builds_average_cost))
+    return render_template("my_builds.html", builds=users_builds,
+                           builds_average_cost=list(builds_average_cost))
 
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email_exists = mongo.db.users.find_one({'email': request.form.get('email')})
-        if email_exists is None:
+        user = mongo.db.users.find_one({'email': request.form.get('email')})
+        if user is None:
             password = request.form.get('password')
             confirm_password = request.form.get('confirm-password')
             if password == confirm_password:
-                hashed_pwd = bcrypt.hashpw(password=password.encode('utf-8'), salt=bcrypt.gensalt())
+                hashed_pwd = bcrypt.hashpw(password=password.encode('utf-8'),
+                                           salt=bcrypt.gensalt())
                 mongo.db.users.insert_one({
                     'username': request.form.get('username'),
                     'email': request.form.get('email'),
@@ -109,9 +120,14 @@ def register():
                 })
                 flash('Account created!', category='success')
                 return redirect(url_for('login'))
+            else:
+                flask('Passwords did not match', category='danger')
         else:
-            flash('User already exists', category="danger")        
-        return redirect(url_for('register'))       
+            flash_message = Markup(
+                'User already exists, <a href="{{ url_for(\'login\')}}"' +
+                'class="alert-link">Login here.</a>')
+            flash(flash_message, category="danger")
+        return redirect(url_for('register'))
     return render_template("register.html")
 
 
@@ -121,14 +137,15 @@ def login():
         user = mongo.db.users.find_one({'email': request.form.get('email')})
         if user is not None:
             if str(user['email']) == str(request.form.get('email')):
-                if User.validate_login(request.form.get('password'), user['password']):
+                if User.validate_login(request.form.get('password'),
+                                       user['password']):
                     user_obj = User(user['email'], user['username'])
                     login_user(user_obj)
                     flash("Logged in successfully", category='success')
                     return redirect(url_for('builds'))
                 else:
                     flash("Incorrect E-mail/Password", category='danger')
-            else: 
+            else:
                 flash("Incorrect E-mail/Password", category='danger')
         else:
             flash("Incorrect E-mail/Password", category='danger')
@@ -186,12 +203,17 @@ def create_record():
     # Adds exterior collection to record
         exterior_dict = []
         for item in exterior:
-            if request.form.get('exterior_'+item["part_id"]+'_product') is not None:
+            product = request.form.get('exterior_'+item["part_id"]+'_product')
+            if product is not None:
                 exterior_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('exterior_'+item["part_id"]+'_product'),
-                        'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'exterior_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'exterior_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -200,12 +222,17 @@ def create_record():
         # Adds Engine collection to record
         engine_dict = []
         for item in engine:
-            if request.form.get('engine_'+item["part_id"]+'_product') is not None:
+            product = request.form.get('engine_'+item["part_id"]+'_product')
+            if product is not None:
                 engine_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('engine_'+item["part_id"]+'_product'),
-                        'link': request.form.get('engine_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'engine_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'engine_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -214,12 +241,17 @@ def create_record():
         # Adds Running Gear collection to record
         running_dict = []
         for item in running:
-            if request.form.get('running_'+item["part_id"]+'_product') is not None:
+            product = request.form.get('running_'+item["part_id"]+'_product')
+            if product is not None:
                 running_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('running_'+item["part_id"]+'_product'),
-                        'link': request.form.get('running_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('running_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'running_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'running_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -228,12 +260,17 @@ def create_record():
         # Adds Interior collection to record
         interior_dict = []
         for item in interior:
-            if request.form.get('interior_'+item["part_id"]+'_product') is not None:
+            product = request.form.get('interior_'+item["part_id"]+'_product')
+            if product is not None:
                 interior_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('interior_'+item["part_id"]+'_product'),
-                        'link': request.form.get('interior_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'interior_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'interior_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -242,7 +279,8 @@ def create_record():
         flash('Build Created', category='success')
         return redirect(url_for('builds'))
 
-    return render_template("create.html", exterior=exterior, engine=engine, running=running, interior=interior)
+    return render_template("create.html", exterior=exterior, engine=engine,
+                           running=running, interior=interior)
 
 
 # View a Record
@@ -258,7 +296,7 @@ def view_record(build_id):
     interior = mongo.db.interior.find()
 
     # Check for if user has liked the build already
-    if current_user.is_authenticated: 
+    if current_user.is_authenticated:
         liked_length = int(len(build['votes']['like']['users_liked']))
 
         liked_by = []
@@ -267,7 +305,7 @@ def view_record(build_id):
             user_in_like = build['votes']['like']['users_liked'][x]
             liked_by.append(user_in_like)
 
-        if str(current_user.email) in liked_by: 
+        if str(current_user.email) in liked_by:
             user_liked = True
         else:
             user_liked = False
@@ -280,15 +318,17 @@ def view_record(build_id):
             user_in_dislike = build['votes']['dislike']['users_disliked'][x]
             disliked_by.append(user_in_dislike)
 
-        if str(current_user.email) in disliked_by: 
+        if str(current_user.email) in disliked_by:
             user_disliked = True
         else:
             user_disliked = False
-    else: 
+    else:
         user_liked = True
         user_disliked = True
 
-    return render_template("view.html", build=build, exterior=exterior, engine=engine, running=running, interior=interior, user_liked=user_liked, user_disliked=user_disliked)
+    return render_template("view.html", build=build, exterior=exterior,
+                           engine=engine, running=running, interior=interior,
+                           user_liked=user_liked, user_disliked=user_disliked)
 
 
 # Edit a Record
@@ -319,12 +359,17 @@ def edit_record(build_id):
         # Adds exterior collection to record
         exterior_dict = []
         for item in exterior:
-            if request.form.get('exterior_'+item["part_id"]+'_product') is not None:
-                exterior_dict.update({
+            product = request.form.get('exterior_'+item["part_id"]+'_product')
+            if product is not None:
+                exterior_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('exterior_'+item["part_id"]+'_product'),
-                        'link': request.form.get('exterior_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('exterior_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'exterior_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'exterior_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -333,12 +378,17 @@ def edit_record(build_id):
         # Adds Engine collection to record
         engine_dict = []
         for item in engine:
-            if request.form.get('engine_'+item["part_id"]+'_product') is not None:
-                engine_dict.update({
+            product = request.form.get('engine_'+item["part_id"]+'_product')
+            if product is not None:
+                engine_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('engine_'+item["part_id"]+'_product'),
-                        'link': request.form.get('engine_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('engine_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'engine_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'engine_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -347,12 +397,17 @@ def edit_record(build_id):
         # Adds Running Gear collection to record
         running_dict = []
         for item in running:
-            if request.form.get('running_'+item["part_id"]+'_product') is not None:
-                running_dict.update({
+            product = request.form.get('running_'+item["part_id"]+'_product')
+            if product is not None:
+                running_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('running_'+item["part_id"]+'_product'),
-                        'link': request.form.get('running_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('running_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'running_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'running_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
@@ -361,19 +416,24 @@ def edit_record(build_id):
         # Adds Interior collection to record
         interior_dict = []
         for item in interior:
-            if request.form.get('interior_'+item["part_id"]+'_product') is not None:
-                interior_dict.update({
+            product = request.form.get('interior_'+item["part_id"]+'_product')
+            if product is not None:
+                interior_dict.append({
                     item["part_id"]: {
-                        'product': request.form.get('interior_'+item["part_id"]+'_product'),
-                        'link': request.form.get('interior_'+item["part_id"]+'_link'),
-                        'price': float(request.form.get('interior_'+item["part_id"]+'_price'))
+                        'product': product,
+                        'link': request.form.get(
+                                'interior_'+item["part_id"]+'_link'
+                            ),
+                        'price': float(request.form.get(
+                                'interior_'+item["part_id"]+'_price'
+                            ))
                     }
                 })
 
         record.update({'interior': interior_dict})
 
         # Update in Mongo
-        builds.update({"_id": ObjectId(build_id)}, {'$set': record}) 
+        builds.update({"_id": ObjectId(build_id)}, {'$set': record})
         flash('Build Updated', category='warning')
         return redirect(url_for('view_record', build_id=build_id))
 
@@ -386,7 +446,9 @@ def edit_record(build_id):
     running = mongo.db.runninggear.find()
     interior = mongo.db.interior.find()
 
-    return render_template("edit.html", build=build, exterior=list(exterior), engine=list(engine), running=list(running), interior=list(interior))
+    return render_template("edit.html", build=build, exterior=list(exterior),
+                           engine=list(engine), running=list(running),
+                           interior=list(interior))
 
 
 # Delete a record
@@ -418,15 +480,18 @@ def like_build(build_id):
         liked_by.append(user)
 
     if current_user.email in liked_by:
-        result = True 
+        result = True
 
-    else: 
+    else:
         likes_number = current_build['votes']['like']['count']
 
-        result = likes_number + 1 
+        result = likes_number + 1
 
-        build.update_one({"_id": ObjectId(build_id)}, {'$set': {'votes.like.count': result}}) 
-        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.like.users_liked': str(current_user.email)}}) 
+        build.update_one({"_id": ObjectId(build_id)},
+                         {'$set': {'votes.like.count': result}})
+        build.update_one({"_id": ObjectId(build_id)},
+                         {'$push': {'votes.like.users_liked':
+                          str(current_user.email)}})
 
     return str(result)
 
@@ -439,7 +504,8 @@ def dislike_build(build_id):
         "_id": ObjectId(build_id)
     })
 
-    array_length = int(len(current_build['votes']['dislike']['users_disliked']))
+    array_length = int(len(
+                       current_build['votes']['dislike']['users_disliked']))
 
     disliked_by = []
 
@@ -448,15 +514,17 @@ def dislike_build(build_id):
         disliked_by.append(user)
 
     if current_user.email in disliked_by:
-        result = True 
+        result = True
 
-    else: 
+    else:
         dislikes_number = current_build['votes']['dislike']['count']
 
         result = dislikes_number + 1
 
-        build.update_one({"_id": ObjectId(build_id)}, {'$set': {'votes.dislike.count': result}}) 
-        build.update_one({"_id": ObjectId(build_id)}, {'$push': {'votes.dislike.users_disliked': 'Mattex'}}) 
+        build.update_one({"_id": ObjectId(build_id)},
+                         {'$set': {'votes.dislike.count': result}})
+        build.update_one({"_id": ObjectId(build_id)},
+                         {'$push': {'votes.dislike.users_disliked': 'Mattex'}})
 
     return str(result)
 
@@ -494,7 +562,8 @@ def sort_likes():
         }
     ])
 
-    return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+    return render_template('builds.html', builds=sort_results,
+                           builds_average_cost=list(builds_average_cost))
 
 
 @app.route('/sort_price', methods=['POST'])
@@ -507,14 +576,14 @@ def sort_prices():
     if sort_option == "high_to_low":
         sort_results = builds.aggregate(
             [
-                {'$sort' : {'total': -1}}
+                {'$sort': {'total': -1}}
             ]
         )
 
     if sort_option == "low_to_high":
         sort_results = builds.aggregate(
             [
-                {'$sort' : {'total': 1}}
+                {'$sort': {'total': 1}}
             ]
         )
 
@@ -529,7 +598,8 @@ def sort_prices():
         }
     ])
 
-    return render_template('builds.html', builds=sort_results, builds_average_cost=list(builds_average_cost))
+    return render_template('builds.html', builds=sort_results,
+                           builds_average_cost=list(builds_average_cost))
 
 
 @app.route('/get_cars')
