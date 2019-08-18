@@ -201,7 +201,7 @@ def create_record():
                 'year': request.form.get('year'),
                 'price': float(request.form.get('price'))
             },
-            'votes': {
+            'votes': [
                 'like': {
                     'count': 1,
                     'users_liked': users
@@ -210,7 +210,7 @@ def create_record():
                     'count': 0,
                     'users_disliked': []
                 }
-            },
+            ],
         }
 
     # Adds exterior collection to record
