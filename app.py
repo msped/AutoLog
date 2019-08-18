@@ -48,7 +48,7 @@ class User(UserMixin):
         return False
 
     def get_id(self):
-        return self._id
+        return self.email
 
     @staticmethod
     def validate_login(password, password_hash):
@@ -105,50 +105,62 @@ def my_builds(user_id):
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        user = mongo.db.users.find_one({'email': request.form.get('email')})
-        if user is None:
-            password = request.form.get('password')
-            confirm_password = request.form.get('confirm-password')
-            if password == confirm_password:
-                hashed_pwd = bcrypt.hashpw(password=password.encode('utf-8'),
-                                           salt=bcrypt.gensalt())
-                mongo.db.users.insert_one({
-                    'username': request.form.get('username'),
-                    'email': request.form.get('email'),
-                    'password': hashed_pwd.decode('utf-8')
-                })
-                flash('Account created!', category='success')
-                return redirect(url_for('login'))
+    if current_user.is_authenticated:
+        flash('Already logged in!', category='warning')
+        redirect(url_for('builds'))
+    else:
+        if request.method == 'POST':
+            user = mongo.db.users.find_one({'email':
+                                           request.form.get('email')})
+            if user is None:
+                password = request.form.get('password')
+                confirm_password = request.form.get('confirm-password')
+                if password == confirm_password:
+                    hashed_pwd = bcrypt.hashpw(
+                            password=password.encode('utf-8'),
+                            salt=bcrypt.gensalt()
+                        )
+                    mongo.db.users.insert_one({
+                        'username': request.form.get('username'),
+                        'email': request.form.get('email'),
+                        'password': hashed_pwd.decode('utf-8')
+                    })
+                    flash('Account created!', category='success')
+                    return redirect(url_for('login'))
+                else:
+                    flask('Passwords did not match', category='danger')
             else:
-                flask('Passwords did not match', category='danger')
-        else:
-            flash_message = Markup(
-                'User already exists, <a href="{{ url_for(\'login\')}}"' +
-                'class="alert-link">Login here.</a>')
-            flash(flash_message, category="danger")
-        return redirect(url_for('register'))
+                flash_message = Markup(
+                    'User already exists, <a href="{{ url_for(\'login\')}}"' +
+                    'class="alert-link">Login here.</a>')
+                flash(flash_message, category="danger")
+            return redirect(url_for('register'))
     return render_template("register.html")
 
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    if request.method == 'POST':
-        user = mongo.db.users.find_one({'email': request.form.get('email')})
-        if user is not None:
-            if str(user['email']) == str(request.form.get('email')):
-                if User.validate_login(request.form.get('password'),
-                                       user['password']):
-                    user_obj = User(user['email'], user['username'])
-                    login_user(user_obj)
-                    flash("Logged in successfully", category='success')
-                    return redirect(url_for('builds'))
+    if current_user.is_authenticated:
+        flash('Already logged in!', category='warning')
+        redirect(url_for('builds'))
+    else:
+        if request.method == 'POST':
+            user = mongo.db.users.find_one({'email':
+                                            request.form.get('email')})
+            if user is not None:
+                if str(user['email']) == str(request.form.get('email')):
+                    if User.validate_login(request.form.get('password'),
+                                           user['password']):
+                        user_obj = User(user['email'], user['username'], user['_id'])
+                        login_user(user_obj)
+                        flash("Logged in successfully", category='success')
+                        return redirect(url_for('builds'))
+                    else:
+                        flash("Incorrect E-mail/Password", category='danger')
                 else:
                     flash("Incorrect E-mail/Password", category='danger')
             else:
                 flash("Incorrect E-mail/Password", category='danger')
-        else:
-            flash("Incorrect E-mail/Password", category='danger')
     return render_template("login.html")
 
 
@@ -621,8 +633,8 @@ def get_cars():
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-        port=int(os.environ.get('PORT')),
-        debug=False)
+            port=int(os.environ.get('PORT')),
+            debug=False)
 
 ##if __name__ == '__main__':
 ##    app.run(debug=True)
