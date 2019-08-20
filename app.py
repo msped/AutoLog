@@ -86,21 +86,10 @@ def builds():
 @login_required
 def my_builds(user_id):
     builds = mongo.db.builds
-    builds_average_cost = builds.aggregate([
-        {
-            '$group': {
-                '_id': '$author',
-                'average_build_cost': {
-                    '$avg': '$total'
-                }
-            }
-        }
-    ])
 
     users_builds = builds.find({'author': ObjectId(user_id)})
 
-    return render_template("my_builds.html", builds=users_builds,
-                           builds_average_cost=list(builds_average_cost))
+    return render_template("my_builds.html", builds=users_builds)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -564,19 +553,7 @@ def sort_likes():
             ]
         )
 
-    builds_average_cost = builds.aggregate([
-        {
-            '$group': {
-                '_id': '$author',
-                'average_build_cost': {
-                    '$avg': '$total'
-                }
-            }
-        }
-    ])
-
-    return render_template('builds.html', builds=sort_results,
-                           builds_average_cost=list(builds_average_cost))
+    return render_template('builds.html', builds=sort_results)
 
 
 @app.route('/sort_price', methods=['POST'])
@@ -600,19 +577,7 @@ def sort_prices():
             ]
         )
 
-    builds_average_cost = builds.aggregate([
-        {
-            '$group': {
-                '_id': '$author',
-                'average_build_cost': {
-                    '$avg': '$total'
-                }
-            }
-        }
-    ])
-
-    return render_template('builds.html', builds=sort_results,
-                           builds_average_cost=list(builds_average_cost))
+    return render_template('builds.html', builds=sort_results)
 
 
 @app.route('/get_cars')
@@ -632,10 +597,10 @@ def get_cars():
 
     return jsonify(buildData)
 
-#if __name__ == '__main__':
-#    app.run(host=os.environ.get('IP'),
-#            port=int(os.environ.get('PORT')),
-#            debug=False)
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=False)
+
+##if __name__ == '__main__':
+##    app.run(debug=True)

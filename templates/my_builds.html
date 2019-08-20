@@ -14,17 +14,12 @@ Builds
         <h1>My Builds</h1>
         <p class="small">View all your builds and sort them by price and likes.</p>
     </div>
-    {% if builds[0] is not none %} 
+    
+    {% if builds %} 
     <div class="row">
         <div class="build-stats col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div class="average-build-price">
+            <div class="make-graph">
                 <div id="amount-of-makes"></div>
-                <p class="average-price-header">Average Price of all Builds:</p>
-                {% for item in builds_average_cost %}
-                    {% if item._id == current_user.email %}
-                        <p class="average-price">{{ item.average_build_cost }}</p>
-                    {% endif %}
-                {% endfor %}
             </div>
         </div>
 
@@ -106,12 +101,6 @@ Builds
 <script type="text/javascript" src="{{ url_for('static', filename='js/dc.js')}}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/d3-queue.min.js')}}"></script>
 <script>
-    $(document).ready(function () {
-        server_average = parseFloat($('.average-price').html());
-        $('.average-price').html(server_average.toFixed(2))
-    })
-
-
     d3.queue()
         .defer(d3.json, "/get_cars")
         .await(makeGraph)

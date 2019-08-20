@@ -10,12 +10,6 @@
     font-family: 'Oswald';
 }
 
-/*Builds Stats*/
-.average-price-header, .average-price {
-    font-family: 'Oswald', sans-serif;
-    display: inline-block;
-}
-
 /*Build Search*/
 .search-header {
     text-align: center;
