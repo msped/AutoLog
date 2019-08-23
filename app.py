@@ -13,6 +13,7 @@ from flask_login import (
 from flask_pymongo import PyMongo
 import bcrypt
 from bson.objectid import ObjectId
+from utils import votes
 
 app = Flask(__name__)
 
@@ -304,31 +305,11 @@ def view_record(build_id):
 
     # Check for if user has liked the build already
     if current_user.is_authenticated:
-        liked_length = int(len(build['votes']['like']['users_liked']))
+        user_liked = votes(current_user.email, build['votes']['users_liked'],
+                           'like')
 
-        liked_by = []
-
-        for x in range(0, liked_length):
-            user_in_like = build['votes']['like']['users_liked'][x]
-            liked_by.append(user_in_like)
-
-        if str(current_user.email) in liked_by:
-            user_liked = True
-        else:
-            user_liked = False
-
-        disliked_length = int(len(build['votes']['dislike']['users_disliked']))
-
-        disliked_by = []
-
-        for x in range(0, disliked_length):
-            user_in_dislike = build['votes']['dislike']['users_disliked'][x]
-            disliked_by.append(user_in_dislike)
-
-        if str(current_user.email) in disliked_by:
-            user_disliked = True
-        else:
-            user_disliked = False
+        user_disliked = votes(current_user.email,
+                              build['votes']['users_disliked'], 'dislike')
     else:
         user_liked = True
         user_disliked = True
