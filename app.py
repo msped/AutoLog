@@ -87,7 +87,12 @@ def builds():
 def my_builds(user_id):
     builds = mongo.db.builds
 
-    users_builds = builds.find({'author': ObjectId(user_id)})
+    item_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
+
+    if item_count > 0:
+        users_builds = builds.find({'author': ObjectId(user_id)})
+    else:
+        users_builds = False
 
     return render_template("my_builds.html", builds=users_builds)
 
