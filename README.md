@@ -1,8 +1,8 @@
-# AutoLog 
+# AutoLog
 
 AutoLog is a parts manager for Car enthusiasts. The site will keep a record of all car parts with the benefit of giving a total price as well as giving other the chance to vote on users builds.
 
-You can view the project here on Heroku: http://autolog-msped.herokuapp.com/
+You can view the project [here on Heroku.](http://autolog-msped.herokuapp.com/)
 
 ## UX
 
@@ -70,11 +70,9 @@ Auotmated testing can be found in testing.py. It can be ran with `python testing
 
 ### Bugs found during testing
 
-
-
 ## Deployment
 
-This application was deloyed using Heroku. It can be view here: http://autolog-msped.herokuapp.com/
+This application was deloyed using Heroku. It can be view [here.](http://autolog-msped.herokuapp.com/)
 
 For this application to be deployed it first requires two files, requirements.txt and a Procfile.
 

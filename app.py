@@ -21,7 +21,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-app.secret_key = '7764d031a1424bf8b12357f7ebb05681'
+app.secret_key = os.getenv("SECERT_KEY")
 app.config["MONGO_DBNAME"] = os.getenv("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
@@ -311,7 +311,7 @@ def view_record(build_id):
 
     # Check for if user has liked the build already
     if current_user.is_authenticated:
-        user_liked = votes(current_user.email, 
+        user_liked = votes(current_user.email,
                            build['votes']['like']['users_liked'], 'like')
 
         user_disliked = votes(
