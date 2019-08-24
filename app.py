@@ -311,11 +311,13 @@ def view_record(build_id):
 
     # Check for if user has liked the build already
     if current_user.is_authenticated:
-        user_liked = votes(current_user.email, build['votes']['users_liked'],
-                           'like')
+        user_liked = votes(current_user.email, 
+                           build['votes']['like']['users_liked'], 'like')
 
-        user_disliked = votes(current_user.email,
-                              build['votes']['users_disliked'], 'dislike')
+        user_disliked = votes(
+                              current_user.email,
+                              build['votes']['dislike']['users_disliked'],
+                              'dislike')
     else:
         user_liked = True
         user_disliked = True
