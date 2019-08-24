@@ -105,30 +105,36 @@ def register():
         redirect(url_for('builds'))
     else:
         if request.method == 'POST':
-            user = mongo.db.users.find_one({'email':
-                                           request.form.get('email')})
-            if user is None:
-                password = request.form.get('password')
-                confirm_password = request.form.get('confirm-password')
-                if password == confirm_password:
-                    hashed_pwd = bcrypt.hashpw(
-                            password=password.encode('utf-8'),
-                            salt=bcrypt.gensalt()
-                        )
-                    mongo.db.users.insert_one({
-                        'username': request.form.get('username'),
-                        'email': request.form.get('email'),
-                        'password': hashed_pwd.decode('utf-8')
-                    })
-                    flash('Account created!', category='success')
-                    return redirect(url_for('login'))
-                else:
-                    flask('Passwords did not match', category='danger')
-            else:
+            email = request.form.get('email')
+            user = mongo.db.users.count_documents({'email': email})
+            if user > 0:
                 flash_message = Markup(
                     'User already exists, <a href="/login"' +
                     'class="alert-link">Login here.</a>')
                 flash(flash_message, category="danger")
+            else:
+                username = request.form.get('username')
+                user = mongo.db.users.count_documents({'username': username})
+                if user > 0:
+                    flash('Username already exists.', category='danger')
+                    return redirect(url_for('register'))
+                else:
+                    password = request.form.get('password')
+                    confirm_password = request.form.get('confirm-password')
+                    if password == confirm_password:
+                        hashed_pwd = bcrypt.hashpw(
+                                password=password.encode('utf-8'),
+                                salt=bcrypt.gensalt()
+                            )
+                        mongo.db.users.insert_one({
+                            'username': request.form.get('username'),
+                            'email': request.form.get('email'),
+                            'password': hashed_pwd.decode('utf-8')
+                        })
+                        flash('Account created!', category='success')
+                        return redirect(url_for('login'))
+                    else:
+                        flask('Passwords did not match', category='danger')
             return redirect(url_for('register'))
     return render_template("register.html")
 
