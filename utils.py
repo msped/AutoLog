@@ -1,6 +1,5 @@
-def votes(user_email, build_votes, vote_option):
+def votes(user_email, build_votes):
     if user_email in build_votes:
         return True
     else:
         return False
-        
