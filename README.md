@@ -1,5 +1,7 @@
 # AutoLog
 
+[![Build Status](https://travis-ci.org/msped/AutoLog.svg?branch=master)](https://travis-ci.org/msped/AutoLog)
+
 AutoLog is a parts manager for Car enthusiasts. The site will keep a record of all car parts with the benefit of giving a total price as well as giving other the chance to vote on users builds.
 
 You can view the project [here on Heroku.](http://autolog-msped.herokuapp.com/)
