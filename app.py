@@ -30,7 +30,7 @@ mongo = PyMongo(app)
 
 # Classes
 class User(UserMixin):
-
+    """User Class as defined by flask-login"""
     def __init__(self, email, username, user_id):
         self.email = email
         self.username = username
@@ -69,12 +69,14 @@ def load_user(email):
 # Site Routes
 @app.route("/")
 def home():
+    """Route to Home Page"""
     return render_template("home.html")
 
 
 # All public builds
 @app.route("/builds")
 def builds():
+    """Route to builds page, shows all public builds"""
     builds = mongo.db.builds
 
     users_builds = builds.find({'visibility': 'Public'})
@@ -86,6 +88,7 @@ def builds():
 @app.route("/builds/<user_id>")
 @login_required
 def my_builds(user_id):
+    """Route to users builds page, all builds (public or private)"""
     builds = mongo.db.builds
 
     item_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
@@ -100,6 +103,7 @@ def my_builds(user_id):
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    """Route to Regsiter page, also handles registration via POST"""
     if current_user.is_authenticated:
         flash('Already logged in!', category='warning')
         redirect(url_for('builds'))
@@ -141,6 +145,7 @@ def register():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
+    """Route to Login Page, also handles login via POST"""
     if current_user.is_authenticated:
         flash('Already logged in!', category='warning')
         redirect(url_for('builds'))
@@ -169,6 +174,7 @@ def login():
 @app.route("/logout")
 @login_required
 def logout():
+    """Logout user"""
     logout_user()
     flash('Logged out Successfully', category='success')
     return redirect(url_for('login'))
@@ -180,6 +186,8 @@ def logout():
 @app.route("/build/new", methods=['POST', 'GET'])
 @login_required
 def create_record():
+    """Route to create a new build,
+    also handle the database record creation via POST"""
     exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
@@ -300,6 +308,7 @@ def create_record():
 # View a Record
 @app.route("/build/<build_id>")
 def view_record(build_id):
+    """Route to view a builds base on build_id"""
     build = mongo.db.builds.find_one({
         "_id": ObjectId(build_id)
     })
@@ -331,7 +340,8 @@ def view_record(build_id):
 @app.route("/build/<build_id>/edit", methods=['POST', 'GET'])
 @login_required
 def edit_record(build_id):
-
+    """Route to edit page, based on build_id
+    Also handles the updating of the database via POST"""
     if request.method == 'POST':
         builds = mongo.db.builds
 
@@ -451,6 +461,7 @@ def edit_record(build_id):
 @app.route("/build/<build_id>/delete")
 @login_required
 def delete_record(build_id):
+    """Deletes a build using build_id"""
     mongo.db.builds.remove({
         '_id': ObjectId(build_id)
     })
@@ -461,6 +472,9 @@ def delete_record(build_id):
 # Votes
 @app.route('/build/like/<build_id>', methods=['POST'])
 def like_build(build_id):
+    """Updates database to show a user has liked a build along with storing
+    users email to stop multiple likes by one user. Return vote amount for AJAX
+    response to update to most current likes"""
     build = mongo.db.builds
 
     current_build = mongo.db.builds.find_one({
@@ -494,6 +508,9 @@ def like_build(build_id):
 
 @app.route('/build/dislike/<build_id>', methods=['POST'])
 def dislike_build(build_id):
+    """Updates database to show a user has disliked a build along with storing
+    users email to stop multiple likes by one user. Return vote amount for AJAX
+    response to update to most current dislikes"""
     build = mongo.db.builds
 
     current_build = mongo.db.builds.find_one({
@@ -528,7 +545,7 @@ def dislike_build(build_id):
 # Sort on Likes and Price
 @app.route('/sort_likes', methods=['POST'])
 def sort_likes():
-
+    """Sorts builds by likes, high to low and low to high"""
     builds = mongo.db.builds
 
     sort_option = request.form.get('sort_by_likes')
@@ -552,7 +569,7 @@ def sort_likes():
 
 @app.route('/sort_price', methods=['POST'])
 def sort_prices():
-
+    """Sorts builds by price, high to low and low to high"""
     builds = mongo.db.builds
 
     sort_option = request.form.get('sort_by_price')
@@ -576,7 +593,7 @@ def sort_prices():
 
 @app.route('/get_cars')
 def get_cars():
-
+    """Get database information for DC/D3 graph"""
     builds = mongo.db.builds
 
     get_cars = builds.find({'author': current_user._id})
