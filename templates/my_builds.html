@@ -102,27 +102,33 @@ Builds
 <script type="text/javascript" src="{{ url_for('static', filename='js/d3-queue.min.js')}}"></script>
 <script>
     d3.queue()
-        .defer(d3.json, "/get_cars")
+        .defer(d3.json, "{{ url_for('get_cars')}}")
         .await(makeGraph)
 
     function makeGraph(error, buildData) {
         console.log(buildData)
+        dc.config.defaultColors(0)
         var ndx = crossfilter(buildData);
-        var makeDim = ndx.dimension(dc.pluck('make'));
-        var build_total = makeDim.group().reduceSum(dc.pluck('total'));
+        var makeDim = ndx.dimension(function(d){
+            if(d.make != null){
+               return d.make; 
+            }
+        });
+        console.log(makeDim)
+        var build_total = makeDim.group();
 
         dc.barChart('#amount-of-makes')
             .width(500)
-            .height(350)
+            .height(250)
             .margins({ top: 10, right: 50, bottom: 30, left: 50 })
             .dimension(makeDim)
             .group(build_total)
-            .tranistionDuration(500)
-            .x(d3.scale.ordinal())
+            .transitionDuration(500)
+            .x(d3.scaleBand())
             .xUnits(dc.units.ordinal)
             .xAxisLabel("Make")
             .yAxis().ticks(4);
-
+        
         dc.renderAll();
     }
 </script>
