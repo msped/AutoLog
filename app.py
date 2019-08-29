@@ -85,9 +85,9 @@ def builds():
 @login_required
 def my_builds(user_id):
     """Route to users builds page, all builds (public or private)"""
-    item_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
+    build_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
 
-    if item_count > 0:
+    if build_count > 0:
         users_builds = builds.find({'author': ObjectId(user_id)})
     else:
         users_builds = False
@@ -309,12 +309,11 @@ def view_record(build_id):
     # Check for if user has liked the build already
     if current_user.is_authenticated:
         user_liked = votes(current_user.email,
-                           build['votes']['like']['users_liked'], 'like')
+                           build['votes']['like']['users_liked'])
 
         user_disliked = votes(
                               current_user.email,
-                              build['votes']['dislike']['users_disliked'],
-                              'dislike')
+                              build['votes']['dislike']['users_disliked'])
     else:
         user_liked = True
         user_disliked = True
@@ -462,17 +461,11 @@ def like_build(build_id):
     response to update to most current likes"""
     build = mongo.db.builds
 
-    current_build = mongo.db.builds.find_one({
+    current_build = build.find_one({
         "_id": ObjectId(build_id)
     })
 
-    array_length = int(len(current_build['votes']['like']['users_liked']))
-
-    liked_by = []
-
-    for x in range(0, array_length):
-        user = current_build['votes']['like']['users_liked'][x]
-        liked_by.append(user)
+    liked_by = list(current_build['votes']['like']['users_liked'])
 
     if current_user.email in liked_by:
         result = True
@@ -502,14 +495,7 @@ def dislike_build(build_id):
         "_id": ObjectId(build_id)
     })
 
-    array_length = int(len(
-                       current_build['votes']['dislike']['users_disliked']))
-
-    disliked_by = []
-
-    for x in range(0, array_length):
-        user = current_build['votes']['dislike']['users_disliked'][x]
-        disliked_by.append(user)
+    disliked_by = list(current_build['votes']['dislike']['users_disliked'])
 
     if current_user.email in disliked_by:
         result = True
@@ -522,7 +508,8 @@ def dislike_build(build_id):
         build.update_one({"_id": ObjectId(build_id)},
                          {'$set': {'votes.dislike.count': result}})
         build.update_one({"_id": ObjectId(build_id)},
-                         {'$push': {'votes.dislike.users_disliked': 'Mattex'}})
+                         {'$push': {'votes.dislike.users_disliked':
+                          current_user.email}})
 
     return str(result)
 
