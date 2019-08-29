@@ -34,7 +34,7 @@ This is a web application that providers users with a place to plan new car buil
 - On clicking the view button it will take you to a page where the user can view the build (Read)
 - When logged in on the My Builds page and clicking on the users own builds, 'Edit' will appear at the bottom.
 - By clicking on the top right of the website, or on the hamburger if on mobile, the user can select 'Create a Build' in-order to create a new build.
-    - When creating a new build the user will be able to add any parts they wish from the dropdown provided and populate the fields that appear with the information required by the site (Create). Any of this information can be edited in the future as described previously.
+  - When creating a new build the user will be able to add any parts they wish from the dropdown provided and populate the fields that appear with the information required by the site (Create). Any of this information can be edited in the future as described previously.
 - On the view page users will be able to vote on other peoples builds.
 
 ### Features left to implement
@@ -58,7 +58,7 @@ Below are the libraries and languages used in creating this project.
 - [Font Awesome](https://fontawesome.com)
 
 - [Flask](https://flask.palletsprojects.com/en/1.0.x/)
-    - [Flask-Login](https://flask-login.readthedocs.io/en/latest/)
+  - [Flask-Login](https://flask-login.readthedocs.io/en/latest/)
 
 - [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt)
 
@@ -81,5 +81,31 @@ Requirements.txt can be created using `pip freeze > requirements.txt` in the com
 With both of these file create a new app on [Heroku](https://dashboard.heroku.com/login). Download the Heroku CLI toolbelt and login to Heroku via the command line. Then in the command line type git init, git add ., git commit, git push heroku master. Finally initalise the app on the Heroku server by typing `heroku ps:scale web=1` and press enter.
 
 Now in the Heroku Settings add the CONFIG VARS IP (0.0.0.0), PORT (5000), MONGO_DBNAME and MONGO_URI.
+
+### Local Deployment
+
+To run the site locally, first download the .zip from GitHub and extract it.
+
+In app.py change:
+
+```python
+    if __name__ == '__main__':
+        app.run(host=os.environ.get('IP'),
+                port=int(os.environ.get('PORT')),
+                debug=False)
+```
+
+to
+
+```python
+    if __name__ == '__main__':
+        app.run(debug=False)
+```
+
+This will ensure that the project runs diectly on 127.0.0.0:5000, or if you have specified an IP and PORT on your local systems environment variables already you can use the preivous option.
+
+In order for the application to work it will need some environment variables, these and either be stored in your systems environment variables, or by install flask-dotenv with `pip intsall flask-dotenv` and added `from flask-dotenv import DotEnv` and `env = DotEnv(app) env.initapp(app)` to app.py. Lastly a .env file will need to be created with the environment variables you wish to use in.
+
+To run the application, open up a terminal and move into the directory where 'app.py' is located. Once there run `python app.py`, this will start the application where it will run on the link shown in the terminal when the server starts.
 
 ## Credits
