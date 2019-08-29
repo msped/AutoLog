@@ -1,5 +1,4 @@
 import os
-import json
 from flask import (
     Flask, render_template, redirect, request, url_for, flash, jsonify, Markup)
 from flask_login import (
@@ -66,14 +65,12 @@ def load_user(email):
     return User(u['email'], u['username'], u['_id'])
 
 
-# Site Routes
 @app.route("/")
 def home():
     """Route to Home Page"""
     return render_template("home.html")
 
 
-# All public builds
 @app.route("/builds")
 def builds():
     """Route to builds page, shows all public builds"""
@@ -84,13 +81,10 @@ def builds():
     return render_template("builds.html", builds=users_builds)
 
 
-# Users builds
 @app.route("/builds/<user_id>")
 @login_required
 def my_builds(user_id):
     """Route to users builds page, all builds (public or private)"""
-    builds = mongo.db.builds
-
     item_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
 
     if item_count > 0:
@@ -105,8 +99,7 @@ def my_builds(user_id):
 def register():
     """Route to Regsiter page, also handles registration via POST"""
     if current_user.is_authenticated:
-        flash('Already logged in!', category='warning')
-        redirect(url_for('builds'))
+        return redirect(url_for('builds'))
     else:
         if request.method == 'POST':
             email = request.form.get('email')
@@ -138,7 +131,7 @@ def register():
                         flash('Account created!', category='success')
                         return redirect(url_for('login'))
                     else:
-                        flask('Passwords did not match', category='danger')
+                        flash('Passwords did not match', category='danger')
             return redirect(url_for('register'))
     return render_template("register.html")
 
@@ -147,8 +140,7 @@ def register():
 def login():
     """Route to Login Page, also handles login via POST"""
     if current_user.is_authenticated:
-        flash('Already logged in!', category='warning')
-        redirect(url_for('builds'))
+        return redirect(url_for('builds'))
     else:
         if request.method == 'POST':
             user = mongo.db.users.find_one({'email':
@@ -179,10 +171,7 @@ def logout():
     flash('Logged out Successfully', category='success')
     return redirect(url_for('login'))
 
-# CRUD Routes
 
-
-# Create a Record
 @app.route("/build/new", methods=['POST', 'GET'])
 @login_required
 def create_record():
@@ -305,7 +294,6 @@ def create_record():
                            running=running, interior=interior)
 
 
-# View a Record
 @app.route("/build/<build_id>")
 def view_record(build_id):
     """Route to view a builds base on build_id"""
@@ -336,7 +324,6 @@ def view_record(build_id):
                            user_liked=user_liked, user_disliked=user_disliked)
 
 
-# Edit a Record
 @app.route("/build/<build_id>/edit", methods=['POST', 'GET'])
 @login_required
 def edit_record(build_id):
@@ -457,7 +444,6 @@ def edit_record(build_id):
                            interior=list(interior))
 
 
-# Delete a record
 @app.route("/build/<build_id>/delete")
 @login_required
 def delete_record(build_id):
@@ -469,7 +455,6 @@ def delete_record(build_id):
     return redirect(url_for('builds'))
 
 
-# Votes
 @app.route('/build/like/<build_id>', methods=['POST'])
 def like_build(build_id):
     """Updates database to show a user has liked a build along with storing
@@ -542,7 +527,6 @@ def dislike_build(build_id):
     return str(result)
 
 
-# Sort on Likes and Price
 @app.route('/sort_likes', methods=['POST'])
 def sort_likes():
     """Sorts builds by likes, high to low and low to high"""
@@ -598,10 +582,10 @@ def get_cars():
 
     get_cars = builds.find({'author': current_user._id})
 
-    buildData = []
+    buildData = {}
 
     for item in get_cars:
-        buildData.append({
+        buildData.update({
             'make': item['car']['make'],
             'total': str(item['total'])
         })
