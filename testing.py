@@ -1,9 +1,10 @@
-import os 
+import os
 import unittest
 
 from app import app
 
-class testCase(unittest.TestCase):
+
+class TestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -19,8 +20,7 @@ class testCase(unittest.TestCase):
 
     def tearDown(self):
         pass
-    
-    # Page Status 
+
     def test_home_status(self):
         result = self.app.get('/')
         self.assertEqual(result.status_code, 200)
@@ -49,8 +49,6 @@ class testCase(unittest.TestCase):
         result = self.app.get('/delete_record/1')
         self.assertEqual(result.status_code, 302)
 
-    # Test Login / Register
-
     def test_register_data(self):
         response = self.app.post(
             '/register',
@@ -64,7 +62,6 @@ class testCase(unittest.TestCase):
         )
         self.assertIn(b"Account created!", response.data)
 
-    # Account Exists
     def test_register_data(self):
         response = self.app.post(
             '/register',
@@ -77,7 +74,6 @@ class testCase(unittest.TestCase):
         )
         self.assertIn(b"User already exists", response.data)
 
-    #Login User
     def test_login_exists_data(self):
         response = self.app.post(
             '/login',
@@ -88,8 +84,7 @@ class testCase(unittest.TestCase):
             follow_redirects=True
         )
         self.assertIn(b"Logged in successfully", response.data)
-        
-        
+
     def test_login_doesnt_exist_data(self):
         response = self.app.post(
             '/login',
@@ -111,6 +106,6 @@ class testCase(unittest.TestCase):
             follow_redirects=True
         )
         self.assertIn(b"Incorrect E-mail/Password", response.data)
-        
+
 if __name__ == "__main__":
     unittest.main()
