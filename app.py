@@ -81,14 +81,15 @@ def builds():
     return render_template("builds.html", builds=users_builds)
 
 
-@app.route("/builds/<user_id>")
+@app.route("/build/user/<user_id>")
 @login_required
 def my_builds(user_id):
     """Route to users builds page, all builds (public or private)"""
-    build_count = mongo.db.builds.count_documents({'author': ObjectId(user_id)})
+    build_count = mongo.db.builds.count_documents({
+                                                  'author': ObjectId(user_id)})
 
     if build_count > 0:
-        users_builds = builds.find({'author': ObjectId(user_id)})
+        users_builds = mongo.db.builds.find({'author': ObjectId(user_id)})
     else:
         users_builds = False
 
@@ -433,6 +434,10 @@ def edit_record(build_id):
         "_id": ObjectId(build_id)
     })
 
+    if build['author'] is not current_user._id:
+        flash("Whoops, this isn't your build!", category="danger")
+        return redirect(url_for('builds'))
+
     exterior = mongo.db.exterior.find()
     engine = mongo.db.engine.find()
     running = mongo.db.runninggear.find()
@@ -447,6 +452,12 @@ def edit_record(build_id):
 @login_required
 def delete_record(build_id):
     """Deletes a build using build_id"""
+    build = mongo.db.builds.find_one({'_id': ObjectId(build_id)})
+
+    if build['author'] is not current_user._id:
+        flash("Whoops, this isn't your build!", category="danger")
+        return redirect(url_for('builds'))
+
     mongo.db.builds.remove({
         '_id': ObjectId(build_id)
     })
