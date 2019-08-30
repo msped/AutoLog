@@ -434,7 +434,7 @@ def edit_record(build_id):
         "_id": ObjectId(build_id)
     })
 
-    if build['author'] is not current_user._id:
+    if str(build['author']) != str(current_user._id):
         flash("Whoops, this isn't your build!", category="danger")
         return redirect(url_for('builds'))
 
@@ -454,7 +454,7 @@ def delete_record(build_id):
     """Deletes a build using build_id"""
     build = mongo.db.builds.find_one({'_id': ObjectId(build_id)})
 
-    if build['author'] is not current_user._id:
+    if str(build['author']) != str(current_user._id):
         flash("Whoops, this isn't your build!", category="danger")
         return redirect(url_for('builds'))
 
@@ -590,10 +590,10 @@ def get_cars():
 
     return jsonify(buildData)
 
-if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
-            debug=False)
+# if __name__ == '__main__':
+#     app.run(host=os.environ.get('IP'),
+#             port=int(os.environ.get('PORT')),
+#             debug=False)
 
-##if __name__ == '__main__':
-##    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
