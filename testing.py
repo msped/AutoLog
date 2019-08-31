@@ -178,7 +178,7 @@ class TestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-    def test_user_can_not_edit_other_user_build(self):
+    def test_can_not_edit_other_user_build_should_redirect_to_builds(self):
         self.app.post(
             '/login',
             data=dict(
@@ -193,7 +193,7 @@ class TestCase(unittest.TestCase):
         )
         self.assertIn(b"Whoops, this isn&#39;t your build!", response.data)
 
-    def test_user_can_not_delete_other_user_build(self):
+    def test_can_not_delete_other_user_build_should_redirect_to_builds(self):
         self.app.post(
             '/login',
             data=dict(
