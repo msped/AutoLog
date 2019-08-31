@@ -39,21 +39,20 @@ class TestCase(unittest.TestCase):
         result = self.app.get('/build/1/delete')
         self.assertEqual(result.status_code, 302)
 
-    # Test Login / Register
     """Username and email will have to be changed to test the function each
     time as it will inject a new user"""
-    # def test_register_account(self):
-    #     response = self.app.post(
-    #         '/register',
-    #         data=dict(
-    #             username="test user 1",
-    #             email="test@gmail.com",
-    #             password="password",
-    #             password2="password"
-    #         ),
-    #         follow_redirects=True
-    #     )
-    #     self.assertIn(b"Account created!", response.data)
+    def test_register_account(self):
+        response = self.app.post(
+            '/register',
+            data=dict(
+                username="test user 1",
+                email="test@gmail.com",
+                password="password",
+                password2="password"
+            ),
+            follow_redirects=True
+        )
+        self.assertIn(b"Account created!", response.data)
 
     def test_register_if_account_exists(self):
         response = self.app.post(
@@ -125,11 +124,11 @@ class TestCase(unittest.TestCase):
         result = self.app.get('/build/user/5d5053d52df25bd353fe7b72')
         self.assertEqual(result.status_code, 200)
 
-    # def test_utlis_function_vote_returns_true(self):
-    #     user_email = "test@gmail.com",
-    #     build_votes = ["test@gmail.com", "test1@gmail.com", "test3@gmail.com"]
-    #     result = votes(user_email, build_votes)
-    #     self.assertTrue(result)
+    def test_utlis_function_vote_returns_true(self):
+        user_email = "test@gmail.com",
+        build_votes = ["test@gmail.com", "test1@gmail.com", "test3@gmail.com"]
+        result = votes(user_email, build_votes)
+        self.assertTrue(result)
 
     def test_utlis_function_vote_returns_false(self):
         user_email = "test@gmail.com",
