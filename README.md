@@ -18,8 +18,6 @@ You can view the project [here on Heroku.](http://autolog-msped.herokuapp.com/)
 
 - Users will wish to delete 'Builds' previously created.
 
-- User would like to be able to share Builds with other users from them to vote on their Builds.
-
 ## Database Design
 
 Design of database can be view [here](https://github.com/msped/AutoLog/blob/master/assets/Autolog%20ERD.png).
@@ -66,9 +64,7 @@ Below are the libraries and languages used in creating this project.
 
 ## Testing
 
-Auotmated testing can be found in testing.py. It can be ran with `python testing.py` in the command line.
-
-### Bugs found during testing
+Auotmated testing can be found in testing.py. It can be ran with `python testing.py` in the appropriate directory on the command line.
 
 ## Deployment
 
