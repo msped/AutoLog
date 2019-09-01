@@ -12,7 +12,7 @@ from flask_login import (
 from flask_pymongo import PyMongo
 import bcrypt
 from bson.objectid import ObjectId
-from utils import votes
+from utils import votes, new_build_content, update_build_content
 
 app = Flask(__name__)
 
@@ -188,105 +188,10 @@ def create_record():
 
         users = [str(current_user.email), ]
 
-        record = {
-            'author': current_user._id,
-            'build_name': request.form.get('build_name'),
-            'total': float(request.form.get('total')),
-            'visibility': request.form.get('visibility'),
-            'car': {
-                'make': request.form.get('make'),
-                'model': request.form.get('model'),
-                'trim': request.form.get('trim'),
-                'year': request.form.get('year'),
-                'price': float(request.form.get('price'))
-            },
-            'votes': {
-                'like': {
-                    'count': 1,
-                    'users_liked': users
-                },
-                'dislike': {
-                    'count': 0,
-                    'users_disliked': []
-                }
-            },
-        }
+        record = new_build_content(exterior, engine, running, interior,
+                                   request, users,
+                                   build_author=current_user._id)
 
-        # Adds exterior collection to record
-        exterior_dict = []
-        for item in exterior:
-            product = request.form.get('exterior_'+item["part_id"]+'_product')
-            if product is not None:
-                exterior_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'exterior_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'exterior_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'exterior': exterior_dict})
-
-        # Adds Engine collection to record
-        engine_dict = []
-        for item in engine:
-            product = request.form.get('engine_'+item["part_id"]+'_product')
-            if product is not None:
-                engine_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'engine_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'engine_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'engine': engine_dict})
-
-        # Adds Running Gear collection to record
-        running_dict = []
-        for item in running:
-            product = request.form.get('running_'+item["part_id"]+'_product')
-            if product is not None:
-                running_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'running_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'running_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'running': running_dict})
-
-        # Adds Interior collection to record
-        interior_dict = []
-        for item in interior:
-            product = request.form.get('interior_'+item["part_id"]+'_product')
-            if product is not None:
-                interior_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'interior_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'interior_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'interior': interior_dict})
         builds.insert_one(record)
         flash('Build Created', category='success')
         return redirect(url_for('builds'))
@@ -329,104 +234,20 @@ def view_record(build_id):
 def edit_record(build_id):
     """Route to edit page, based on build_id
     Also handles the updating of the database via POST"""
+
+    exterior = mongo.db.exterior.find()
+    engine = mongo.db.engine.find()
+    running = mongo.db.runninggear.find()
+    interior = mongo.db.interior.find()
+
     if request.method == 'POST':
         builds = mongo.db.builds
 
-        exterior = mongo.db.exterior.find()
-        engine = mongo.db.engine.find()
-        running = mongo.db.runninggear.find()
-        interior = mongo.db.interior.find()
-
-        record = {
-            'total': float(request.form.get('total')),
-            'visibility': request.form.get('visibility'),
-            'car': {
-                'make': request.form.get('make'),
-                'model': request.form.get('model'),
-                'trim': request.form.get('trim'),
-                'year': request.form.get('year'),
-                'price': float(request.form.get('price'))
-            },
-        }
-
-        # Adds exterior collection to record
-        exterior_dict = []
-        for item in exterior:
-            product = request.form.get('exterior_'+item["part_id"]+'_product')
-            if product is not None:
-                exterior_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'exterior_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'exterior_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'exterior': exterior_dict})
-
-        # Adds Engine collection to record
-        engine_dict = []
-        for item in engine:
-            product = request.form.get('engine_'+item["part_id"]+'_product')
-            if product is not None:
-                engine_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'engine_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'engine_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'engine': engine_dict})
-
-        # Adds Running Gear collection to record
-        running_dict = []
-        for item in running:
-            product = request.form.get('running_'+item["part_id"]+'_product')
-            if product is not None:
-                running_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'running_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'running_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'running': running_dict})
-
-        # Adds Interior collection to record
-        interior_dict = []
-        for item in interior:
-            product = request.form.get('interior_'+item["part_id"]+'_product')
-            if product is not None:
-                interior_dict.append({
-                    item["part_id"]: {
-                        'product': product,
-                        'link': request.form.get(
-                                'interior_'+item["part_id"]+'_link'
-                            ),
-                        'price': float(request.form.get(
-                                'interior_'+item["part_id"]+'_price'
-                            ))
-                    }
-                })
-
-        record.update({'interior': interior_dict})
+        build_content = update_build_content(exterior, engine, running,
+                                             interior, request)
 
         # Update in Mongo
-        builds.update({"_id": ObjectId(build_id)}, {'$set': record})
+        builds.update({"_id": ObjectId(build_id)}, {'$set': build_content})
         flash('Build Updated', category='warning')
         return redirect(url_for('view_record', build_id=build_id))
 
@@ -437,11 +258,6 @@ def edit_record(build_id):
     if str(build['author']) != str(current_user._id):
         flash("Whoops, this isn't your build!", category="danger")
         return redirect(url_for('builds'))
-
-    exterior = mongo.db.exterior.find()
-    engine = mongo.db.engine.find()
-    running = mongo.db.runninggear.find()
-    interior = mongo.db.interior.find()
 
     return render_template("edit.html", build=build, exterior=list(exterior),
                            engine=list(engine), running=list(running),
@@ -590,10 +406,10 @@ def get_cars():
 
     return jsonify(buildData)
 
-# if __name__ == '__main__':
-#     app.run(host=os.environ.get('IP'),
-#             port=int(os.environ.get('PORT')),
-#             debug=False)
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=False)
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
