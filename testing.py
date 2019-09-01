@@ -39,9 +39,9 @@ class TestCase(unittest.TestCase):
         result = self.app.get('/build/1/delete')
         self.assertEqual(result.status_code, 302)
 
-    """Username and email will have to be changed to test the function each
-    time as it will inject a new user"""
     def test_register_account(self):
+        """Username and email will have to be changed to test the function each
+        time as it will inject a new user"""
         response = self.app.post(
             '/register',
             data=dict(
@@ -125,7 +125,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
     def test_utlis_function_vote_returns_true(self):
-        user_email = "test@gmail.com",
+        user_email = "test@gmail.com"
         build_votes = ["test@gmail.com", "test1@gmail.com", "test3@gmail.com"]
         result = votes(user_email, build_votes)
         self.assertTrue(result)
