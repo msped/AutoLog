@@ -10,11 +10,14 @@ from flask_login import (
         logout_user
     )
 from flask_pymongo import PyMongo
+from dotenv import load_dotenv
 import bcrypt
 from bson.objectid import ObjectId
 from utils import votes, new_build_content, update_build_content
 
 app = Flask(__name__)
+
+load_dotenv()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -406,10 +409,10 @@ def get_cars():
 
     return jsonify(buildData)
 
-if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
-            debug=False)
-
 # if __name__ == '__main__':
-#     app.run(debug=True)
+#     app.run(host=os.environ.get('IP'),
+#             port=int(os.environ.get('PORT')),
+#             debug=False)
+
+if __name__ == '__main__':
+    app.run(debug=True)
