@@ -10,6 +10,10 @@
     font-family: 'Oswald';
 }
 
+.build-stats, .search-builds {
+    margin: 30px 0;
+}
+
 /*Build Search*/
 .search-header {
     text-align: center;

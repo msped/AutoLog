@@ -396,10 +396,10 @@ def get_cars():
 
     get_cars = builds.find({'author': current_user._id})
 
-    buildData = {}
+    buildData = []
 
     for item in get_cars:
-        buildData.update({
+        buildData.append({
             'make': item['car']['make'],
             'total': str(item['total'])
         })

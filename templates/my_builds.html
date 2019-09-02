@@ -96,40 +96,29 @@ Builds
 {% endblock content %}
 
 {% block js %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/d3.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/crossfilter.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/dc.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/d3-queue.min.js')}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
 <script>
-    d3.queue()
+    queue()
         .defer(d3.json, "{{ url_for('get_cars')}}")
-        .await(makeGraph)
+        .await(pieChart)
 
-    function makeGraph(error, buildData) {
-        console.log(buildData)
-        dc.config.defaultColors(0)
+    function pieChart(error, buildData){
         var ndx = crossfilter(buildData);
-        var makeDim = ndx.dimension(function(d){
-            if(d.make != null){
-               return d.make; 
-            }
-        });
-        console.log(makeDim)
-        var build_total = makeDim.group();
+        var make_dim = ndx.dimension(dc.pluck('make'));
+        var total_per_build = make_dim.group().reduceSum(dc.pluck('total'));
 
-        dc.barChart('#amount-of-makes')
-            .width(500)
-            .height(250)
-            .margins({ top: 10, right: 50, bottom: 30, left: 50 })
-            .dimension(makeDim)
-            .group(build_total)
-            .transitionDuration(500)
-            .x(d3.scaleBand())
-            .xUnits(dc.units.ordinal)
-            .xAxisLabel("Make")
-            .yAxis().ticks(4);
-        
-        dc.renderAll();
+        dc.pieChart('#amount-of-makes')
+            .height(185)
+            .radius(150)
+            .transitionDuration(1500)
+            .dimension(make_dim)
+            .group(total_per_build)
+            .legend(dc.legend().x(95).y(0).gap(5))
+
+        dc.renderAll()
     }
 </script>
 {% endblock js %}
