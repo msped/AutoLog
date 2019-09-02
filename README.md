@@ -76,32 +76,12 @@ Requirements.txt can be created using `pip freeze > requirements.txt` in the com
 
 With both of these file create a new app on [Heroku](https://dashboard.heroku.com/login). Download the Heroku CLI toolbelt and login to Heroku via the command line. Then in the command line type git init, git add ., git commit, git push heroku master. Finally initalise the app on the Heroku server by typing `heroku ps:scale web=1` and press enter.
 
-Now in the Heroku Settings add the CONFIG VARS IP (0.0.0.0), PORT (5000), MONGO_DBNAME and MONGO_URI.
+Now in the Heroku Settings add the CONFIG VARS IP (0.0.0.0), PORT (5000), MONGO_DBNAME, MONGO_URI and SECERT_KEY.
 
 ### Local Deployment
 
-To run the site locally, first download the .zip from GitHub and extract it.
+To run the site locally, use `git clone https://github.com/msped/AutoLog.git`. Secondly in the commnad line `pip install -r requirements.txt`, this will install all the dependencies needed to run the application.
 
-In app.py change:
-
-```python
-    if __name__ == '__main__':
-        app.run(host=os.environ.get('IP'),
-                port=int(os.environ.get('PORT')),
-                debug=False)
-```
-
-to
-
-```python
-    if __name__ == '__main__':
-        app.run(debug=False)
-```
-
-This will ensure that the project runs diectly on 127.0.0.0:5000, or if you have specified an IP and PORT on your local systems environment variables already you can use the preivous option.
-
-In order for the application to work it will need some environment variables, these and either be stored in your systems environment variables, or by install flask-dotenv with `pip intsall flask-dotenv` and added `from flask-dotenv import DotEnv` and `env = DotEnv(app) env.initapp(app)` to app.py. Lastly a .env file will need to be created with the environment variables you wish to use in.
+In order for the application to work it will need some environment variables, these and either be stored in your systems environment variables, or create a .env file and add a MONGO_URI, MONGO_DBNAME and a SECERT_KEY
 
 To run the application, open up a terminal and move into the directory where 'app.py' is located. Once there run `python app.py`, this will start the application where it will run on the link shown in the terminal when the server starts.
-
-## Credits
