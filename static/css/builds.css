@@ -1,9 +1,9 @@
 .build-header h1 {
-    font-family: 'PM';
+    font-family: 'PM', monospace;
 }
 
 .build-header p {
-    font-family: 'Oswald';
+    font-family: 'Oswald', serif;
 }
 
 .user-sort-graph {

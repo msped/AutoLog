@@ -27,7 +27,7 @@
 
 
 .nav-link {
-    font-family: 'Oswald';
+    font-family: 'Oswald', serif;
     font-size: 14pt; 
 }
 
@@ -42,7 +42,7 @@ footer {
 }
 
 .footer-text {
-    font-family: 'Oswald';
+    font-family: 'Oswald', serif;
     font-size: 10pt;
     color: rgba(0,0,0,.5);
     
@@ -54,7 +54,7 @@ footer {
 }
 
 .social-links h5 {
-    font-family: 'PM';
+    font-family: 'PM', monospace;
 }
 
 .social-links ul li {
@@ -89,9 +89,9 @@ footer {
         circle at 30% 107%,
         #fdf497 0%,
         #fdf497 5%,
-         #fd5949 45%,
-         #d6249f 60%,
-         #285AEB 90%)
+        #fd5949 45%,
+        #d6249f 60%,
+        #285AEB 90%)
     ;
 }
 
