@@ -2,7 +2,7 @@ import os
 import unittest
 
 from app import app
-from utils import votes
+from utils import votes, get_heading_contents
 
 
 class TestCase(unittest.TestCase):
@@ -124,13 +124,13 @@ class TestCase(unittest.TestCase):
         result = self.app.get('/build/user/5d5053d52df25bd353fe7b72')
         self.assertEqual(result.status_code, 200)
 
-    def test_utlis_function_vote_returns_true(self):
+    def test_vote_returns_true_when_user_in_build_votes(self):
         user_email = "test@gmail.com"
         build_votes = ["test@gmail.com", "test1@gmail.com", "test3@gmail.com"]
         result = votes(user_email, build_votes)
         self.assertTrue(result)
 
-    def test_utlis_function_vote_returns_false(self):
+    def test_vote_returns_false_when_user_not_in_build_votes(self):
         user_email = "test@gmail.com",
         build_votes = ["test1@gmail.com", "test1@gmail.com", "test3@gmail.com"]
         result = votes(user_email, build_votes)
