@@ -4,6 +4,25 @@ def votes(user_email, build_votes):
     return False
 
 
+def get_heading_contents(request, heading, heading_name):
+    heading_content = {}
+    for item in heading:
+        product = request.form.get(heading_name + item["part_id"] + '_product')
+        if product is not None:
+            heading_content.update({
+                item["part_id"]: {
+                    'product': product,
+                    'link': request.form.get(
+                        heading_name + item["part_id"] + '_link'
+                    ),
+                    'price': float(request.form.get(
+                        heading_name + item["part_id"] + '_price'
+                    ))
+                }
+            })
+    return heading_content
+
+
 def new_build_content(exterior, engine, running, interior, request, users,
                       build_author):
     record = {
@@ -31,79 +50,19 @@ def new_build_content(exterior, engine, running, interior, request, users,
     }
 
     # Adds exterior collection to record
-    exterior_dict = {}
-    for item in exterior:
-        product = request.form.get('exterior_'+item["part_id"]+'_product')
-        if product is not None:
-            exterior_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'exterior_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'exterior_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-    record.update({'exterior': exterior_dict})
+    record.update({'exterior': get_heading_contents(request, exterior,
+                                                    'exterior_')})
 
     # Adds Engine collection to record
-    engine_dict = {}
-    for item in engine:
-        product = request.form.get('engine_'+item["part_id"]+'_product')
-        if product is not None:
-            engine_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'engine_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'engine_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'engine': engine_dict})
+    record.update({'engine': get_heading_contents(request, engine, 'engine_')})
 
     # Adds Running Gear collection to record
-    running_dict = {}
-    for item in running:
-        product = request.form.get('running_'+item["part_id"]+'_product')
-        if product is not None:
-            running_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'running_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'running_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'running': running_dict})
+    record.update({'running': get_heading_contents(request, running,
+                                                   'running_')})
 
     # Adds Interior collection to record
-    interior_dict = {}
-    for item in interior:
-        product = request.form.get('interior_'+item["part_id"]+'_product')
-        if product is not None:
-            interior_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'interior_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'interior_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'interior': interior_dict})
+    record.update({'interior': get_heading_contents(request, interior,
+                                                    'interior_')})
 
     return record
 
@@ -123,79 +82,19 @@ def update_build_content(exterior, engine, running, interior, request):
     }
 
     # Adds exterior collection to record
-    exterior_dict = {}
-    for item in exterior:
-        product = request.form.get('exterior_'+item["part_id"]+'_product')
-        if product is not None:
-            exterior_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'exterior_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'exterior_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'exterior': exterior_dict})
+    record.update({'exterior': get_heading_contents(request, exterior,
+                                                    'exterior_')})
 
     # Adds Engine collection to record
-    engine_dict = {}
-    for item in engine:
-        product = request.form.get('engine_'+item["part_id"]+'_product')
-        if product is not None:
-            engine_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'engine_'+item["part_id"]+'_link'
-                        ),
-                    'price': float(request.form.get(
-                        'engine_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'engine': engine_dict})
+    record.update({'engine': get_heading_contents(request, engine,
+                                                  'engine_')})
 
     # Adds Running Gear collection to record
-    running_dict = {}
-    for item in running:
-        product = request.form.get('running_'+item["part_id"]+'_product')
-        if product is not None:
-            running_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'running_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'running_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'running': running_dict})
+    record.update({'running': get_heading_contents(request, running,
+                                                   'running_')})
 
     # Adds Interior collection to record
-    interior_dict = {}
-    for item in interior:
-        product = request.form.get('interior_'+item["part_id"]+'_product')
-        if product is not None:
-            interior_dict.update({
-                item["part_id"]: {
-                    'product': product,
-                    'link': request.form.get(
-                        'interior_'+item["part_id"]+'_link'
-                    ),
-                    'price': float(request.form.get(
-                        'interior_'+item["part_id"]+'_price'
-                    ))
-                }
-            })
-
-    record.update({'interior': interior_dict})
+    record.update({'interior': get_heading_contents(request, interior,
+                                                    'interior_')})
 
     return record
