@@ -350,22 +350,44 @@ def sort_likes():
     builds = mongo.db.builds
 
     sort_option = request.form.get('sort_by_likes')
+    previous_page = request.form.get('page')
 
-    if sort_option == "high_to_low":
-        sort_results = builds.aggregate(
-            [
-                {'$sort': {'votes.like.count': -1}}
-            ]
-        )
+    if previous_page == 'my_builds':
+        if sort_option == "high_to_low":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'author': ObjectId(current_user._id)}},
+                    {'$sort': {'total': -1}}
+                ]
+            )
 
-    if sort_option == "low_to_high":
-        sort_results = builds.aggregate(
-            [
-                {'$sort': {'votes.like.count': 1}}
-            ]
-        )
+        if sort_option == "low_to_high":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'author': ObjectId(current_user._id)}},
+                    {'$sort': {'total': 1}}
+                ]
+            )
 
-    return render_template('builds.html', builds=sort_results)
+        return render_template('my_builds.html', builds=sort_results)
+    else:
+        if sort_option == "high_to_low":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'visibility': 'Public'}},
+                    {'$sort': {'total': -1}}
+                ]
+            )
+
+        if sort_option == "low_to_high":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'visibility': 'Public'}},
+                    {'$sort': {'total': 1}}
+                ]
+            )
+
+        return render_template('builds.html', builds=sort_results)
 
 
 @app.route('/sort_price', methods=['POST'])
@@ -374,22 +396,44 @@ def sort_prices():
     builds = mongo.db.builds
 
     sort_option = request.form.get('sort_by_price')
+    previous_page = request.form.get('page')
 
-    if sort_option == "high_to_low":
-        sort_results = builds.aggregate(
-            [
-                {'$sort': {'total': -1}}
-            ]
-        )
+    if previous_page == 'my_builds':
+        if sort_option == "high_to_low":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'author': ObjectId(current_user._id)}},
+                    {'$sort': {'total': -1}}
+                ]
+            )
 
-    if sort_option == "low_to_high":
-        sort_results = builds.aggregate(
-            [
-                {'$sort': {'total': 1}}
-            ]
-        )
+        if sort_option == "low_to_high":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'author': ObjectId(current_user._id)}},
+                    {'$sort': {'total': 1}}
+                ]
+            )
 
-    return render_template('builds.html', builds=sort_results)
+        return render_template('my_builds.html', builds=sort_results)
+    else:
+        if sort_option == "high_to_low":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'visibility': 'Public'}},
+                    {'$sort': {'total': -1}}
+                ]
+            )
+
+        if sort_option == "low_to_high":
+            sort_results = builds.aggregate(
+                [
+                    {'$match': {'visibility': 'Public'}},
+                    {'$sort': {'total': 1}}
+                ]
+            )
+
+        return render_template('builds.html', builds=sort_results)
 
 
 @app.route('/get_cars')
