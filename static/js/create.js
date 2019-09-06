@@ -18,7 +18,8 @@ $(document).ready(function () {
     $('#add-exterior').on('click', function(){
         part_id = $('#exterior-categories').find(":selected").val();
         title = $('#exterior-categories').find(":selected").text();
-        var template = '<tr>' +
+        if (part_id != 'Choose an option'){
+            var template = '<tr>' +
                         '<td scope="row">' + title + '</td>' +
                         '<td>' +
                             '<input type="text" class="form-control input-sm" name="exterior_'+ part_id +'_product" required>' +
@@ -33,13 +34,16 @@ $(document).ready(function () {
                             '<i class="far fa-times-circle" id="delete-row"></i>' +
                         '</td>' +
                     '</tr>';
-        $('#exterior-table').append(template);
+            $('#exterior-table').append(template);
+        }
+        
     });
 
     $('#add-engine').on('click', function(){
         part_id = $('#engine-categories').find(":selected").val();
         title = $('#engine-categories').find(":selected").text();
-        var template = '<tr>' +
+        if (part_id != 'Choose an option') {
+           var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
                             '<td>' +
                                 '<input type="text" class="form-control input-sm" name="engine_'+ part_id +'_product" required>' +
@@ -54,13 +58,16 @@ $(document).ready(function () {
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
                             '</td>' +
                         '</tr>';
-        $('#engine-table').append(template);
+            $('#engine-table').append(template); 
+        }
+        
     });
 
     $('#add-running-gear').on('click', function(){
         part_id = $('#running-gear-categories').find(":selected").val();
         title = $('#running-gear-categories').find(":selected").text();
-        var template = '<tr>' +
+        if (part_id != 'Choose an option') {
+           var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
                             '<td>' +
                                 '<input type="text" class="form-control input-sm" name="running_'+ part_id +'_product" required>' +
@@ -75,13 +82,16 @@ $(document).ready(function () {
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
                             '</td>' +
                         '</tr>';
-        $('#running-gear-table').append(template);
+            $('#running-gear-table').append(template); 
+        }
+        
     });
 
     $('#add-interior').on('click', function(){
         part_id = $('#interior-categories').find(":selected").val();
         title = $('#interior-categories').find(":selected").text();
-        var template = '<tr>' +
+        if (part_id != 'Choose an option') {
+           var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
                             '<td>' +
                                 '<input type="text" class="form-control input-sm" name="interior_'+ part_id +'_product" required>' +
@@ -96,10 +106,28 @@ $(document).ready(function () {
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
                             '</td>' +
                         '</tr>';
-        $('#interior-table').append(template);
+            $('#interior-table').append(template); 
+        }
+        
     });
 
     $('tbody').on('click', '#delete-row', function(){
         $(this).closest('tr').remove();
     });
+});    
+    
+function validateURL(textval) {
+    var urlregex = new RegExp( "^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
+    return urlregex.test(textval);
+}
+
+$("tbody").on('change paste', 'input[type=url]', function() {
+    var url = $(this).val();
+    console.log(url)
+    if(validateURL(url)) {
+        $(this).css('border-color', 'green');
+    } else {
+        $(this).css('border-color', 'red');
+    }
 });
+

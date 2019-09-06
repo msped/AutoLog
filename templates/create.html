@@ -115,7 +115,7 @@ Create a new build
             <div class="card-body">
                 <div class="add-category col-md-12">
                     <select class="form-control" id="exterior-categories">
-                        <option value="" disabled selected>Choose an option</option>
+                        <option value="Choose an option" disabled selected>Choose an option</option>
                         {% for item in exterior %}
                         <option value="{{ item.part_id }}">{{ item.title }}</option>
                         {% endfor %}
@@ -162,7 +162,7 @@ Create a new build
             <div class="card-body">
                     <div class="add-category col-md-12">
                         <select class="form-control" id="engine-categories">
-                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Choose an option" disabled selected>Choose an option</option>
                             {% for item in engine %}
                             <option value="{{ item.part_id }}">{{ item.title }}</option>
                             {% endfor %}
@@ -206,7 +206,7 @@ Create a new build
             <div class="card-body">
                     <div class="add-category col-md-12">
                         <select class="form-control" id="running-gear-categories">
-                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Choose an option" disabled selected>Choose an option</option>
                             {% for item in running %}
                             <option value="{{ item.part_id }}">{{ item.title }}</option>
                             {% endfor %}
@@ -250,7 +250,7 @@ Create a new build
             <div class="card-body">
                 <div class="add-category col-md-12">
                     <select class="form-control" id="interior-categories">
-                        <option value="" disabled selected>Choose an option</option>
+                        <option value="Choose an option" disabled selected>Choose an option</option>
                         {% for item in interior %}
                         <option value="{{ item.part_id }}">{{ item.title }}</option>
                         {% endfor %}
