@@ -66,6 +66,14 @@ Below are the libraries and languages used in creating this project.
 
 Auotmated testing can be found in testing.py. It can be ran with `python testing.py` in the appropriate directory on the command line.
 
+CSS and JS passed through Jigsaw & JShint without any errors.
+
+The site was manually tested for an errors with the HTML and CSS. All pages worked as expected, making use of the space of each screen size.
+
+### Bugs to be fixed
+
+The only major bug to be fixed is on the create and edit pages where the use of the tables make for very short input boxes. A fixed to move them onto another line with smaller screen sizes.
+
 ## Deployment
 
 This application was deloyed using Heroku. It can be view [here.](http://autolog-msped.herokuapp.com/)
