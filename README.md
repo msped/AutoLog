@@ -72,7 +72,7 @@ The site was manually tested for an errors with the HTML and CSS. All pages work
 
 ### Bugs to be fixed
 
-The only major bug to be fixed is on the create and edit pages where the use of the tables make for very short input boxes. A fixed to move them onto another line with smaller screen sizes.
+The only minor bug to be fixed is on the create and edit pages where the use of the tables make for very short input boxes. A fixed to move them onto another line with smaller screen sizes.
 
 ## Deployment
 
@@ -88,7 +88,7 @@ Now in the Heroku Settings add the CONFIG VARS IP (0.0.0.0), PORT (5000), MONGO_
 
 ### Local Deployment
 
-To run the site locally, use `git clone https://github.com/msped/AutoLog.git`. Install venv with `pip install venv` and run `python -m venv (path to the env)`. Move to this directory and install the packages / dependancies from the requirements.txt using `pip install -r requirements.txt`.
+To run the site locally, install venv with `pip install venv` and run `python -m venv (path to the env)`. Move to this directory and clone the git repository using `git clone https://github.com/msped/AutoLog.git`, install the packages / dependancies from the requirements.txt using `pip install -r requirements.txt`.
 
 In order for the application to work it will need some environment variables, these and either be stored in your systems environment variables, or create a .env file and add a MONGO_URI, MONGO_DBNAME and a SECERT_KEY
 
