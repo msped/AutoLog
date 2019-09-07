@@ -35,6 +35,30 @@
     list-style: none;
 }
 
+/*Page height*/
+
+main {
+    min-height: 300px;
+}
+
+@media (min-width: 768px) {
+    main {
+        min-height: 768px;
+    }
+}
+
+@media (min-width: 992px) {
+    main {
+        min-height: 455px;
+    }
+}
+
+@media (min-width: 1200px) {
+    main {
+        min-height: 600px;
+    }
+}
+
 /*footer*/
 
 footer {
