@@ -1,6 +1,6 @@
 queue()
     .defer(d3.json, "/get_cars")
-    .await(pieChart)
+    .await(pieChart);
 
 function pieChart(error, buildData){
     var ndx = crossfilter(buildData);
@@ -13,7 +13,7 @@ function pieChart(error, buildData){
         .transitionDuration(1500)
         .dimension(make_dim)
         .group(total_per_build)
-        .legend(dc.legend().x(95).y(0).gap(5))
+        .legend(dc.legend().x(95).y(0).gap(5));
 
-    dc.renderAll()
+    dc.renderAll();
 }
