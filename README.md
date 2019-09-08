@@ -29,11 +29,17 @@ Design of database can be view [here](https://github.com/msped/AutoLog/blob/mast
 This is a web application that providers users with a place to plan new car builds. The application provide create, read, update and delete (CRUD) functionality for each Build.
 
 - The builds page gives an overview of the builds that all user have created with the visibility of Public as well as the option to sort the builds on the amount of likes and the price.
-- On clicking the view button it will take you to a page where the user can view the build (Read)
+
+- On clicking the view button it will take you to a page where the user can view the build (Read).
+
 - When logged in on the My Builds page and clicking on the users own builds, 'Edit' will appear at the bottom.
+
 - By clicking on the top right of the website, or on the hamburger if on mobile, the user can select 'Create a Build' in-order to create a new build. Create a build will allow users to input the products name, a link to a webpage where the product can be purchased (The input box will give a green or red outline depending on whether the link is valid or not.) as well as the price of the product.
   - When creating a new build the user will be able to add any parts they wish from the dropdown provided and populate the fields that appear with the information required by the site (Create). Any of this information can be edited in the future as described previously.
+
 - On the view page users will be able to vote on other peoples builds.
+
+- Users are not be able to edit other users build and if they attempt to access via the address bar (build/<build_id>/edit) they will be redirected to the builds page with a visible error message.
 
 ### Features left to implement
 
@@ -68,7 +74,7 @@ Auotmated testing can be found in testing.py. It can be ran with `python testing
 
 CSS and JS passed through Jigsaw & JShint without any errors.
 
-The site was manually tested for an errors with the HTML and CSS. All pages worked as expected, making use of the space of each screen size.
+The site was manually tested for an errors with the HTML and CSS. All pages worked as expected, making use of the space of each screen size, the only issue found is outlined below.
 
 ### Bugs to be fixed
 
