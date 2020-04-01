@@ -1,8 +1,12 @@
 $(document).ready(function () {
-    $('tbody').on('change', '.part-price', function () {
+    $('tbody').on('change', '.part-price, input[type=checkbox]', function () {
         var buildPrice = 0;
         $('.part-price').each(function () {
-            buildPrice += parseFloat($(this).val()) || 0;
+            current = $(this);
+            console.log(current.closest("tr").find("td>div>input").is(":checked"))
+            if (!current.closest("tr").find("td>div>input").is(":checked")){
+                buildPrice += parseFloat(current.val()) || 0;  
+            }
         });
         $('#build-total').html(buildPrice);
         $('input[name="total"]').val(buildPrice);
