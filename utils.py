@@ -9,6 +9,10 @@ def get_heading_contents(request, heading, heading_name):
     for item in heading:
         product = request.form.get(heading_name + item["part_id"] + '_product')
         if product is not None:
+            if request.form.get(heading_name + item['part_id'] + '_purchased') == "on":
+                purchased = True
+            else:
+                purchased = False
             heading_content.update({
                 item["part_id"]: {
                     'product': product,
@@ -17,7 +21,8 @@ def get_heading_contents(request, heading, heading_name):
                     ),
                     'price': float(request.form.get(
                         heading_name + item["part_id"] + '_price'
-                    ))
+                    )),
+                    'purchased': purchased
                 }
             })
     return heading_content

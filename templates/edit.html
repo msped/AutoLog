@@ -124,8 +124,11 @@ Edit a build
                             <th scope="col">
                                 Web Link
                             </th>
-                            <th scope="col">
+                            <th scope="col" id="price-table-header">
                                 Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
                             </th>
                             <th scope="col">
 
@@ -149,6 +152,11 @@ Edit a build
                             </td>
                             <td>
                                 <input type="number" class="form-control input-sm part-price" value="{{ build['exterior'][prod]['price'] }}" name="exterior_{{ prod }}_price" step="any" required>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <input type="checkbox" name="exterior_{{ prod }}_purchased" {% if build['exterior'][prod]['purchased'] %}checked{% endif %}>
+                                </div>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -194,8 +202,14 @@ Edit a build
                             <th scope="col">
                                 Web Link
                             </th>
-                            <th scope="col">
+                            <th scope="col" id="price-table-header">
                                 Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
                             </th>
                         </tr>
                     </thead>
@@ -216,6 +230,11 @@ Edit a build
                             </td>
                             <td>
                                 <input type="number" class="form-control input-sm part-price" value="{{ build['engine'][prod]['price'] }}" name="engine_{{ prod }}_price" step="any" required>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <input type="checkbox" name="engine_{{ prod }}_purchased" {% if build['engine'][prod]['purchased'] %}checked{% endif %}>
+                                </div>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -261,8 +280,14 @@ Edit a build
                             <th scope="col">
                                 Web Link
                             </th>
-                            <th scope="col">
+                            <th scope="col" id="price-table-header">
                                 Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
                             </th>
                         </tr>
                     </thead>
@@ -283,6 +308,11 @@ Edit a build
                             </td>
                             <td>
                                 <input type="number" class="form-control input-sm part-price" value="{{ build['running'][prod]['price'] }}" name="running_{{ prod }}_price" step="any" required>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <input type="checkbox" name="running_{{ prod }}_purchased" {% if build['running'][prod]['purchased'] %}checked{% endif %}>
+                                </div>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>
@@ -328,8 +358,14 @@ Edit a build
                             <th scope="col">
                                 Web Link
                             </th>
-                            <th scope="col">
+                            <th scope="col" id="price-table-header">
                                 Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
                             </th>
                         </tr>
                     </thead>
@@ -350,6 +386,11 @@ Edit a build
                             </td>
                             <td>
                                 <input type="number" class="form-control input-sm part-price" value="{{ build['interior'][prod]['price'] }}" name="interior_{{ prod }}_price" step="any" required>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <input type="checkbox" name="interior_{{ prod }}_purchased" {% if build['interior'][prod]['purchased'] %}checked{% endif %}>
+                                </div>
                             </td>
                             <td>
                                 <i class="far fa-times-circle" id="delete-row"></i>

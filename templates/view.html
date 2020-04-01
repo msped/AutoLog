@@ -87,8 +87,14 @@ View a build
                         <th scope="col">
                             Product
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="price-table-header">
                             Price
+                        </th>
+                        <th scope="col" class="text-center">
+                            Purchased
+                        </th>
+                        <th scope="col" class="text-center">
+                            Mini Addition
                         </th>
                     </tr>
                 </thead>
@@ -105,8 +111,22 @@ View a build
                             <a href="{{ build['exterior'][prod]['link'] }}"
                                 target="_blank">{{ build['exterior'][prod]['product'] }}</a>
                         </td>
-                        <td>
+                        <td class="object-price">
                             <p>{{ build['exterior'][prod]['price'] }}</p>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                {% if build['exterior'][prod]['purchased'] %} 
+                                <i class="far fa-check-circle purchased"></i>
+                                {% else %}
+                                <i class="far fa-times-circle not-purchased"></i>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <input type="checkbox" class="mini-addition">
+                            </div>
                         </td>
                     </tr>
                     {% endif %}
@@ -137,8 +157,14 @@ View a build
                         <th scope="col">
                             Product
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="price-table-header">
                             Price
+                        </th>
+                        <th scope="col" class="text-center">
+                            Purchased
+                        </th>
+                        <th scope="col" class="text-center">
+                            Mini Addition
                         </th>
                     </tr>
                 </thead>
@@ -155,8 +181,22 @@ View a build
                             <a href="{{ build['engine'][prod]['link'] }}"
                                 target="_blank">{{ build['engine'][prod]['product'] }}</a>
                         </td>
-                        <td>
+                        <td class="object-price">
                             <p>{{ build['engine'][prod]['price'] }}</p>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                {% if build['engine'][prod]['purchased'] %} 
+                                <i class="far fa-check-circle purchased"></i>
+                                {% else %}
+                                <i class="far fa-times-circle not-purchased"></i>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <input type="checkbox" class="mini-addition">
+                            </div>
                         </td>
                     </tr>
                     {% endif %}
@@ -187,8 +227,14 @@ View a build
                         <th scope="col">
                             Product
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="price-table-header">
                             Price
+                        </th>
+                        <th scope="col" class="text-center">
+                            Purchased
+                        </th>
+                        <th scope="col" class="text-center">
+                            Mini Addition
                         </th>
                     </tr>
                 </thead>
@@ -205,8 +251,22 @@ View a build
                             <a href="{{ build['running'][prod]['link'] }}"
                                 target="_blank">{{ build['running'][prod]['product'] }}</a>
                         </td>
-                        <td>
+                        <td class="object-price">
                             <p>{{ build['running'][prod]['price'] }}</p>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                {% if build['running'][prod]['purchased'] %} 
+                                <i class="far fa-check-circle purchased"></i>
+                                {% else %}
+                                <i class="far fa-times-circle not-purchased"></i>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <input type="checkbox" class="mini-addition">
+                            </div>
                         </td>
                     </tr>
                     {% endif %}
@@ -237,8 +297,14 @@ View a build
                         <th scope="col">
                             Product
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="price-table-header">
                             Price
+                        </th>
+                        <th scope="col" class="text-center">
+                            Purchased
+                        </th>
+                        <th scope="col" class="text-center">
+                            Mini Addition
                         </th>
                     </tr>
                 </thead>
@@ -255,8 +321,22 @@ View a build
                             <a href="{{ build['interior'][prod]['link'] }}"
                                 target="_blank">{{ build['interior'][prod]['product'] }}</a>
                         </td>
-                        <td>
+                        <td class="object-price">
                             <p>{{ build['interior'][prod]['price'] }}</p>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                {% if build['interior'][prod]['purchased'] %} 
+                                <i class="far fa-check-circle purchased"></i>
+                                {% else %}
+                                <i class="far fa-times-circle not-purchased"></i>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <input type="checkbox" class="mini-addition">
+                            </div>
                         </td>
                     </tr>
                     {% endif %}
@@ -272,6 +352,11 @@ View a build
     <!--Build Total-->
     <div class="col">
         Total Price: <strong>{{ build.total }}</strong>
+    </div>
+
+    <!--Mini Addition-->
+    <div class="col selected-total">
+        Selected Total: <strong><span id="mini-total"></span></strong>
     </div>
 
     <!--Voting-->
@@ -372,6 +457,23 @@ View a build
                 $('.dislike-button, .like-button').off('click');
                 $('.fa-thumbs-up').css('opacity', '.5');
             }
+
+            $('tbody').on('change', '.mini-addition', function () {
+                var selectedTotal = 0;
+                $('.mini-addition').each(function () {
+                    current_box = $(this)
+                    if (current_box.prop('checked') == true) {
+                        console.log(current_box.closest("tr").find(".object-price>p").html())
+                        selectedTotal += parseFloat(current_box.closest("tr").find(".object-price>p").html()) || 0;
+                    }
+                });
+                $('#mini-total').html(selectedTotal);
+                if (selectedTotal == 0) {
+                    $('.selected-total').hide();
+                } else {
+                   $('.selected-total').show(); 
+                }
+            });
         });
     </script>
 {% endblock js %}

@@ -31,6 +31,11 @@ $(document).ready(function () {
                             '<input type="number" class="form-control input-sm part-price" name="exterior_'+ part_id +'_price" step="any" required>' +
                         '</td>' +
                         '<td>' +
+                            '<div class="text-center">' +
+                                '<input type="checkbox" name="exterior_'+ part_id +'_purchased">' +
+                            '</div>'+
+                        '</td>' +
+                        '<td>' +
                             '<i class="far fa-times-circle" id="delete-row"></i>' +
                         '</td>' +
                     '</tr>';
@@ -53,6 +58,11 @@ $(document).ready(function () {
                             '</td>' +
                             '<td>' +
                                 '<input type="number" class="form-control input-sm part-price" name="engine_'+ part_id +'_price" step="any" required>' +
+                            '</td>' +
+                            '<td>' +
+                            '<div class="text-center">' +
+                                '<input type="checkbox" name="engine_'+ part_id +'_purchased">' +
+                            '</div>'+
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -79,6 +89,11 @@ $(document).ready(function () {
                                 '<input type="number" class="form-control input-sm part-price" name="running_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
+                            '<div class="text-center">' +
+                                '<input type="checkbox" name="running_'+ part_id +'_purchased">' +
+                            '</div>'+
+                            '</td>' +
+                            '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
                             '</td>' +
                         '</tr>';
@@ -101,6 +116,11 @@ $(document).ready(function () {
                             '</td>' +
                             '<td>' +
                                 '<input type="number" class="form-control input-sm part-price" name="interior_'+ part_id +'_price" step="any" required>' +
+                            '</td>' +
+                            '<td>' +
+                            '<div class="text-center">' +
+                                '<input type="checkbox" name="interior_'+ part_id +'_purchased">' +
+                            '</div>'+
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +

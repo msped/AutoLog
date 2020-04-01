@@ -53,6 +53,17 @@
     margin-top: 10%;
 }
 
+input[type=checkbox] {
+    text-align: center;
+    vertical-align: middle;
+    width: 15px;
+    height: 15px;
+}
+
+#price-table-header {
+    width: 10%;
+}
+
 @media (min-width: 576px) {
     .submit-buttons {
         margin-top: 5%;

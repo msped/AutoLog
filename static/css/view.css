@@ -74,3 +74,24 @@
 .disliked {
     color: red;
 }
+
+input[type=checkbox] {
+    text-align: center;
+    vertical-align: middle;
+    width: 15px;
+    height: 15px;
+}
+
+.selected-total {
+    display: none;
+}
+
+.purchased {
+    color: #008640;
+    font-size: 15pt;
+}
+
+.not-purchased {
+    color: #F60002;
+    font-size: 15pt;
+}
