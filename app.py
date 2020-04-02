@@ -171,9 +171,12 @@ def login():
 @login_required
 def logout():
     """Logout user"""
-    logout_user()
-    flash('Logged out Successfully', category='success')
-    return redirect(url_for('login'))
+    if current_user.is_authenticated:
+        logout_user()
+        flash('Logged out Successfully', category='success')
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('builds'))
 
 
 @app.route("/build/new", methods=['POST', 'GET'])
@@ -297,21 +300,25 @@ def like_build(build_id):
 
     liked_by = list(current_build['votes']['like']['users_liked'])
 
-    if current_user.email in liked_by:
-        result = True
+    if current_user.is_authenticated:
+        if current_user.email in liked_by:
+            result = True
 
+        else:
+            likes_number = current_build['votes']['like']['count']
+
+            result = likes_number + 1
+
+            build.update_one({"_id": ObjectId(build_id)},
+                            {'$set': {'votes.like.count': result}})
+            build.update_one({"_id": ObjectId(build_id)},
+                            {'$push': {'votes.like.users_liked':
+                            str(current_user.email)}})
+
+        return str(result)
     else:
-        likes_number = current_build['votes']['like']['count']
-
-        result = likes_number + 1
-
-        build.update_one({"_id": ObjectId(build_id)},
-                         {'$set': {'votes.like.count': result}})
-        build.update_one({"_id": ObjectId(build_id)},
-                         {'$push': {'votes.like.users_liked':
-                          str(current_user.email)}})
-
-    return str(result)
+        flash("You must log in to vote!", category="danger")
+        return redirect(url_for('login'))
 
 
 @app.route('/build/dislike/<build_id>', methods=['POST'])
@@ -321,27 +328,31 @@ def dislike_build(build_id):
     response to update to most current dislikes"""
     build = mongo.db.builds
 
-    current_build = mongo.db.builds.find_one({
-        "_id": ObjectId(build_id)
-    })
+    if current_user.is_authenticated:
+        current_build = mongo.db.builds.find_one({
+            "_id": ObjectId(build_id)
+        })
 
-    disliked_by = list(current_build['votes']['dislike']['users_disliked'])
+        disliked_by = list(current_build['votes']['dislike']['users_disliked'])
 
-    if current_user.email in disliked_by:
-        result = True
+        if current_user.email in disliked_by:
+            result = True
 
+        else:
+            dislikes_number = current_build['votes']['dislike']['count']
+
+            result = dislikes_number + 1
+
+            build.update_one({"_id": ObjectId(build_id)},
+                            {'$set': {'votes.dislike.count': result}})
+            build.update_one({"_id": ObjectId(build_id)},
+                            {'$push': {'votes.dislike.users_disliked':
+                            current_user.email}})
+
+        return str(result)
     else:
-        dislikes_number = current_build['votes']['dislike']['count']
-
-        result = dislikes_number + 1
-
-        build.update_one({"_id": ObjectId(build_id)},
-                         {'$set': {'votes.dislike.count': result}})
-        build.update_one({"_id": ObjectId(build_id)},
-                         {'$push': {'votes.dislike.users_disliked':
-                          current_user.email}})
-
-    return str(result)
+        flash("You must log in to vote!", category="danger")
+        return redirect(url_for('login'))
 
 
 @app.route('/sort_likes', methods=['POST'])
