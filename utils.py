@@ -7,15 +7,14 @@ def votes(user_email, build_votes):
 def get_heading_contents(request, heading, heading_name):
     heading_content = {}
     for item in heading:
-        product = request.form.get(heading_name + item["part_id"] + '_product')
-        if product is not None:
+        link = request.form.get(heading_name + item["part_id"] + '_link')
+        if link is not None:
             if request.form.get(heading_name + item['part_id'] + '_purchased') == "on":
                 purchased = True
             else:
                 purchased = False
             heading_content.update({
                 item["part_id"]: {
-                    'product': product,
                     'link': request.form.get(
                         heading_name + item["part_id"] + '_link'
                     ),
