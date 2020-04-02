@@ -84,9 +84,6 @@ View a build
                         <th scope="col">
                             Part
                         </th>
-                        <th scope="col">
-                            Product
-                        </th>
                         <th scope="col" id="price-table-header">
                             Price
                         </th>
@@ -102,14 +99,11 @@ View a build
                     {% for item in exterior %}
                     {% set prod = item.part_id %}
                     {% if build['exterior'][prod] is defined %}
-                    {% if build['exterior'][prod]['product'] != None %}
+                    {% if build['exterior'][prod]['price'] != None %}
                     <tr>
                         <td>
-                            {{ item['title'] }}
-                        </td>
-                        <td>
                             <a href="{{ build['exterior'][prod]['link'] }}"
-                                target="_blank">{{ build['exterior'][prod]['product'] }}</a>
+                                target="_blank">{{ item['title'] }}</a>
                         </td>
                         <td class="object-price">
                             <p>{{ build['exterior'][prod]['price'] }}</p>
@@ -154,9 +148,6 @@ View a build
                         <th scope="col">
                             Part
                         </th>
-                        <th scope="col">
-                            Product
-                        </th>
                         <th scope="col" id="price-table-header">
                             Price
                         </th>
@@ -172,14 +163,11 @@ View a build
                     {% for item in engine %}
                     {% set prod = item.part_id %}
                     {% if build['engine'][prod] is defined %}
-                    {% if build['engine'][prod]['product'] != None %}
+                    {% if build['engine'][prod]['price'] != None %}
                     <tr>
                         <td>
-                            {{ item['title'] }}
-                        </td>
-                        <td>
                             <a href="{{ build['engine'][prod]['link'] }}"
-                                target="_blank">{{ build['engine'][prod]['product'] }}</a>
+                                target="_blank">{{ item['title'] }}</a>
                         </td>
                         <td class="object-price">
                             <p>{{ build['engine'][prod]['price'] }}</p>
@@ -224,9 +212,6 @@ View a build
                         <th scope="col">
                             Part
                         </th>
-                        <th scope="col">
-                            Product
-                        </th>
                         <th scope="col" id="price-table-header">
                             Price
                         </th>
@@ -242,14 +227,11 @@ View a build
                     {% for item in running %}
                     {% set prod = item.part_id %}
                     {% if build['running'][prod] is defined %}
-                    {% if build['running'][prod]['product'] != None %}
+                    {% if build['running'][prod]['price'] != None %}
                     <tr>
                         <td>
-                            {{ item['title'] }}
-                        </td>
-                        <td>
                             <a href="{{ build['running'][prod]['link'] }}"
-                                target="_blank">{{ build['running'][prod]['product'] }}</a>
+                                target="_blank">{{ item['title'] }}</a>
                         </td>
                         <td class="object-price">
                             <p>{{ build['running'][prod]['price'] }}</p>
@@ -294,9 +276,6 @@ View a build
                         <th scope="col">
                             Part
                         </th>
-                        <th scope="col">
-                            Product
-                        </th>
                         <th scope="col" id="price-table-header">
                             Price
                         </th>
@@ -312,14 +291,11 @@ View a build
                     {% for item in interior %}
                     {% set prod = item.part_id %}
                     {% if build['interior'][prod] is defined %}
-                    {% if build['interior'][prod]['product'] != None %}
+                    {% if build['interior'][prod]['price'] != None %}
                     <tr>
                         <td>
-                            {{ item['title'] }}
-                        </td>
-                        <td>
                             <a href="{{ build['interior'][prod]['link'] }}"
-                                target="_blank">{{ build['interior'][prod]['product'] }}</a>
+                                target="_blank">{{ item['title'] }}</a>
                         </td>
                         <td class="object-price">
                             <p>{{ build['interior'][prod]['price'] }}</p>
@@ -461,18 +437,17 @@ View a build
             $('tbody').on('change', '.mini-addition', function () {
                 var selectedTotal = 0;
                 $('.mini-addition').each(function () {
-                    current_box = $(this)
+                    current_box = $(this);
                     if (current_box.prop('checked') == true) {
-                        console.log(current_box.closest("tr").find(".object-price>p").html())
                         selectedTotal += parseFloat(current_box.closest("tr").find(".object-price>p").html()) || 0;
                     }
                 });
-                $('#mini-total').html(selectedTotal);
+                $('#mini-total').html(selectedTotal.toFixed(2));
                 if (selectedTotal == 0) {
                     $('.selected-total').hide();
                 } else {
                    $('.selected-total').show(); 
-                }
+                };
             });
         });
     </script>
