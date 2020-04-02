@@ -338,13 +338,6 @@ View a build
     <!--Voting-->
     <div class="col">
         <div class="voting-content">
-            <div class="user-logged-in">
-            {% if current_user.is_authenticated %}
-            <p>How do you like this build?</p>
-            {% else %}
-            <p><a href="{{ url_for('login') }}">Login</a> to vote!</p>
-            {% endif %}
-            </div>
             <div class="like">
                 <div class="{% if current_user.is_authenticated %}like-button{% endif %} like-button-div like-button-hover">
                     <i class="far fa-thumbs-up"></i>
