@@ -3,13 +3,12 @@ $(document).ready(function () {
         var buildPrice = 0;
         $('.part-price').each(function () {
             current = $(this);
-            console.log(current.closest("tr").find("td>div>input").is(":checked"))
             if (!current.closest("tr").find("td>div>input").is(":checked")){
                 buildPrice += parseFloat(current.val()) || 0;  
             }
         });
-        $('#build-total').html(buildPrice);
-        $('input[name="total"]').val(buildPrice);
+        $('#build-total').html(buildPrice.toFixed(2));
+        $('input[name="total"]').val(buildPrice.toFixed(2));
     });
 
     $(window).keydown(function(event){
@@ -24,25 +23,22 @@ $(document).ready(function () {
         title = $('#exterior-categories').find(":selected").text();
         if (part_id != 'Choose an option'){
             var template = '<tr>' +
-                        '<td scope="row">' + title + '</td>' +
-                        '<td>' +
-                            '<input type="text" class="form-control input-sm" name="exterior_'+ part_id +'_product" required>' +
-                        '</td>' +
-                        '<td>' +
-                            '<input type="url" class="form-control input-sm" name="exterior_'+ part_id +'_link" required>' +
-                        '</td>' +
-                        '<td>' +
-                            '<input type="number" class="form-control input-sm part-price" name="exterior_'+ part_id +'_price" step="any" required>' +
-                        '</td>' +
-                        '<td>' +
-                            '<div class="text-center">' +
-                                '<input type="checkbox" name="exterior_'+ part_id +'_purchased">' +
-                            '</div>'+
-                        '</td>' +
-                        '<td>' +
-                            '<i class="far fa-times-circle" id="delete-row"></i>' +
-                        '</td>' +
-                    '</tr>';
+                                '<td scope="row">' + title + '</td>' +
+                                '<td>' +
+                                    '<input type="url" class="form-control input-sm" name="exterior_'+ part_id +'_link" required>' +
+                                '</td>' +
+                                '<td>' +
+                                    '<input type="number" class="form-control input-sm part-price" name="exterior_'+ part_id +'_price" step="any" required>' +
+                                '</td>' +
+                                '<td>' +
+                                '<div class="text-center">' +
+                                    '<input type="checkbox" name="exterior_'+ part_id +'_purchased">' +
+                                '</div>'+
+                                '</td>' +
+                                '<td>' +
+                                    '<i class="far fa-times-circle" id="delete-row"></i>' +
+                                '</td>' +
+                            '</tr>';
             $('#exterior-table').append(template);
         }
         
@@ -54,9 +50,6 @@ $(document).ready(function () {
         if (part_id != 'Choose an option') {
            var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
-                            '<td>' +
-                                '<input type="text" class="form-control input-sm" name="engine_'+ part_id +'_product" required>' +
-                            '</td>' +
                             '<td>' +
                                 '<input type="url" class="form-control input-sm" name="engine_'+ part_id +'_link" required>' +
                             '</td>' +
@@ -84,9 +77,6 @@ $(document).ready(function () {
            var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
                             '<td>' +
-                                '<input type="text" class="form-control input-sm" name="running_'+ part_id +'_product" required>' +
-                            '</td>' +
-                            '<td>' +
                                 '<input type="url" class="form-control input-sm" name="running_'+ part_id +'_link" required>' +
                             '</td>' +
                             '<td>' +
@@ -112,9 +102,6 @@ $(document).ready(function () {
         if (part_id != 'Choose an option') {
            var template = '<tr>' +
                             '<td scope="row">' + title + '</td>' +
-                            '<td>' +
-                                '<input type="text" class="form-control input-sm" name="interior_'+ part_id +'_product" required>' +
-                            '</td>' +
                             '<td>' +
                                 '<input type="url" class="form-control input-sm" name="interior_'+ part_id +'_link" required>' +
                             '</td>' +
