@@ -3,3 +3,5 @@ assets/wireframes/autolog.xd
 .vscode
 __pycache__
 .env
+Pipfile
+Pipfile.lock
