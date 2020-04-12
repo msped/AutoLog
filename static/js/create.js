@@ -27,13 +27,13 @@ $(document).ready(function () {
                                 '<td>' +
                                     '<input type="url" class="form-control input-sm" name="exterior_'+ part_id +'_link" required>' +
                                 '</td>' +
-                                '<td>' +
+                                '<td class="url-price">' +
                                     '<input type="number" class="form-control input-sm part-price" name="exterior_'+ part_id +'_price" step="any" required>' +
                                 '</td>' +
                                 '<td>' +
-                                '<div class="text-center">' +
-                                    '<input type="checkbox" name="exterior_'+ part_id +'_purchased">' +
-                                '</div>'+
+                                    '<div class="text-center">' +
+                                        '<input type="checkbox" name="exterior_'+ part_id +'_purchased">' +
+                                    '</div>'+
                                 '</td>' +
                                 '<td>' +
                                     '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -53,13 +53,13 @@ $(document).ready(function () {
                             '<td>' +
                                 '<input type="url" class="form-control input-sm" name="engine_'+ part_id +'_link" required>' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="url-price">' +
                                 '<input type="number" class="form-control input-sm part-price" name="engine_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
-                            '<div class="text-center">' +
-                                '<input type="checkbox" name="engine_'+ part_id +'_purchased">' +
-                            '</div>'+
+                                '<div class="text-center">' +
+                                    '<input type="checkbox" name="engine_'+ part_id +'_purchased">' +
+                                '</div>'+
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -79,13 +79,13 @@ $(document).ready(function () {
                             '<td>' +
                                 '<input type="url" class="form-control input-sm" name="running_'+ part_id +'_link" required>' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="url-price">' +
                                 '<input type="number" class="form-control input-sm part-price" name="running_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
-                            '<div class="text-center">' +
-                                '<input type="checkbox" name="running_'+ part_id +'_purchased">' +
-                            '</div>'+
+                                '<div class="text-center">' +
+                                    '<input type="checkbox" name="running_'+ part_id +'_purchased">' +
+                                '</div>'+
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -105,13 +105,13 @@ $(document).ready(function () {
                             '<td>' +
                                 '<input type="url" class="form-control input-sm" name="interior_'+ part_id +'_link" required>' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="url-price">' +
                                 '<input type="number" class="form-control input-sm part-price" name="interior_'+ part_id +'_price" step="any" required>' +
                             '</td>' +
                             '<td>' +
-                            '<div class="text-center">' +
-                                '<input type="checkbox" name="interior_'+ part_id +'_purchased">' +
-                            '</div>'+
+                                '<div class="text-center">' +
+                                    '<input type="checkbox" name="interior_'+ part_id +'_purchased">' +
+                                '</div>'+
                             '</td>' +
                             '<td>' +
                                 '<i class="far fa-times-circle" id="delete-row"></i>' +
@@ -125,4 +125,20 @@ $(document).ready(function () {
     $('tbody').on('click', '#delete-row', function(){
         $(this).closest('tr').remove();
     });
+
+    $('tbody').on('change paste', 'input[type=url]', function(){
+        url_box = $(this)
+        url = $(this).val();
+        $.ajax({
+            url: "/get_web_price",
+            type: 'POST',
+            data: {
+                'url': url
+            },
+            success: function(data){
+                input = url_box.closest('tr').find('.url-price').children('input.part-price');
+                input.val(data)
+            }
+        });
+    })
 });

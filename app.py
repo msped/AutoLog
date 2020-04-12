@@ -13,6 +13,10 @@ from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import bcrypt
 from bson.objectid import ObjectId
+from tld import parse_tld
+import re
+import requests
+from bs4 import BeautifulSoup
 from utils import votes, new_build_content, update_build_content
 
 app = Flask(__name__)
@@ -463,6 +467,35 @@ def get_cars():
         })
 
     return jsonify(buildData)
+
+@app.route('/get_web_price', methods=['POST'])
+def get_web_price():
+
+    url = request.form.get('url')
+    user_domain = parse_tld(str(url))
+
+    domain = mongo.db.domains.find_one({
+        "domain": user_domain[1]
+    })
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+    }
+
+    if domain is not None:
+        page = requests.get(url, headers=headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        attr_val = str(domain['price_element'])
+        if domain['attr'] == "id":
+            price_site = soup.find(id=attr_val).get_text()
+            price = price_site.strip()
+        else:
+            price_site = soup.find(class_=attr_val).get_text()
+            price = price_site.strip()
+        new_price = re.sub(r'[^\w^.]','', price)
+        return new_price
+    
+    price = '0'
+    return price
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
