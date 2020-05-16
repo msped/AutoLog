@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css' )}}">
+{% endblock css %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="homepage-banner">
+            <div class="homepage-button">
+                <p>Plan your builds with AutoLog.</p> 
+                <a href="{{ url_for('login') }}" class="homepage-banner-button">
+                    Join for Free
+                </a>
+            </div>
+        </div>
+    </div>  
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 what-is-autolog text-center">
+        <h3 class="text-center">What is AutoLog?</h3>
+        <p>AutoLog exists to help you plan your current or builds you want to create. </p>
+
+        <p>AutoLog aims to replace the odd pieces of paper with scribbles on and the 
+        more modern option of notes on your mobile phone. With AutoLog we aim to 
+        give you better experience in planning your builds, from automatically 
+        updating the build total if you change the products to linking the products 
+        straight to the site where the can buy them from.</p>
+    </div>
+</div>
+<hr>
+<div class="row new-section">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <img src="{{ url_for('static', filename='images/create-a-plan.png')}}" id="create-a-plan-img" alt="Create a plan">
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <p>AutoLog makes use of a simple to use dynamic interface to provide users 
+            with the best experience. Each heading has the option add various 
+            parts, which are updated regularly, in-order to ensure that you have
+            the most up to date parts and pricing for your projected Build. 
+        </p>
+        <p><strong>ALL</strong> Builds you create are under your control. Builds can only be
+            seen by others if you set the visibility to Public, where they will be display on the <a href="{{ url_for('builds')}}">Builds Page</a>.
+        </p>
+        <p>Here you can show off your next financial mistake as well as let other users vote on your build, If you have a build you want to keep a secert you can make it private.</p>
+    </div>
+</div>
+
+{% endblock content %}

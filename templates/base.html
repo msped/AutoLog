@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    
+    <!--CDNs-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/999af8025a.js"></script>
+    <!--My Files-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css' )}}">
+    {% block css %}{% endblock css %}
+    <title>AutoLog | {% block title %}{% endblock title %}</title>
+</head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="{{ url_for('home') }}"><img
+                    src="{{ url_for('static', filename='images/autolog.png' )}}" alt="AutoLog"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('builds') }}">Builds</a>
+                    </li>
+                </ul>
+                <div class="navbar-collapse justify-content-end" id="navbarCollapse">
+                    <ul class="navbar-nav navbar-right">
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ url_for('create_record') }}">
+                                + Create a Build
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ url_for('my_builds', user_id=current_user._id) }}">
+                                My Builds
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                <li>
+                    <div class="alert alert-{{ message[0] }} alert-dismissible fade show" role="alert">
+                        {{ message[1] }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+            <main>
+            {% block content %}
+            {% endblock content %}
+            </main>
+        </div>
+        <footer class="container-fluid page-footer font-small blue ">
+            <div class="text-center text-md-left">
+                <div class="row">
+    
+                    <hr class="clearfix w-100 d-md-none pb-3">
+    
+                    <div class="offset-md-3 col-md-1 col-xs-12 mb-md-0 mb-3">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="footer-text" href="{{ url_for('home') }}">Home</a>
+                            </li>
+                            <li>
+                                <a class="footer-text" href="{{ url_for('builds') }}">Builds</a>
+                            </li>
+                            {% if current_user.is_authenticated %}
+                            <li>
+                                <a class="footer-text" href="{{ url_for('my_builds', user_id=current_user._id) }}">My Builds</a>
+                            </li>
+                            <li>
+                                <a class="footer-text" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <a class="footer-text" href="{{ url_for('register') }}">Register</a>
+                            </li>
+                            <li>
+                                <a class="footer-text" href="{{ url_for('login') }}">Login</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="offset-md-2 col-md-4 col-xs-12 mb-md-0 mb-3">
+                        <div class="col-md-12 mt-md-0 mt-3 social-links">
+                            <h5 class="text-uppercase text-center">Follow us on Social Media</h5>
+                            <ul class="text-center">
+                                <li>
+                                    <a target="_blank" href="https://www.facebook.com">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="https://www.twitter.com">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="https://www.instagram.com">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    
+        <!--CDNs-->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <!--My Files-->
+        {% block js %}{% endblock js %}
+    </body>
+</html>

@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create a new build
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+{% endblock css %}
+
+{% block content %}
+<div class="text-center create-header">
+    <h1>Create a new plan</h1>
+    <p class="small">You can edit the parts, links & price in future <br> on the builds page by clicking 'Edit'.</p>
+</div>
+
+
+<form method="POST" action="{{ url_for('create_record') }}">
+    <!--Make/Model/Trim/Year-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#build-details" aria-expanded="false"
+                aria-controls="build-details">
+                Build Details
+            </h6>
+        </div>
+        <div id="build-details" class="collapse" aria-labelledby="headingTwo" data-parent="#build-details">
+            <div class="card-body">
+                <table class="table-sm col-md-6">
+                    <thead>
+                        <tr>
+                            <th>Build Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control input-sm" name="build_name" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Make
+                            </th>
+                            <th scope="col">
+                                Model
+                            </th>
+                            <th scope="col">
+                                Trim
+                            </th>
+                            <th scope="col">
+                                Year
+                            </th>
+                            <th scope="col">
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--Car-->
+                        <tr>
+                            <td scope="row">
+                                <input type="text" class="form-control input-sm" name="make" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="model" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="trim" required>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" name="year" required>
+                            </td>
+                            <td>
+                                <input type="number" step="any" class="form-control input-sm part-price" name="price"
+                                    required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table-sm col-md-4">
+                    <thead>
+                        <tr>
+                            <th>Visibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select name="visibility" class="form-control" id="visibility">
+                                    <option value="Public" selected>Public</option>
+                                    <option value="Private">Private</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Exterior-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#exterior" aria-expanded="false"
+                aria-controls="exterior">
+                Exterior
+            </h6>
+        </div>
+        <div id="exterior" class="collapse" aria-labelledby="headingTwo" data-parent="#exterior">
+            <div class="card-body">
+                <div class="add-category col-md-12">
+                    <select class="form-control" id="exterior-categories">
+                        <option value="Choose an option" disabled selected>Choose an option</option>
+                        {% for item in exterior %}
+                        <option value="{{ item.part_id }}">{{ item.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <a id="add-exterior" class="btn btn-light">Add</a>
+                </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col" id="price-table-header">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="exterior-table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Engine-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#engine" aria-expanded="false"
+                aria-controls="engine">
+                Engine
+            </h6>
+        </div>
+        <div id="engine" class="collapse" aria-labelledby="headingTwo" data-parent="#engine">
+            <div class="card-body">
+                    <div class="add-category col-md-12">
+                        <select class="form-control" id="engine-categories">
+                            <option value="Choose an option" disabled selected>Choose an option</option>
+                            {% for item in engine %}
+                            <option value="{{ item.part_id }}">{{ item.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <a id="add-engine" class="btn btn-light">Add</a>
+                    </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col" id="price-table-header">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="engine-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Running Gear-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#running-gear" aria-expanded="false"
+                aria-controls="running-gear">
+                Running Gear
+            </h6>
+        </div>
+        <div id="running-gear" class="collapse" aria-labelledby="headingTwo" data-parent="#running-gear">
+            <div class="card-body">
+                    <div class="add-category col-md-12">
+                        <select class="form-control" id="running-gear-categories">
+                            <option value="Choose an option" disabled selected>Choose an option</option>
+                            {% for item in running %}
+                            <option value="{{ item.part_id }}">{{ item.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <a id="add-running-gear" class="btn btn-light">Add</a>
+                    </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col" id="price-table-header">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="running-gear-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Interior-->
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h6 class="collapsed mb-0" data-toggle="collapse" data-target="#interior" aria-expanded="false"
+                aria-controls="interior">
+                Interior
+            </h6>
+        </div>
+        <div id="interior" class="collapse" aria-labelledby="headingTwo" data-parent="#interior">
+            <div class="card-body">
+                <div class="add-category col-md-12">
+                    <select class="form-control" id="interior-categories">
+                        <option value="Choose an option" disabled selected>Choose an option</option>
+                        {% for item in interior %}
+                        <option value="{{ item.part_id }}">{{ item.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <a id="add-interior" class="btn btn-light">Add</a>
+                </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Part
+                            </th>
+                            <th scope="col">
+                                Web Link
+                            </th>
+                            <th scope="col" id="price-table-header">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Purchased
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="interior-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Build Total-->
+    <div class="col-md-12">
+        Total Price: <strong><span id="build-total">0.00</span></strong>
+        <input type="hidden" name="total" id="build-total">
+    </div>
+
+    <!--Submit / Go back to Builds Page-->
+    <div class="text-center submit-buttons">
+        <a class="btn btn-btn-outline-dark" href="{{ url_for('builds') }}">Back to Builds</a>
+        <button type="submit" class="btn btn-outline-success">Create</button>
+    </div>
+
+</form>
+{% endblock content %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/create.js' )}}"></script>
+{% endblock js %}

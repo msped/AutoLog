@@ -1,0 +1,71 @@
+.edit-header h1 {
+    font-family: 'PM', monospace;
+}
+
+.edit-header p {
+    font-family: 'Oswald', serif;
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    margin-bottom: 20px; 
+    border: 0px solid rgba(0,0,0,.125);
+}
+
+.card-header {
+    padding: .25rem 0rem;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+}
+
+.card-header h6 {
+    font-family: 'Roboto', sans-serif;
+    margin: 5px 0px 5px 15px;
+}
+
+.add-category {
+    margin-bottom: 15px;
+}
+
+#exterior-categories, #engine-categories, #running-gear-categories, #interior-categories {
+    width: 250px; 
+    display: inline-block; 
+}
+
+#add-exterior, #add-engine, #add-running-gear, #add-interior {
+    margin-left: 15px;
+}
+
+#delete-row {
+    font-size: 17pt;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.submit-buttons {
+    margin-top: 10%;
+}
+
+input[type=checkbox] {
+    text-align: center;
+    vertical-align: middle;
+    width: 15px;
+    height: 15px;
+}
+
+#price-table-header {
+    width: 15%;
+}
+
+@media (min-width: 576px) {
+    .submit-buttons {
+        margin-top: 5%;
+    }
+}
